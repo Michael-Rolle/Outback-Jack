@@ -36,8 +36,10 @@ int main()
     startMessage.setString("Press  Space  to  Play");
     title.setLetterSpacing(3);
     startMessage.setLetterSpacing(3);
-    title.setOutlineThickness(2);
+    title.setOutlineThickness(3);
     title.setOutlineColor(sf::Color::Red);
+    startMessage.setOutlineThickness(2);
+    startMessage.setOutlineColor(sf::Color::White);
     // Centre text
     sf::FloatRect titleRect = title.getLocalBounds();
     sf::FloatRect startRect = startMessage.getLocalBounds();
