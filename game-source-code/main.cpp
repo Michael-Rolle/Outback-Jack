@@ -7,8 +7,8 @@
 using namespace std;
 
 // Global Constants
-const int gameWidth = 1920;
-const int gameHeight = 1080;
+const float gameWidth = 1920;
+const float gameHeight = 1080;
 const int frameRate = 60;
 
 int main()
@@ -27,18 +27,23 @@ int main()
     sf::Text startMessage;
     title.setFont(font);
     startMessage.setFont(font);
-    title.setCharacterSize(40);
-    startMessage.setCharacterSize(20);
-    title.setPosition(gameWidth/2.f, gameHeight/2.f);
-    startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
+    title.setCharacterSize(100);
+    startMessage.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
     startMessage.setFillColor(sf::Color::Red);
-    title.setString("OUTBACK JACK");
-    startMessage.setString("Press Space to Play");
+    title.setString("OUTBACK  JACK");
+    startMessage.setString("Press  Space  to  Play");
     title.setLetterSpacing(3);
     startMessage.setLetterSpacing(3);
     title.setOutlineThickness(2);
     title.setOutlineColor(sf::Color::Red);
+    // Centre text
+    sf::FloatRect titleRect = title.getLocalBounds();
+    sf::FloatRect startRect = startMessage.getLocalBounds();
+    title.setOrigin(titleRect.left + titleRect.width/2.0f, titleRect.top + titleRect.height/2.0f);
+    title.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - title.getCharacterSize());
+    startMessage.setOrigin(startRect.left + startRect.width/2.0f, startRect.top + startRect.height/2.0f);
+    startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
 
     bool isPlaying = false;
     while(window.isOpen())
