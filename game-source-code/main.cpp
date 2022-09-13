@@ -23,6 +23,7 @@ int main()
         return EXIT_FAILURE;
 
     // Initialize the start screen
+    // Text
     sf::Text title;
     sf::Text startMessage;
     title.setFont(font);
@@ -44,6 +45,15 @@ int main()
     title.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - title.getCharacterSize());
     startMessage.setOrigin(startRect.left + startRect.width/2.0f, startRect.top + startRect.height/2.0f);
     startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
+    // Background image
+    sf::Texture background;
+    if(!background.loadFromFile("resources/start_background.jpg"))
+        return EXIT_FAILURE;
+    sf::Sprite image(background);
+    image.setScale(window.getView().getSize().x/image.getLocalBounds().width, window.getView().getSize().y/image.getLocalBounds().height);
+    sf::FloatRect picRect = image.getLocalBounds();
+    image.setOrigin(picRect.left + picRect.width/2, picRect.top + picRect.height/2);
+    image.setPosition(window.getView().getCenter());
 
     bool isPlaying = false;
     while(window.isOpen())
@@ -63,6 +73,7 @@ int main()
         }
         else
         {
+            window.draw(image);
             window.draw(title);
             window.draw(startMessage);
         }
