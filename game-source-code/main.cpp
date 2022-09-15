@@ -46,7 +46,7 @@ int main()
                 isPlaying = true;
                 sf::FloatRect jackRect = Jack.getLocalBounds();
                 Jack.setOrigin(jackRect.left + jackRect.width/2, jackRect.top + jackRect.height/2);
-                Jack.setPosition(window.getView().getCenter());
+                Jack.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - 0.75*(gameHeight/2));
                 Jack.setScale(0.1*(gameHeight/jackRect.height), 0.1*(gameHeight/jackRect.height));
             }
         }
