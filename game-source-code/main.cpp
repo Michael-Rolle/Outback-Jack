@@ -44,6 +44,10 @@ int main()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
             {
                 isPlaying = true;
+                sf::FloatRect jackRect = Jack.getLocalBounds();
+                Jack.setOrigin(jackRect.left + jackRect.width/2, jackRect.top + jackRect.height/2);
+                Jack.setPosition(window.getView().getCenter());
+                Jack.setScale(0.1*(gameHeight/jackRect.height), 0.1*(gameHeight/jackRect.height));
             }
         }
 
