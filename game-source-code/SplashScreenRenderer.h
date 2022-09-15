@@ -1,24 +1,19 @@
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef SPLASHSCREENRENDERER_H
+#define SPLASHSCREENRENDERER_H
 #include <SFML/Graphics.hpp>
 
 
-class Renderer
+class SplashScreenRenderer
 {
     public:
-        Renderer(sf::RenderWindow window);
-        void renderSplashScreen();
+        SplashScreenRenderer(const float gameWidth, const float gameHeight);
+        void renderSplashScreen(sf::RenderWindow& window);
 
     private:
-        sf::RenderWindow window_;
         sf::Font font;
         sf::Text title;
         sf::Text startMessage;
-        //sf::Texture background;
         sf::Sprite backgroundImage;
-        //const unsigned float gameWidth;
-        //const unsigned float gameHeight;
-        //const unsigned short frameRate;
 };
 
-#endif // RENDERER_H
+#endif // SPLASHSCREENRENDERER_H

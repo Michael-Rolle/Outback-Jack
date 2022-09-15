@@ -1,6 +1,7 @@
 // Headers
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include "SplashScreenRenderer.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -9,7 +10,7 @@ using namespace std;
 // Global Constants
 const float gameWidth = 1920;
 const float gameHeight = 1080;
-const int frameRate = 60;
+const unsigned short frameRate = 60;
 
 int main()
 {
@@ -17,7 +18,7 @@ int main()
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
     window.setFramerateLimit(frameRate);
 
-    // Load the text font
+    /*// Load the text font
     sf::Font font;
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         return EXIT_FAILURE;
@@ -55,7 +56,9 @@ int main()
     image.setScale(window.getView().getSize().x/image.getLocalBounds().width, window.getView().getSize().y/image.getLocalBounds().height);
     sf::FloatRect picRect = image.getLocalBounds();
     image.setOrigin(picRect.left + picRect.width/2, picRect.top + picRect.height/2);
-    image.setPosition(window.getView().getCenter());
+    image.setPosition(window.getView().getCenter());*/
+
+    auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
 
     bool isPlaying = false;
     while(window.isOpen())
@@ -75,9 +78,10 @@ int main()
         }
         else
         {
-            window.draw(image);
+            /*window.draw(image);
             window.draw(title);
-            window.draw(startMessage);
+            window.draw(startMessage);*/
+            splashRenderer.renderSplashScreen(window);
         }
         window.display();
     }

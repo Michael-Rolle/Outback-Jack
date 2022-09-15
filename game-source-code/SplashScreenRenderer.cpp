@@ -1,16 +1,8 @@
-#include "Renderer.h"
+#include "SplashScreenRenderer.h"
 #include <SFML/Graphics.hpp>
 
-Renderer::Renderer(sf::RenderWindow window):
-    //gameWidth = 1920;
-    //gameHeight = 1080;
-    //frameRate = 60;
-    window_ = window;
+SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float gameHeight)
 {
-    //Window
-    //window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
-    //window.setFramerateLimit(frameRate);
-
     //Font
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         throw "cannot load font file";
@@ -34,7 +26,7 @@ Renderer::Renderer(sf::RenderWindow window):
     sf::FloatRect titleRect = title.getLocalBounds();
     sf::FloatRect startRect = startMessage.getLocalBounds();
     title.setOrigin(titleRect.left + titleRect.width/2.0f, titleRect.top + titleRect.height/2.0f);
-    title.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - title.getCharacterSize());
+    title.setPosition(gameWidth/2, gameHeight/2 - title.getCharacterSize());
     startMessage.setOrigin(startRect.left + startRect.width/2.0f, startRect.top + startRect.height/2.0f);
     startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
 
@@ -42,14 +34,17 @@ Renderer::Renderer(sf::RenderWindow window):
     sf::Texture background;
     if(!background.loadFromFile("resources/start_background.jpg"))
         throw "cannot load background image";
-    backgroundImage = ;
-    image.setScale(window.getView().getSize().x/image.getLocalBounds().width, window.getView().getSize().y/image.getLocalBounds().height);
-    sf::FloatRect picRect = image.getLocalBounds();
-    image.setOrigin(picRect.left + picRect.width/2, picRect.top + picRect.height/2);
-    image.setPosition(window.getView().getCenter());
+    //backgroundImage.setTexture(background);
+    backgroundImage.setTexture(background);
+    backgroundImage.setScale(gameWidth/backgroundImage.getLocalBounds().width, gameHeight/backgroundImage.getLocalBounds().height);
+    sf::FloatRect picRect = backgroundImage.getLocalBounds();
+    backgroundImage.setOrigin(picRect.left + picRect.width/2.0f, picRect.top + picRect.height/2.0f);
+    backgroundImage.setPosition(gameWidth/2.0f, gameHeight/2.0f);
 }
 
-Renderer::renderSplashScreen()
+void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
 {
-
+    window.draw(backgroundImage);
+    window.draw(title);
+    window.draw(startMessage);
 }
