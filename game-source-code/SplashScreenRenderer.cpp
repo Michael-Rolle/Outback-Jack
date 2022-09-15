@@ -31,10 +31,8 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
 
     //Background image
-    sf::Texture background;
     if(!background.loadFromFile("resources/start_background.jpg"))
         throw "cannot load background image";
-    //backgroundImage.setTexture(background);
     backgroundImage.setTexture(background);
     backgroundImage.setScale(gameWidth/backgroundImage.getLocalBounds().width, gameHeight/backgroundImage.getLocalBounds().height);
     sf::FloatRect picRect = backgroundImage.getLocalBounds();

@@ -13,7 +13,8 @@ class SplashScreenRenderer
         sf::Font font;
         sf::Text title;
         sf::Text startMessage;
+        sf::Texture background;
         sf::Sprite backgroundImage;
 };
 
-#endif // SPLASHSCREENRENDERER_H
+#endif
