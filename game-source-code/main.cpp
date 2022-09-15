@@ -21,21 +21,38 @@ int main()
     // Initialize the splash screen
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
 
+    //Load resources
+    sf::Texture jack_standing;
+    if(!jack_standing.loadFromFile("resources/jack_standing.png"))
+        return EXIT_FAILURE;
+    sf::Sprite Jack;
+    Jack.setTexture(jack_standing);
+
     bool isPlaying = false;
     while(window.isOpen())
     {
         sf::Event event;
         while(window.pollEvent(event))
         {
-            if(event.type == sf::Event::Closed) window.close();
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
+            if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                window.close();
+                break;
+            }
+
+            // Space pressed, start game
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
+            {
+                isPlaying = true;
+            }
         }
 
         // Render
         window.clear();
         if(isPlaying)
         {
-
+            //draw the playing field
+            window.draw(Jack);
         }
         else
         {
