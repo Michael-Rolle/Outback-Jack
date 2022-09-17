@@ -23,13 +23,13 @@ int main()
 
     //Load resources
     sf::Texture jack_standing;
-    if(!jack_standing.loadFromFile("resources/jack_standing.png"))
+    if(!jack_standing.loadFromFile("resources/jack.png"))
         return EXIT_FAILURE;
     sf::Sprite Jack;
     Jack.setTexture(jack_standing);
 
     //Movement
-    const int playerSpeed = 0.1*gameWidth;
+    const int playerSpeed = 0.15*gameWidth;
 
     sf::Clock clock;
     bool isPlaying = false;
