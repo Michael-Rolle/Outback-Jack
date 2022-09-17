@@ -55,28 +55,26 @@ int main()
                 break;
             }
         }
+
         if(isPlaying)
         {
             float deltaTime = clock.restart().asSeconds();
+            auto JackRect = Jack.getLocalBounds();
             // Player movement
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Jack.getPosition().x + JackRect.width/2 < gameWidth)
             {
-                //Jack.setPosition(Jack.getPosition().x + playerSpeed, Jack.getPosition().y);
                 Jack.move(playerSpeed*deltaTime, 0.f);
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Jack.getPosition().x - JackRect.width/2 > 0.f)
             {
-                //Jack.setPosition(Jack.getPosition().x - playerSpeed, Jack.getPosition().y);
                 Jack.move(-playerSpeed*deltaTime, 0.f);
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Jack.getPosition().y - JackRect.height/2 > 0.f)
             {
-                //Jack.setPosition(Jack.getPosition().x, Jack.getPosition().y  - playerSpeed);
                 Jack.move(0.f, -playerSpeed*deltaTime);
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Jack.getPosition().y + JackRect.width/2 < gameHeight)
             {
-                //Jack.setPosition(Jack.getPosition().x, Jack.getPosition().y  + playerSpeed);
                 Jack.move(0.f, playerSpeed*deltaTime);
             }
         }
