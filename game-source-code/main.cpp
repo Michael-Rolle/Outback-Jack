@@ -28,6 +28,10 @@ int main()
     sf::Sprite Jack;
     Jack.setTexture(jack_standing);
 
+    //Movement
+    const int playerSpeed = 0.1*gameWidth;
+
+    sf::Clock clock;
     bool isPlaying = false;
     while(window.isOpen())
     {
@@ -48,6 +52,32 @@ int main()
                 Jack.setOrigin(jackRect.left + jackRect.width/2, jackRect.top + jackRect.height/2);
                 Jack.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - 0.75*(gameHeight/2));
                 Jack.setScale(0.1*(gameHeight/jackRect.height), 0.1*(gameHeight/jackRect.height));
+                break;
+            }
+        }
+        if(isPlaying)
+        {
+            float deltaTime = clock.restart().asSeconds();
+            // Player movement
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                //Jack.setPosition(Jack.getPosition().x + playerSpeed, Jack.getPosition().y);
+                Jack.move(playerSpeed*deltaTime, 0.f);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                //Jack.setPosition(Jack.getPosition().x - playerSpeed, Jack.getPosition().y);
+                Jack.move(-playerSpeed*deltaTime, 0.f);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            {
+                //Jack.setPosition(Jack.getPosition().x, Jack.getPosition().y  - playerSpeed);
+                Jack.move(0.f, -playerSpeed*deltaTime);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                //Jack.setPosition(Jack.getPosition().x, Jack.getPosition().y  + playerSpeed);
+                Jack.move(0.f, playerSpeed*deltaTime);
             }
         }
 
