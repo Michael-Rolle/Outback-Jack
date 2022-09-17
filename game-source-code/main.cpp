@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "SplashScreenRenderer.h"
+#include "Jack.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -18,15 +19,9 @@ int main()
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
     window.setFramerateLimit(frameRate);
 
-    // Initialize the splash screen
+    // Initialize the splash screen and Jack
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
-
-    //Load resources
-    sf::Texture jack_standing;
-    if(!jack_standing.loadFromFile("resources/jack.png"))
-        return EXIT_FAILURE;
-    sf::Sprite Jack;
-    Jack.setTexture(jack_standing);
+    auto Player_1 = Jack(gameWidth, gameHeight, window);
 
     //Movement
     const int playerSpeed = 0.15*gameWidth;
@@ -48,10 +43,6 @@ int main()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
             {
                 isPlaying = true;
-                sf::FloatRect jackRect = Jack.getLocalBounds();
-                Jack.setOrigin(jackRect.left + jackRect.width/2, jackRect.top + jackRect.height/2);
-                Jack.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - 0.75*(gameHeight/2));
-                Jack.setScale(0.1*(gameHeight/jackRect.height), 0.1*(gameHeight/jackRect.height));
                 break;
             }
         }
@@ -59,23 +50,26 @@ int main()
         if(isPlaying)
         {
             float deltaTime = clock.restart().asSeconds();
-            auto JackRect = Jack.getLocalBounds();
+            auto JackRect = Player_1.getJackLocalBounds();
+            auto x = Player_1.getJackPositionX();
+            auto y = Player_1.getJackPositionY();
+
             // Player movement
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Jack.getPosition().x + JackRect.width/2 < gameWidth)
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x + JackRect.width/2 < gameWidth)
             {
-                Jack.move(playerSpeed*deltaTime, 0.f);
+                Player_1.moveJack(playerSpeed, deltaTime, 'D');
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Jack.getPosition().x - JackRect.width/2 > 0.f)
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x - JackRect.width/2 > 0.f)
             {
-                Jack.move(-playerSpeed*deltaTime, 0.f);
+                Player_1.moveJack(playerSpeed, deltaTime, 'A');
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Jack.getPosition().y - JackRect.height/2 > 0.f)
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y - JackRect.height/2 > 0.f)
             {
-                Jack.move(0.f, -playerSpeed*deltaTime);
+                Player_1.moveJack(playerSpeed, deltaTime, 'W');
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Jack.getPosition().y + JackRect.width/2 < gameHeight)
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y + JackRect.height/2 < gameHeight)
             {
-                Jack.move(0.f, playerSpeed*deltaTime);
+                Player_1.moveJack(playerSpeed, deltaTime, 'S');
             }
         }
 
@@ -84,7 +78,7 @@ int main()
         if(isPlaying)
         {
             //draw the playing field
-            window.draw(Jack);
+            Player_1.renderJack(window);
         }
         else
         {
