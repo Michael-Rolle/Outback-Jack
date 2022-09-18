@@ -4,10 +4,11 @@
 Jack::Jack(const float gameWidth, const float gameHeight, sf::RenderWindow& window)
 {
     //Texture
-    if(!jack_standing.loadFromFile("resources/jack.png"))
+    if(!jack_spritesheet.loadFromFile("resources/jack_spritesheet.png"))
         throw "cannot load texture file";
 
-    jack.setTexture(jack_standing);
+    jack.setTexture(jack_spritesheet);
+    jack.setTextureRect(sf::IntRect(256, 0, 256, 256));
     jackRect = jack.getLocalBounds();
     jack.setOrigin(jackRect.left + jackRect.width/2, jackRect.top + jackRect.height/2);
     jack.setPosition(window.getView().getCenter().x, window.getView().getCenter().y - 0.75*(gameHeight/2));

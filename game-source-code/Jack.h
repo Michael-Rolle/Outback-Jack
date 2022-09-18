@@ -13,7 +13,7 @@ class Jack
         void renderJack(sf::RenderWindow& window);
 
     private:
-        sf::Texture jack_standing;
+        sf::Texture jack_spritesheet;
         sf::Sprite jack;
         sf::FloatRect jackRect;
 };
