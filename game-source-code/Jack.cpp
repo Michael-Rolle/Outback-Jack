@@ -36,13 +36,13 @@ void Jack::moveJack(const float playerSpeed, const float deltaTime, const float 
     auto y = getJackPositionY();
 
     //Movement
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x + jackRect.width/2 < gameWidth)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x + ((jackRect.width/2)-padding.x) < gameWidth)
         jack.move(playerSpeed*deltaTime, 0.f);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x - jackRect.width/2 > 0.f)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x - ((jackRect.width/2)-padding.x) > 0.f)
         jack.move(-playerSpeed*deltaTime, 0.f);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y - jackRect.height/2 > 0.f)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y - ((jackRect.height/2)-padding.y) > 0.f)
         jack.move(0.f, -playerSpeed*deltaTime);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y + jackRect.height/2 < gameHeight)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y + ((jackRect.height/2)-padding.y) < gameHeight)
         jack.move(0.f, playerSpeed*deltaTime);
 }
 

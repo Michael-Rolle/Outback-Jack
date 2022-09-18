@@ -16,6 +16,7 @@ class Jack
         sf::Texture jack_spritesheet;
         sf::Sprite jack;
         sf::FloatRect jackRect;
+        const sf::Vector2f padding{90, 80}; //Padding of character in each frame
 };
 
 #endif
