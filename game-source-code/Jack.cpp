@@ -29,24 +29,20 @@ float Jack::getJackPositionY()
     return jack.getPosition().y;
 }
 
-void Jack::moveJack(float playerSpeed, float deltaTime, char D)
+void Jack::moveJack(const float playerSpeed, const float deltaTime, const float gameWidth, const float gameHeight)
 {
-    switch(D)
-    {
-    case 'D':
-        jack.move(playerSpeed*deltaTime, 0.f);
-        break;
-    case 'A':
-        jack.move(-playerSpeed*deltaTime, 0.f);
-        break;
-    case 'W':
-        jack.move(0.f, -playerSpeed*deltaTime);
-        break;
-    case 'S':
-        jack.move(0.f, playerSpeed*deltaTime);
-        break;
-    }
+    auto x = getJackPositionX();
+    auto y = getJackPositionY();
 
+    //Movement
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x + jackRect.width/2 < gameWidth)
+        jack.move(playerSpeed*deltaTime, 0.f);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x - jackRect.width/2 > 0.f)
+        jack.move(-playerSpeed*deltaTime, 0.f);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y - jackRect.height/2 > 0.f)
+        jack.move(0.f, -playerSpeed*deltaTime);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y + jackRect.height/2 < gameHeight)
+        jack.move(0.f, playerSpeed*deltaTime);
 }
 
 void Jack::renderJack(sf::RenderWindow& window)

@@ -24,7 +24,7 @@ int main()
     auto Player_1 = Jack(gameWidth, gameHeight, window);
 
     //Movement
-    const int playerSpeed = 0.15*gameWidth;
+    const float playerSpeed = 0.15*gameWidth;
 
     sf::Clock clock;
     bool isPlaying = false;
@@ -50,27 +50,7 @@ int main()
         if(isPlaying)
         {
             float deltaTime = clock.restart().asSeconds();
-            auto JackRect = Player_1.getJackLocalBounds();
-            auto x = Player_1.getJackPositionX();
-            auto y = Player_1.getJackPositionY();
-
-            // Player movement
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && x + JackRect.width/2 < gameWidth)
-            {
-                Player_1.moveJack(playerSpeed, deltaTime, 'D');
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && x - JackRect.width/2 > 0.f)
-            {
-                Player_1.moveJack(playerSpeed, deltaTime, 'A');
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && y - JackRect.height/2 > 0.f)
-            {
-                Player_1.moveJack(playerSpeed, deltaTime, 'W');
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && y + JackRect.height/2 < gameHeight)
-            {
-                Player_1.moveJack(playerSpeed, deltaTime, 'S');
-            }
+            Player_1.moveJack(playerSpeed, deltaTime, gameWidth, gameHeight);
         }
 
         // Render

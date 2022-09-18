@@ -9,7 +9,7 @@ class Jack
         sf::FloatRect getJackLocalBounds();
         float getJackPositionX();
         float getJackPositionY();
-        void moveJack(float playerSpeed, float deltaTime, char D);
+        void moveJack(const float playerSpeed, const float deltaTime, const float gameWidth, const float gameHeight);
         void renderJack(sf::RenderWindow& window);
 
     private:
