@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "SplashScreenRenderer.h"
 #include "Jack.h"
+//#include "Animation.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -21,12 +22,24 @@ int main()
 
     // Initialize the splash screen and Jack
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
-    auto Player_1 = Jack(gameWidth, gameHeight, window);
+    sf::Texture jack_spritesheet;
+    if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
+        throw "cannot load texture file";
+    //auto Player_1 = Jack(&jack_spritesheet, gameWidth, gameHeight, window);
+    auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3,3), 0.3f, 300.0f);
 
-    //Movement
-    const float playerSpeed = 0.15*gameWidth;
+    // Movement
+    //const float playerSpeed = 0.15*gameWidth;
+    //sf::IntRect rect(256, 0, 256, 256);
+    sf::Clock movement_clock;
+    float deltaTimeMovement = 0;
+    //int prev = 0;
 
-    sf::Clock clock;
+    // Animation
+    //auto jack_animation = Animation{&jack_spritesheet, sf::Vector2u(3, 3), 0.3f};
+    sf::Clock animation_clock;
+    float deltaTimeAnimation = 0;
+
     bool isPlaying = false;
     while(window.isOpen())
     {
@@ -49,8 +62,43 @@ int main()
 
         if(isPlaying)
         {
-            float deltaTime = clock.restart().asSeconds();
-            Player_1.moveJack(playerSpeed, deltaTime, gameWidth, gameHeight);
+            deltaTimeMovement = movement_clock.restart().asSeconds();
+            //Player_1.moveJack(playerSpeed, deltaTimeMovement, gameWidth, gameHeight, animation_clock);
+
+            deltaTimeAnimation = animation_clock.restart().asSeconds();
+            //jack_animation.update(0, deltaTimeAnimation, false);
+            //Player_1.setTextureRect(jack_animation.textRect);
+
+            Player_1.update(deltaTimeAnimation);
+
+            //Animation
+            /*if(animation_clock.getElapsedTime().asSeconds() > 0.3f)
+            {
+                if(rect.left == 512)
+                {
+                    rect.left -= 256;
+                    prev = 512;
+                }
+                else if(rect.left == 0)
+                {
+                    rect.left += 256;
+                    prev = 0;
+                }
+                else
+                {
+                    if(prev == 0)
+                    {
+                        rect.left += 256;
+                    }
+                    else
+                    {
+                        rect.left -= 256;
+                    }
+                }
+
+                Player_1.setTextureRect(rect);
+                animation_clock.restart();
+            }*/
         }
 
         // Render
@@ -58,7 +106,8 @@ int main()
         if(isPlaying)
         {
             //draw the playing field
-            Player_1.renderJack(window);
+            //Player_1.renderJack(window);
+            Player_1.draw(window);
         }
         else
         {
