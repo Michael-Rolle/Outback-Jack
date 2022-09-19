@@ -8,9 +8,12 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     row = 0; //idle animation
     facingRight = true;
 
+    const auto jackHeight = 133.0f;
+    padding.x = 0.4*jackHeight*frameCount.x;
+    padding.y = 0.375*jackHeight*frameCount.y;
     jack.setTexture(*texture);
-    jack.scale(400.0f/jack.getLocalBounds().width, 400.0f/jack.getLocalBounds().height);
-    jack.setPosition(960.0f, 320.0f);
+    jack.scale(jackHeight*frameCount.y/jack.getLocalBounds().width, jackHeight*frameCount.y/jack.getLocalBounds().height);
+    jack.setPosition(960.0f, 540.0f);
 }
 
 void Jack::update(float deltaTime)
@@ -34,11 +37,9 @@ void Jack::update(float deltaTime)
     {
         row = 1; //walking animation
 
-        if(movement.x == 0)
-            facingRight = facingRight;
-        else if(movement.x > 0.0f)
+        if(movement.x > 0.0f)
             facingRight = true;
-        else
+        else if(movement.x < 0.0f)
             facingRight= false;
     }
 
@@ -53,6 +54,7 @@ void Jack::update(float deltaTime)
 
     animation.update(row, deltaTime, facingRight);
     jack.setTextureRect(animation.textRect);
+    jack.setOrigin(jack.getLocalBounds().width/2.0f, jack.getLocalBounds().height/2.0f);
     jack.move(movement);
 }
 

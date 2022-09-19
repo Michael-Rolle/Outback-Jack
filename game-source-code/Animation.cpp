@@ -36,7 +36,7 @@ void Animation::update(int row, float deltaTime, bool facingRight)
         textRect.left = currentFrame.x * textRect.width;
         textRect.width = abs(textRect.width);
     }
-    else
+    else //flips row of animation to face the other direction
     {
         textRect.left = (currentFrame.x + 1) * abs(textRect.width);
         textRect.width = -abs(textRect.width);

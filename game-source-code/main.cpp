@@ -24,7 +24,7 @@ int main()
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         throw "cannot load texture file";
-    auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3,3), 0.3f, 300.0f);
+    auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 300.0f);
 
     sf::Clock clock;
     float deltaTime = 0;
