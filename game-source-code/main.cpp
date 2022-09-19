@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "SplashScreenRenderer.h"
+#include "PlayingFieldRenderer.h"
 #include "Jack.h"
 #include <cstdlib>
 #include <iostream>
@@ -19,8 +20,9 @@ int main()
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
     window.setFramerateLimit(frameRate);
 
-    // Initialize the splash screen and Jack
+    // Initialize the splash screen, playing field and Jack
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
+    auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         throw "cannot load texture file";
@@ -58,6 +60,7 @@ int main()
         window.clear();
         if(isPlaying)
         {
+            playingFieldRenderer.renderPlayingField(window);
             Player_1.draw(window);
         }
         else
