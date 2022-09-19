@@ -8,11 +8,12 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     row = 0; //idle animation
     facingRight = true;
 
-    const auto jackHeight = 133.0f;
-    padding.x = 0.4*jackHeight*frameCount.x;
-    padding.y = 0.375*jackHeight*frameCount.y;
+    //Padding needs work for better collision checking
+    const auto jackHeight = 150.0f;
     jack.setTexture(*texture);
     jack.scale(jackHeight*frameCount.y/jack.getLocalBounds().width, jackHeight*frameCount.y/jack.getLocalBounds().height);
+    padding.x = (56.0f)*((jackHeight*frameCount.y)/jack.getLocalBounds().width);
+    padding.y = (32.0f)*((jackHeight*frameCount.y)/jack.getLocalBounds().height);
     jack.setPosition(960.0f, 540.0f);
 }
 
@@ -43,13 +44,13 @@ void Jack::update(float deltaTime)
             facingRight= false;
     }
 
-    if(jack.getPosition().x - (400/2 - padding.x) <= 0.0f && movement.x < 0.0f)
+    if(jack.getPosition().x - (jack.getLocalBounds().width/2.0f) - padding.x <= 0.0f && movement.x < 0.0f)
         movement.x = 0;
-    if(jack.getPosition().x + (400/2 - padding.x) >= 1920 && movement.x > 0.0f)
+    if(jack.getPosition().x + (jack.getLocalBounds().width/2.0f) - padding.x >= 1920 && movement.x > 0.0f)
         movement.x = 0;
-    if(jack.getPosition().y - (400/2 - padding.y) <= 0.0f && movement.y < 0.0f)
+    if(jack.getPosition().y - (jack.getLocalBounds().height/2.0f) - padding.y <= 0.0f && movement.y < 0.0f)
         movement.y = 0;
-    if(jack.getPosition().y + (400/2 - padding.y) >= 1080 && movement.y > 0.0f)
+    if(jack.getPosition().y + (jack.getLocalBounds().height/2.0f) - padding.y >= 1080 && movement.y > 0.0f)
         movement.y = 0;
 
     animation.update(row, deltaTime, facingRight);
