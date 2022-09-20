@@ -13,8 +13,6 @@ class Jack
     private:
         sf::Sprite jack;
         Animation animation;
-        //const sf::Vector2f padding{160, 150}; //Padding of character in each frame
-        sf::Vector2f padding;
         unsigned int row;
         float speed;
         bool facingRight;
