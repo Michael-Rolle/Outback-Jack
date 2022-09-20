@@ -8,12 +8,9 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     row = 0; //idle animation
     facingRight = true;
 
-    //Padding needs work for better collision checking
-    const auto jackHeight = 150.0f;
+    const auto jackHeight = 100.0f;
     jack.setTexture(*texture);
     jack.scale(jackHeight*frameCount.y/jack.getLocalBounds().width, jackHeight*frameCount.y/jack.getLocalBounds().height);
-    padding.x = (56.0f)*((jackHeight*frameCount.y)/jack.getLocalBounds().width);
-    padding.y = (32.0f)*((jackHeight*frameCount.y)/jack.getLocalBounds().height);
     jack.setPosition(960.0f, 540.0f);
 }
 
