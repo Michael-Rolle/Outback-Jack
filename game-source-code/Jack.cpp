@@ -32,7 +32,7 @@ void Jack::update(float deltaTime)
         isJumping = true;
         jumpingUp = true;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isJumping && gameRow != 6)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isJumping && gameRow != 5)
     {
         isJumping = true;
         jumpingUp = false;
@@ -41,11 +41,8 @@ void Jack::update(float deltaTime)
     if(isJumping)
     {
         frameRow = 2; //jumping animation
-        if(jumpingUp)
-            velocity.y += 981.0f * deltaTime; //gravity assuming 100 pixels is 1 meter
-        else
-            velocity.y -= 981.0f * deltaTime;
         jump(jumpingUp);
+        velocity.y += 981.0f * deltaTime;
     }
     else if(velocity.x == 0.0f && velocity.y == 0.0f)
         frameRow = 0; //idle animation
@@ -56,6 +53,9 @@ void Jack::update(float deltaTime)
         facingRight = true;
     else if(velocity.x < 0.0f)
         facingRight= false;
+
+    if(!isJumping)
+        velocity.y = 0;
 
     if(jack.getPosition().x - (jack.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
         velocity.x = 0;
@@ -72,25 +72,27 @@ void Jack::jump(bool up)
 {
     if(up)
     {
-        if(jack.getPosition().y <= (gameRow*180)-90)
+        if(velocity.y > 0 && jack.getPosition().y >= (gameRow*180)-90)
         {
             isJumping = false;
             gameRow--;
             velocity.y = 0.0f;
             return;
         }
-        velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+        if(velocity.y == 0)
+            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f);
     }
     else
     {
-        if(jack.getPosition().y >= (gameRow*180)+90)
+        if(jack.getPosition().y >= ((gameRow+1)*180)+90)
         {
             isJumping = false;
             gameRow++;
             velocity.y = 0.0f;
             return;
         }
-        velocity.y = sqrtf(2.0f * 981.0f * jumpHeight);
+        if(velocity.y == 0)
+            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f);
     }
 }
 
