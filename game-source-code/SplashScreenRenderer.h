@@ -15,6 +15,14 @@ class SplashScreenRenderer
         sf::Text startMessage;
         sf::Texture background;
         sf::Sprite backgroundImage;
+
+        sf::Text player_1;
+        sf::Text player_2;
+        sf::Text up;
+        sf::Text down;
+        sf::Text left;
+        sf::Text right;
+
         sf::Texture controls_1;
         sf::Sprite controls_1_Image;
         sf::Texture controls_2;

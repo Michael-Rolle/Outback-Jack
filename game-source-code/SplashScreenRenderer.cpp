@@ -56,6 +56,19 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     sf::FloatRect arrowsRect = controls_2_Image.getLocalBounds();
     controls_2_Image.setOrigin(arrowsRect.left + arrowsRect.width/2.0f, arrowsRect.top + arrowsRect.height/2.0f);
     controls_2_Image.setPosition(gameWidth/1.125f, gameHeight/1.25f);
+
+    //Controls text
+    player_1.setFont(font);
+    player_1.setCharacterSize(15);
+    player_1.setFillColor(sf::Color::White);
+    player_1.setString("PLAYER  1  CONTROLS");
+    player_1.setLetterSpacing(3);
+    player_1.setOutlineThickness(3);
+    player_1.setOutlineColor(sf::Color::Red);
+
+    sf::FloatRect player_1_Rect = player_1.getLocalBounds();
+    player_1.setOrigin(player_1_Rect.left + player_1_Rect.width/2.0f, player_1_Rect.top + player_1_Rect.height/2.0f);
+    player_1.setPosition(gameWidth/2, gameHeight/2 - player_1.getCharacterSize());
 }
 
 void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
@@ -63,6 +76,12 @@ void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
     window.draw(backgroundImage);
     window.draw(title);
     window.draw(startMessage);
+    //window.draw(up);
+    //window.draw(down);
+    //window.draw(left);
+    //window.draw(right);
+    window.draw(player_1);
+    //window.draw(player_2);
     window.draw(controls_1_Image);
     window.draw(controls_2_Image);
 }
