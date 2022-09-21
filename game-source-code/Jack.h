@@ -10,7 +10,7 @@ class Jack
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
     private:
-        float jumpingSpeed(bool up); //returns a speed
+        void jump(bool up); //returns a speed
 
     private:
         sf::Sprite jack;
@@ -21,6 +21,8 @@ class Jack
         bool facingRight;
         bool isJumping;
         bool jumpingUp;
+        float jumpHeight;
+        sf::Vector2f velocity;
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Jack.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed):
     animation(texture, frameCount, switchTime)
@@ -10,6 +11,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     gameRow = 1; //safe zone
     isJumping = false;
     jumpingUp = false;
+    jumpHeight = 180.0f; //1/6 of the gameHeight
 
     const auto jackHeight = 100.0f; //How many pixels tall Jack is
     jack.setTexture(*texture);
@@ -19,12 +21,12 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
 
 void Jack::update(float deltaTime)
 {
-    sf::Vector2f movement(0.0f, 0.0f);
+    velocity.x = 0.0f;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        movement.x -= speed * deltaTime;
+        velocity.x -= speed;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        movement.x += speed * deltaTime;
+        velocity.x += speed;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isJumping && gameRow != 1)
     {
         isJumping = true;
@@ -39,32 +41,34 @@ void Jack::update(float deltaTime)
     if(isJumping)
     {
         frameRow = 2; //jumping animation
-        movement.y += jumpingSpeed(jumpingUp)*deltaTime;
+        if(jumpingUp)
+            velocity.y += 981.0f * deltaTime; //gravity assuming 100 pixels is 1 meter
+        else
+            velocity.y -= 981.0f * deltaTime;
+        jump(jumpingUp);
     }
-    else if(movement.x == 0.0f && movement.y == 0.0f)
+    else if(velocity.x == 0.0f && velocity.y == 0.0f)
         frameRow = 0; //idle animation
     else
-    {
         frameRow = 1; //walking animation
 
-        if(movement.x > 0.0f)
-            facingRight = true;
-        else if(movement.x < 0.0f)
-            facingRight= false;
-    }
+    if(velocity.x > 0.0f)
+        facingRight = true;
+    else if(velocity.x < 0.0f)
+        facingRight= false;
 
-    if(jack.getPosition().x - (jack.getGlobalBounds().width/2.0f) <= 0.0f && movement.x < 0.0f)
-        movement.x = 0;
-    if(jack.getPosition().x + (jack.getGlobalBounds().width/2.0f) >= 1920 && movement.x > 0.0f)
-        movement.x = 0;
+    if(jack.getPosition().x - (jack.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
+        velocity.x = 0;
+    if(jack.getPosition().x + (jack.getGlobalBounds().width/2.0f) >= 1920 && velocity.x > 0.0f)
+        velocity.x = 0;
 
     animation.update(frameRow, deltaTime, facingRight);
     jack.setTextureRect(animation.textRect);
     jack.setOrigin(jack.getLocalBounds().width/2.0f, jack.getLocalBounds().height/2.0f);
-    jack.move(movement);
+    jack.move(velocity * deltaTime);
 }
 
-float Jack::jumpingSpeed(bool up)
+void Jack::jump(bool up)
 {
     if(up)
     {
@@ -72,8 +76,10 @@ float Jack::jumpingSpeed(bool up)
         {
             isJumping = false;
             gameRow--;
+            velocity.y = 0.0f;
+            return;
         }
-        return -300.0f; //therefore it will take 180/300 = 0.6 seconds to do a full jump (time per animation frame is 0.2s)
+        velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
     }
     else
     {
@@ -81,8 +87,10 @@ float Jack::jumpingSpeed(bool up)
         {
             isJumping = false;
             gameRow++;
+            velocity.y = 0.0f;
+            return;
         }
-        return 360.0f;
+        velocity.y = sqrtf(2.0f * 981.0f * jumpHeight);
     }
 }
 
