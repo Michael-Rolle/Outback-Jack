@@ -18,10 +18,8 @@ class SplashScreenRenderer
 
         sf::Text player_1;
         sf::Text player_2;
-        sf::Text up;
-        sf::Text down;
-        sf::Text left;
-        sf::Text right;
+        sf::Text controls_1_text;
+        sf::Text controls_2_text;
 
         sf::Texture controls_1;
         sf::Sprite controls_1_Image;
