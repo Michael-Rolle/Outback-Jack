@@ -9,6 +9,21 @@
 const float gameWidth = 1920;
 const float gameHeight = 1080;
 
+const sf::Event simulateKeypress(sf::Keyboard::Key key, bool alt, bool control, bool shift, bool system)
+{
+    sf::Event::KeyEvent data;
+    data.code = key;
+    data.alt = alt;
+    data.control = control;
+    data.shift = shift;
+    data.system = system;
+
+    sf::Event event;
+    event.type = sf::Event::KeyPressed;
+    event.key = data;
+    return event;
+}
+
 TEST_CASE("Player spawns in the safe zone")
 {
     sf::Texture jack_spritesheet;
@@ -18,8 +33,18 @@ TEST_CASE("Player spawns in the safe zone")
     CHECK(player.jack.getPosition().y < (gameHeight/6.0f)*2);
 }
 
+/*TEST_CASE("Player can jump down")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jump(false);
+    CHECK(player.velocity.y > 0);
+}*/
+
 /*TEST_CASE("Player can move right")
 {
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "Outback Jack");
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
@@ -27,12 +52,20 @@ TEST_CASE("Player spawns in the safe zone")
 
     sf::Clock clock;
     float deltaTime = 0;
-    while(true)
+    while(window.isOpen())
     {
-        deltaTime = clock.restart().asSeconds();
-        player.update(deltaTime); //controls movement and animations
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            break;
+        sf::Event event = simulateKeypress(sf::Keyboard::D, false, false, false, false);
+        while(window.pollEvent(event))
+        {
+            if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                window.close();
+                break;
+            }
+
+            deltaTime = clock.restart().asSeconds();
+            player.update(deltaTime);
+        }
     }
 
     CHECK(player.jack.getPosition().x > previousPos);
