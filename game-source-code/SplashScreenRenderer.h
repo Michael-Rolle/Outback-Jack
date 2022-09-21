@@ -15,6 +15,10 @@ class SplashScreenRenderer
         sf::Text startMessage;
         sf::Texture background;
         sf::Sprite backgroundImage;
+        sf::Texture controls_1;
+        sf::Sprite controls_1_Image;
+        sf::Texture controls_2;
+        sf::Sprite controls_2_Image;
 };
 
 #endif

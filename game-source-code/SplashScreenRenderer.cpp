@@ -22,6 +22,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     title.setOutlineColor(sf::Color::Red);
     startMessage.setOutlineThickness(2);
     startMessage.setOutlineColor(sf::Color::White);
+
     // Centre text
     sf::FloatRect titleRect = title.getLocalBounds();
     sf::FloatRect startRect = startMessage.getLocalBounds();
@@ -38,6 +39,23 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     sf::FloatRect picRect = backgroundImage.getLocalBounds();
     backgroundImage.setOrigin(picRect.left + picRect.width/2.0f, picRect.top + picRect.height/2.0f);
     backgroundImage.setPosition(gameWidth/2.0f, gameHeight/2.0f);
+
+    //Controls image
+    if(!controls_1.loadFromFile("resources/wasd.png"))
+        throw "cannot load one player controls image";
+    controls_1_Image.setTexture(controls_1);
+    controls_1_Image.setScale(gameWidth/(6.0f*controls_1_Image.getLocalBounds().width), gameHeight/(5.0f*controls_1_Image.getLocalBounds().height));
+    sf::FloatRect wasdRect = controls_1_Image.getLocalBounds();
+    controls_1_Image.setOrigin(wasdRect.left + wasdRect.width/2.0f, wasdRect.top + wasdRect.height/2.0f);
+    controls_1_Image.setPosition(gameWidth/9.0f, gameHeight/1.25f);
+
+    if(!controls_2.loadFromFile("resources/arrows.png"))
+        throw "cannot load one player controls image";
+    controls_2_Image.setTexture(controls_2);
+    controls_2_Image.setScale(gameWidth/(6.0f*controls_2_Image.getLocalBounds().width), gameHeight/(5.0f*controls_2_Image.getLocalBounds().height));
+    sf::FloatRect arrowsRect = controls_2_Image.getLocalBounds();
+    controls_2_Image.setOrigin(arrowsRect.left + arrowsRect.width/2.0f, arrowsRect.top + arrowsRect.height/2.0f);
+    controls_2_Image.setPosition(gameWidth/1.125f, gameHeight/1.25f);
 }
 
 void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
@@ -45,4 +63,6 @@ void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
     window.draw(backgroundImage);
     window.draw(title);
     window.draw(startMessage);
+    window.draw(controls_1_Image);
+    window.draw(controls_2_Image);
 }
