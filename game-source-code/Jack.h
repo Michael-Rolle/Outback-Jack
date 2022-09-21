@@ -9,6 +9,8 @@ class Jack
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
+    private:
+        float jumpingSpeed(bool up); //returns a speed
 
     private:
         sf::Sprite jack;
@@ -18,6 +20,7 @@ class Jack
         float speed;
         bool facingRight;
         bool isJumping;
+        bool jumpingUp;
 };
 
 #endif
