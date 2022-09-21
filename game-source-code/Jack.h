@@ -13,9 +13,11 @@ class Jack
     private:
         sf::Sprite jack;
         Animation animation;
-        unsigned int row;
+        unsigned int frameRow;
+        unsigned int gameRow; //Board is divided into 6 rows, tells you what row Jack is on
         float speed;
         bool facingRight;
+        bool isJumping;
 };
 
 #endif
