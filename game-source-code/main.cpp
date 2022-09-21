@@ -63,7 +63,7 @@ int main()
         if(isPlaying)
         {
             playingFieldRenderer.renderPlayingField(window);
-            platform.renderPlatform(window);
+            //platform.renderPlatform(window);
             Player_1.draw(window);
         }
         else

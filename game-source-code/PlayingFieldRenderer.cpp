@@ -4,7 +4,7 @@
 PlayingFieldRenderer::PlayingFieldRenderer(const float gameWidth, const float gameHeight)
 {
     //Playing field image
-    if(!playingField.loadFromFile("resources/playing_field.jpg"))
+    if(!playingField.loadFromFile("resources/playingField1.png"))
         throw "cannot load playing field image";
     playingFieldImage.setTexture(playingField);
     playingFieldImage.setScale(gameWidth/playingFieldImage.getLocalBounds().width, gameHeight/playingFieldImage.getLocalBounds().height);
