@@ -168,6 +168,28 @@ TEST_CASE("Player jumps up 180 pixels")
     CHECK((int)player.jack.getPosition().y == (int)previousPos-180);
 }
 
+TEST_CASE("Player can't jump up out of safe zone")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    sf::Event event = simulateKeypress(sf::Keyboard::W);
+    player.setMovement(event);
+    CHECK_FALSE(player.isJumping);
+}
+
+TEST_CASE("Player can't jump down past bottom row")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(player.jack.getPosition().x, 990);
+    player.gameRow = 5;
+    sf::Event event = simulateKeypress(sf::Keyboard::S);
+    player.setMovement(event);
+    CHECK_FALSE(player.isJumping);
+}
+
 TEST_CASE("Player can't move right out of bounds")
 {
     sf::Texture jack_spritesheet;
