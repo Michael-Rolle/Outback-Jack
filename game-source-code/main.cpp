@@ -50,13 +50,18 @@ int main()
                 isPlaying = true;
                 break;
             }
+
+            if(isPlaying)
+            {
+                Player_1.update(deltaTime, event);
+            }
         }
 
-        if(isPlaying)
+        /*if(isPlaying)
         {
             deltaTime = clock.restart().asSeconds();
             Player_1.update(deltaTime); //controls movement and animations
-        }
+        }*/
 
         // Render
         window.clear();
