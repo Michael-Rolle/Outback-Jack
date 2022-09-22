@@ -7,7 +7,6 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
-        //void update(float deltaTime);
         void setMovement(sf::Event event);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
