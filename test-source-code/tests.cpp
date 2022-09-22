@@ -49,6 +49,23 @@ TEST_CASE("Players width is 100 pixels")
     CHECK(player.jack.getGlobalBounds().width/3.0f == 100.0f);
 }
 
+TEST_CASE("Player can move right")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto prvsPos = player.jack.getPosition().x;
+    sf::Event event = simulateKeypress(sf::Keyboard::D, false, false, false, false);
+    player.setMovement(event);
+    sf::Clock clock1;
+    sf::Clock clock2;
+    while(clock1.getElapsedTime().asSeconds() <= 1)
+    {
+       player.update(clock2.restart().asSeconds());
+    }
+    CHECK(player.jack.getPosition().x > prvsPos);
+}
+
 /*TEST_CASE("Player can jump down")
 {
     sf::Texture jack_spritesheet;
