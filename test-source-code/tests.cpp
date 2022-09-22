@@ -9,18 +9,11 @@
 const float gameWidth = 1920;
 const float gameHeight = 1080;
 
-const sf::Event simulateKeypress(sf::Keyboard::Key key, bool alt, bool control, bool shift, bool system)
+const sf::Event simulateKeypress(sf::Keyboard::Key key)
 {
-    sf::Event::KeyEvent data;
-    data.code = key;
-    data.alt = alt;
-    data.control = control;
-    data.shift = shift;
-    data.system = system;
-
     sf::Event event;
     event.type = sf::Event::KeyPressed;
-    event.key = data;
+    event.key.code = key;
     return event;
 }
 
@@ -55,7 +48,7 @@ TEST_CASE("Player can move right")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto prvsPos = player.jack.getPosition().x;
-    sf::Event event = simulateKeypress(sf::Keyboard::D, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::D);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -72,7 +65,7 @@ TEST_CASE("Player can move left")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto prvsPos = player.jack.getPosition().x;
-    sf::Event event = simulateKeypress(sf::Keyboard::A, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::A);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -89,7 +82,7 @@ TEST_CASE("Player can jump down")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto previousPos = player.jack.getPosition().y;
-    sf::Event event = simulateKeypress(sf::Keyboard::S, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::S);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -108,7 +101,7 @@ TEST_CASE("Player can jump up")
     player.jack.setPosition(player.jack.getPosition().x, 450);
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
-    sf::Event event = simulateKeypress(sf::Keyboard::W, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::W);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -125,7 +118,7 @@ TEST_CASE("Player jumps down 180 pixels")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto previousPos = player.jack.getPosition().y;
-    sf::Event event = simulateKeypress(sf::Keyboard::S, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::S);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -144,7 +137,7 @@ TEST_CASE("Player jumps up 180 pixels")
     player.jack.setPosition(player.jack.getPosition().x, 450);
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
-    sf::Event event = simulateKeypress(sf::Keyboard::W, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::W);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;

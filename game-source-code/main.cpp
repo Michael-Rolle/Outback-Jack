@@ -48,7 +48,7 @@ int main()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
             {
                 isPlaying = true;
-                break;
+                //break;
             }
 
             if(isPlaying)
