@@ -49,14 +49,42 @@ TEST_CASE("Players width is 100 pixels")
     CHECK(player.jack.getGlobalBounds().width/3.0f == 100.0f);
 }
 
-/*TEST_CASE("Player can jump down")
+
+TEST_CASE("Player can jump down")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    player.jump(false);
-    CHECK(player.velocity.y > 0);
-}*/
+    auto previousPos = player.jack.getPosition().y;
+    sf::Event event = simulateKeypress(sf::Keyboard::S, false, false, false, false);
+    player.setMovement(event);
+    sf::Clock clock1;
+    sf::Clock clock2;
+    while(clock1.getElapsedTime().asSeconds() <= 3)
+    {
+        player.update(clock2.restart().asSeconds());
+    }
+    CHECK(player.jack.getPosition().y > previousPos);
+}
+
+TEST_CASE("Player can jump up")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(player.jack.getPosition().x, 450);
+    player.gameRow = 2;
+    auto previousPos = player.jack.getPosition().y;
+    sf::Event event = simulateKeypress(sf::Keyboard::W, false, false, false, false);
+    player.setMovement(event);
+    sf::Clock clock1;
+    sf::Clock clock2;
+    while(clock1.getElapsedTime().asSeconds() <= 3)
+    {
+        player.update(clock2.restart().asSeconds());
+    }
+    CHECK(player.jack.getPosition().y < previousPos);
+}
 
 /*TEST_CASE("Player can move right")
 {
