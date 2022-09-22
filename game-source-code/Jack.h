@@ -11,7 +11,7 @@ class Jack
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
     private:
-        void jump(bool up); //returns a speed
+        void jump(); //sets the vertical velocity
 
     private:
         sf::Sprite jack;
@@ -20,6 +20,7 @@ class Jack
         unsigned int gameRow; //Board is divided into 6 rows, tells you what row Jack is on
         float speed;
         bool facingRight;
+        bool canJump;
         bool isJumping;
         bool jumpingUp;
         bool movingRight;

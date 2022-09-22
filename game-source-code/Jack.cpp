@@ -10,6 +10,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     facingRight = true;
     gameRow = 1; //safe zone
     isJumping = false;
+    canJump = true;
     movingLeft = false;
     movingRight = false;
     jumpHeight = 180.0f; //1/6 of the gameHeight
@@ -32,7 +33,7 @@ void Jack::update(float deltaTime)
     if(isJumping)
     {
         frameRow = 2; //jumping animation
-        jump(jumpingUp);
+        jump();
         velocity.y += 981.0f * deltaTime;
     }
     else if(!movingRight && !movingLeft)
@@ -67,15 +68,17 @@ void Jack::setMovement(sf::Event event)
             movingRight = true;
         if(event.key.code == sf::Keyboard::A)
             movingLeft = true;
-        if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1)
+        if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1 && canJump)
         {
             isJumping = true;
             jumpingUp = true;
+            canJump = false;
         }
-        if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5)
+        if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5 && canJump)
         {
             isJumping = true;
             jumpingUp = false;
+            canJump = false;
         }
     }
     else if(event.type == sf::Event::KeyReleased)
@@ -84,12 +87,14 @@ void Jack::setMovement(sf::Event event)
             movingLeft = false;
         if(event.key.code == sf::Keyboard::D)
             movingRight = false;
+        if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::S)
+            canJump = true;
     }
 }
 
-void Jack::jump(bool up)
+void Jack::jump()
 {
-    if(up)
+    if(jumpingUp)
     {
         if(velocity.y > 0 && jack.getPosition().y >= (gameRow*180)-90)
         {
@@ -99,7 +104,7 @@ void Jack::jump(bool up)
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f);
+            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f); //Initial velocity using kinematic equaitions
     }
     else
     {
@@ -111,7 +116,7 @@ void Jack::jump(bool up)
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f);
+            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f); //Initial velocity using kinematic equaitions
     }
 }
 
