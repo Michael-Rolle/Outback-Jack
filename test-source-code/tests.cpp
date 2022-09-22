@@ -24,6 +24,26 @@ const sf::Event simulateKeypress(sf::Keyboard::Key key, bool alt, bool control, 
     return event;
 }
 
+TEST_CASE("All assests load correctly")
+{
+    sf::Texture arrows;
+    sf::Texture wasd;
+    sf::Texture platform;
+    sf::Texture jack;
+    sf::Texture field;
+    sf::Texture background;
+    sf::Font font;
+
+    CHECK(arrows.loadFromFile("resources/arrows.png"));
+    CHECK(wasd.loadFromFile("resources/wasd.png"));
+    CHECK(platform.loadFromFile("resources/basic_platform.png"));
+    CHECK(jack.loadFromFile("resources/jack_frames.png"));
+    CHECK(field.loadFromFile("resources/playingField.png"));
+    CHECK(background.loadFromFile("resources/start_background.jpg"));
+    CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
+}
+
+
 TEST_CASE("Player spawns in the safe zone")
 {
     sf::Texture jack_spritesheet;
