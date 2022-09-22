@@ -41,6 +41,14 @@ TEST_CASE("Players height is 100 pixels")
     CHECK(player.jack.getGlobalBounds().height/3.0f == 100.0f);
 }
 
+TEST_CASE("Players width is 100 pixels")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    CHECK(player.jack.getGlobalBounds().width/3.0f == 100.0f);
+}
+
 /*TEST_CASE("Player can jump down")
 {
     sf::Texture jack_spritesheet;
