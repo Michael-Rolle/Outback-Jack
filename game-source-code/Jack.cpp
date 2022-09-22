@@ -104,7 +104,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f); //Initial velocity using kinematic equaitions
+            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f); //Initial velocity using kinematic equations
     }
     else
     {
@@ -116,7 +116,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f); //Initial velocity using kinematic equaitions
+            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f); //Initial velocity using kinematic equations
     }
 }
 
