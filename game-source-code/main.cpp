@@ -53,15 +53,15 @@ int main()
 
             if(isPlaying)
             {
-                Player_1.update(deltaTime, event);
+                Player_1.setMovement(event);
             }
         }
 
-        /*if(isPlaying)
+        if(isPlaying)
         {
             deltaTime = clock.restart().asSeconds();
             Player_1.update(deltaTime); //controls movement and animations
-        }*/
+        }
 
         // Render
         window.clear();
