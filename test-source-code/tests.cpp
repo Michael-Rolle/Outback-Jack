@@ -174,7 +174,7 @@ TEST_CASE("Player can't move right out of bounds")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     player.jack.setPosition(gameWidth, player.jack.getPosition().y);
-    sf::Event event = simulateKeypress(sf::Keyboard::D, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::D);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
@@ -191,7 +191,7 @@ TEST_CASE("Player can't move left out of bounds")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     player.jack.setPosition(0, player.jack.getPosition().y);
-    sf::Event event = simulateKeypress(sf::Keyboard::A, false, false, false, false);
+    sf::Event event = simulateKeypress(sf::Keyboard::A);
     player.setMovement(event);
     sf::Clock clock1;
     sf::Clock clock2;
