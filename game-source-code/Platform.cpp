@@ -15,7 +15,7 @@ Platform::Platform(const float gameWidth, const float gameHeight)
 
 Platform::isActive(Jack jack)
 {
-
+    return 0;
 }
 
 void Platform::renderPlatform(sf::RenderWindow& window)
