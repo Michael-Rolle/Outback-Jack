@@ -7,6 +7,7 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
+        void setMovement(sf::Event event);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
     private:
@@ -21,6 +22,8 @@ class Jack
         bool facingRight;
         bool isJumping;
         bool jumpingUp;
+        bool movingRight;
+        bool movingLeft;
         float jumpHeight;
         sf::Vector2f velocity;
 };

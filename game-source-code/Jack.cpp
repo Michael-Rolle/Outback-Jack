@@ -10,7 +10,8 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     facingRight = true;
     gameRow = 1; //safe zone
     isJumping = false;
-    jumpingUp = false;
+    movingLeft = false;
+    movingRight = false;
     jumpHeight = 180.0f; //1/6 of the gameHeight
 
     const auto jackHeight = 100.0f; //How many pixels tall Jack is
@@ -23,20 +24,10 @@ void Jack::update(float deltaTime)
 {
     velocity.x = 0.0f;
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if(movingLeft)
         velocity.x -= speed;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if(movingRight)
         velocity.x += speed;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isJumping && gameRow != 1)
-    {
-        isJumping = true;
-        jumpingUp = true;
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isJumping && gameRow != 5)
-    {
-        isJumping = true;
-        jumpingUp = false;
-    }
 
     if(isJumping)
     {
@@ -44,14 +35,14 @@ void Jack::update(float deltaTime)
         jump(jumpingUp);
         velocity.y += 981.0f * deltaTime;
     }
-    else if(velocity.x == 0.0f && velocity.y == 0.0f)
+    else if(!movingRight && !movingLeft)
         frameRow = 0; //idle animation
     else
         frameRow = 1; //walking animation
 
-    if(velocity.x > 0.0f)
+    if(movingRight)
         facingRight = true;
-    else if(velocity.x < 0.0f)
+    else if(movingLeft)
         facingRight= false;
 
     if(!isJumping)
@@ -66,6 +57,34 @@ void Jack::update(float deltaTime)
     jack.setTextureRect(animation.textRect);
     jack.setOrigin(jack.getLocalBounds().width/2.0f, jack.getLocalBounds().height/2.0f);
     jack.move(velocity * deltaTime);
+}
+
+void Jack::setMovement(sf::Event event)
+{
+    if(event.type == sf::Event::KeyPressed)
+    {
+        if(event.key.code == sf::Keyboard::D)
+            movingRight = true;
+        if(event.key.code == sf::Keyboard::A)
+            movingLeft = true;
+        if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1)
+        {
+            isJumping = true;
+            jumpingUp = true;
+        }
+        if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5)
+        {
+            isJumping = true;
+            jumpingUp = false;
+        }
+    }
+    else if(event.type == sf::Event::KeyReleased)
+    {
+        if(event.key.code == sf::Keyboard::A)
+            movingLeft = false;
+        if(event.key.code == sf::Keyboard::D)
+            movingRight = false;
+    }
 }
 
 void Jack::jump(bool up)

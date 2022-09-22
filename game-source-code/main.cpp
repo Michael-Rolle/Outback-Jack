@@ -50,6 +50,11 @@ int main()
                 isPlaying = true;
                 break;
             }
+
+            if(isPlaying)
+            {
+                Player_1.setMovement(event);
+            }
         }
 
         if(isPlaying)
