@@ -2,12 +2,14 @@
 #define JACK_H
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include <Platform.h"
 
 class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
         void setMovement(sf::Event event);
+        void addVelocityX(float speed, bool right);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
     private:

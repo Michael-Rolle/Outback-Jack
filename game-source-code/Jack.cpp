@@ -23,12 +23,10 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
 
 void Jack::update(float deltaTime)
 {
-    velocity.x = 0.0f;
-
     if(movingLeft)
-        velocity.x -= speed;
-    if(movingRight)
         velocity.x += speed;
+    if(movingRight)
+        velocity.x -= speed;
 
     if(isJumping)
     {
@@ -58,6 +56,7 @@ void Jack::update(float deltaTime)
     jack.setTextureRect(animation.textRect);
     jack.setOrigin(jack.getLocalBounds().width/2.0f, jack.getLocalBounds().height/2.0f);
     jack.move(velocity * deltaTime);
+    velocity.x = 0.0f;
 }
 
 void Jack::setMovement(sf::Event event)
@@ -90,6 +89,14 @@ void Jack::setMovement(sf::Event event)
         if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::S)
             canJump = true;
     }
+}
+
+void Jack::addVelocityX(float speed, bool right)
+{
+    if(right)
+        velocity.x = speed;
+    else
+        velocity.x = -speed;
 }
 
 void Jack::jump()
