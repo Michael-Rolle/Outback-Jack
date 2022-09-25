@@ -31,3 +31,8 @@ void PlatformController::spawnPlatformRow(unsigned int gameRow, bool right)
 {
 //
 }
+
+vector<float> PlatformController::getPlatformPositions(const unsigned int row)
+{
+    return plaformRows.at(row-1).platformPositions();
+}

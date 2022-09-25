@@ -11,6 +11,10 @@ class Jack
         void addVelocityX(float speed, bool right);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
+        bool isJumping(){ return isJumping; }
+        float getPositionX() { return jack.getPosition().x; }
+        float width() { return jack.getGlobalBounds().width; }
+        unsigned int row() { return gameRow; }
     private:
         void jump(); //sets the vertical velocity
 
