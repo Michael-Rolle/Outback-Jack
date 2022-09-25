@@ -5,6 +5,7 @@
 #include "PlayingFieldRenderer.h"
 #include "Jack.h"
 #include "PlatformController.h"
+#include "Collisions.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -32,6 +33,7 @@ int main()
     if(!platformText.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
     auto platforms = PlatformController(&platformText);
+    auto collisionDetector = Collisions(Player_1, platforms, platforms.getPlatformRow(1).getPlatform(1).width(), 100.0f);
 
     sf::Clock clock;
     float deltaTime = 0;
@@ -64,6 +66,7 @@ int main()
             deltaTime = clock.restart().asSeconds();
             Player_1.update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
+            collisionDetector.update();
         }
 
         // Render

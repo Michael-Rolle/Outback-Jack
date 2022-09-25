@@ -7,11 +7,12 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
+        Jack& operator= (const Jack& player);
         void setMovement(sf::Event event);
         void addVelocityX(float speed, bool right);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
-        bool isJumping(){ return isJumping; }
+        bool jumping(){ return isJumping; }
         float getPositionX() { return jack.getPosition().x; }
         float width() { return jack.getGlobalBounds().width; }
         unsigned int row() { return gameRow; }

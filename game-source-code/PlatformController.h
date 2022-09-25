@@ -12,6 +12,7 @@ class PlatformController
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         void spawnPlatformRow(unsigned int gameRow, bool right);
+        PlatformRow getPlatformRow(const unsigned int row){ return platformRows.at(row-1); } //enter a row num from 1 to 4
         vector<float> getPlatformPositions(const unsigned int row); //enter a row num from 1 to 4
 
     private:
