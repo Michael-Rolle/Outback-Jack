@@ -10,6 +10,7 @@ class Platform
         void changeDirection();
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
+        float width();
         //isActive(Jack jack);
         //void renderPlatform(sf::RenderWindow& window);
 
@@ -22,7 +23,6 @@ class Platform
         float speed;
         sf::Vector2f velocity;
         const float height = 90;
-        const float width = 66.77;
 };
 
 #endif

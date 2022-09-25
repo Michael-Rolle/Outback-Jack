@@ -35,6 +35,11 @@ void Platform::changeDirection()
     movingRight = !movingRight;
 }
 
+float Platform::width()
+{
+    return platform.getGlobalBounds().width;
+}
+
 void Platform::update(float deltaTime)
 {
     velocity.x = 0.0f;
