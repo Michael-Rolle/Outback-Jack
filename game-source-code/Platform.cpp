@@ -40,6 +40,16 @@ float Platform::width()
     return platform.getGlobalBounds().width;
 }
 
+void Platform::setPositionX(float x)
+{
+    platform.setPosition(x, platform.getPosition().y);
+}
+
+void Platform::getPositionX()
+{
+    return platform.getPosition().x;
+}
+
 void Platform::update(float deltaTime)
 {
     velocity.x = 0.0f;
