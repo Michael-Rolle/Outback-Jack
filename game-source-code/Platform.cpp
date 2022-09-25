@@ -4,7 +4,7 @@
 Platform::Platform(const float gameWidth, const float gameHeight)
 {
     //Playing field image
-    if(!platform.loadFromFile("resources/basic_platform.png"))
+    if(!platform.loadFromFile("resources/log.png"))
         throw "cannot load playing field image";
     platformImage.setTexture(platform);
     platformImage.setScale(gameWidth/platformImage.getLocalBounds().width, gameHeight/platformImage.getLocalBounds().height);
