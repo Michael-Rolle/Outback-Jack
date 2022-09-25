@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "Platform.h"
 #include <SFML/Graphics.hpp>
 
 /*Platform::Platform(const float gameWidth, const float gameHeight)
@@ -13,8 +13,10 @@
     platformImage.setPosition(gameWidth/2.0f, gameHeight/1.7f);
 }*/
 
-Platform::Platform(sf::Texture* texture, float speed, bool movingRight, bool gameRow)
+Platform::Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow)
 {
+    if(gameRow < 1 || gameRow > 5)
+        throw "Trying to spawn platform out of bounds";
     this->speed = speed;
     this->movingRight = movingRight;
     this->gameRow = gameRow;
@@ -23,9 +25,9 @@ Platform::Platform(sf::Texture* texture, float speed, bool movingRight, bool gam
     platform.scale(height/platform.getLocalBounds().width, height/platform.getLocalBounds().height);
     platform.setOrigin(platform.getLocalBounds().width/2.0f, platform.getLocalBounds().top); //So the platform will spawn at the bottom of the game row.
     if(movingRight)
-        platform.setPosition(0.0f+platform.getGlobalBounds()/2.0f, (gameRow*180.0f)+90.0f);
+        platform.setPosition(0.0f+platform.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
     else
-        platform.setPosition(1080.0f-platform.getGlobalBounds()/2.0f, (gameRow*180.0f)+90.0f);
+        platform.setPosition(1920.0f-platform.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
 }
 
 void Platform::changeDirection()
@@ -37,20 +39,20 @@ void Platform::update(float deltaTime)
 {
     velocity.x = 0.0f;
 
-    if(movingLeft)
-        velocity.x -= speed;
     if(movingRight)
         velocity.x += speed;
+    else
+        velocity.x -= speed;
 
     if(platform.getPosition().x - (platform.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
-        platform.changeDirection();
+        changeDirection();
     if(platform.getPosition().x + (platform.getGlobalBounds().width/2.0f) >= 1920 && velocity.x > 0.0f)
-        platform.changeDirection();
+        changeDirection();
 
     platform.move(velocity * deltaTime);
 }
 
 void Platform::draw(sf::RenderWindow& window)
 {
-    window.draw(platformImage);
+    window.draw(platform);
 }

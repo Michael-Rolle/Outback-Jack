@@ -1,13 +1,12 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
-#include "Jack.h"
 #include <SFML/Graphics.hpp>
 
 
 class Platform
 {
     public:
-        Platform(sf::Texture* texture, float speed, bool movingRight, bool gameRow);
+        Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow);
         void changeDirection();
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
