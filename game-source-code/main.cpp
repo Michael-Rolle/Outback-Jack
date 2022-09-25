@@ -4,7 +4,7 @@
 #include "SplashScreenRenderer.h"
 #include "PlayingFieldRenderer.h"
 #include "Jack.h"
-#include "PlatformRow.h"
+#include "PlatformController.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -28,11 +28,10 @@ int main()
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    //auto platform = Platform(gameWidth, gameHeight);
     sf::Texture platformText;
     if(!platformText.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
-    auto logRow = PlatformRow(&platformText, 6, 100, 2, true);
+    auto platforms = PlatformController(&platformText);
 
     sf::Clock clock;
     float deltaTime = 0;
@@ -64,7 +63,7 @@ int main()
         {
             deltaTime = clock.restart().asSeconds();
             Player_1.update(deltaTime); //controls movement and animations
-            logRow.update(deltaTime);
+            platforms.update(deltaTime);
         }
 
         // Render
@@ -72,8 +71,7 @@ int main()
         if(isPlaying)
         {
             playingFieldRenderer.renderPlayingField(window);
-            //platform.renderPlatform(window);
-            logRow.draw(window);
+            platforms.draw(window);
             Player_1.draw(window);
         }
         else

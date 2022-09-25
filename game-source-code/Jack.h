@@ -2,7 +2,6 @@
 #define JACK_H
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
-#include <Platform.h"
 
 class Jack
 {

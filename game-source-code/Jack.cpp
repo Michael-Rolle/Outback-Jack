@@ -24,9 +24,9 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
 void Jack::update(float deltaTime)
 {
     if(movingLeft)
-        velocity.x += speed;
-    if(movingRight)
         velocity.x -= speed;
+    if(movingRight)
+        velocity.x += speed;
 
     if(isJumping)
     {

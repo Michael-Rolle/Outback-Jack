@@ -8,7 +8,7 @@ using namespace std;
 class PlatformController
 {
     public:
-        PlatformController();
+        PlatformController(sf::Texture* texture);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         void spawnPlatformRow(unsigned int gameRow, bool right);
