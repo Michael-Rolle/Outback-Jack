@@ -45,7 +45,7 @@ void Platform::setPositionX(float x)
     platform.setPosition(x, platform.getPosition().y);
 }
 
-void Platform::getPositionX()
+float Platform::getPositionX()
 {
     return platform.getPosition().x;
 }
@@ -59,10 +59,10 @@ void Platform::update(float deltaTime)
     else
         velocity.x -= speed;
 
-    if(platform.getPosition().x - (platform.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
+    /*if(platform.getPosition().x - (platform.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
         changeDirection();
     if(platform.getPosition().x + (platform.getGlobalBounds().width/2.0f) >= 1920 && velocity.x > 0.0f)
-        changeDirection();
+        changeDirection();*/
 
     platform.move(velocity * deltaTime);
 }

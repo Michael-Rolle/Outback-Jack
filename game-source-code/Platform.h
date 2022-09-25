@@ -9,7 +9,7 @@ class Platform
         Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow);
         void changeDirection();
         void setPositionX(float x);
-        void getPositionX();
+        float getPositionX();
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         float width();

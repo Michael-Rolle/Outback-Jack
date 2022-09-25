@@ -4,7 +4,7 @@
 #include "SplashScreenRenderer.h"
 #include "PlayingFieldRenderer.h"
 #include "Jack.h"
-#include "Platform.h"
+#include "PlatformRow.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -32,10 +32,7 @@ int main()
     sf::Texture platformText;
     if(!platformText.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
-    auto log1 = Platform(&platformText, 200.0f, true, 2);
-    auto log2 = Platform(&platformText, 200.0f, false, 3);
-    auto log3 = Platform(&platformText, 200.0f, true, 4);
-    auto log4 = Platform(&platformText, 200.0f, false, 5);
+    auto logRow = PlatformRow(&platformText, 6, 100, 2, true);
 
     sf::Clock clock;
     float deltaTime = 0;
@@ -67,10 +64,7 @@ int main()
         {
             deltaTime = clock.restart().asSeconds();
             Player_1.update(deltaTime); //controls movement and animations
-            log1.update(deltaTime);
-            log2.update(deltaTime);
-            log3.update(deltaTime);
-            log4.update(deltaTime);
+            logRow.update(deltaTime);
         }
 
         // Render
@@ -79,10 +73,7 @@ int main()
         {
             playingFieldRenderer.renderPlayingField(window);
             //platform.renderPlatform(window);
-            log1.draw(window);
-            log2.draw(window);
-            log3.draw(window);
-            log4.draw(window);
+            logRow.draw(window);
             Player_1.draw(window);
         }
         else
