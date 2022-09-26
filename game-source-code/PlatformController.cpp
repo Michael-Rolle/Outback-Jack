@@ -20,10 +20,25 @@ PlatformController::PlatformController(const PlatformController& controller)
     this->platformRows = controller.platformRows;
 }
 
-PlatformController& PlatformController::operator= (const PlatformController& platformController)
+PlatformController PlatformController::operator= (const PlatformController& platformController)
 {
     auto controller = PlatformController{platformController};
     return controller;
+}
+
+void PlatformController::changePlatformRowColour(unsigned int row, sf::Texture* texture)
+{
+    platformRows.at(row-1).changeColour(texture);
+}
+
+bool PlatformController::allPlatformsNewColour()
+{
+    for(auto& platformRow : platformRows)
+    {
+        if(platformRow.isOriginalColour)
+            return false;
+    }
+    return true;
 }
 
 void PlatformController::update(float deltaTime)
@@ -36,11 +51,6 @@ void PlatformController::draw(sf::RenderWindow& window)
 {
     for(auto& platformRow : platformRows)
         platformRow.draw(window);
-}
-
-void PlatformController::spawnPlatformRow(unsigned int gameRow, bool right)
-{
-//
 }
 
 vector<float> PlatformController::getPlatformPositions(const unsigned int row)

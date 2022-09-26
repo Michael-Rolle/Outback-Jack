@@ -8,8 +8,9 @@ class Platform
     public:
         Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow);
         Platform(const Platform& platform);
-        Platform& operator= (const Platform& platform);
+        Platform operator= (const Platform& platform);
         void changeDirection();
+        void changeColour(sf::Texture* texture);
         void setPositionX(float x);
         float getPositionX();
         void update(float deltaTime);

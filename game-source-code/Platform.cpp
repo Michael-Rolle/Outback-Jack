@@ -38,7 +38,7 @@ Platform::Platform(const Platform& platform)
     this->speed = platform.speed;
 }
 
-Platform& Platform::operator= (const Platform& platform)
+Platform Platform::operator= (const Platform& platform)
 {
     auto platform_ = Platform{platform};
     return platform_;
@@ -47,6 +47,11 @@ Platform& Platform::operator= (const Platform& platform)
 void Platform::changeDirection()
 {
     movingRight = !movingRight;
+}
+
+void Platform::changeColour(sf::Texture* texture)
+{
+    platform.setTexture(*texture);
 }
 
 float Platform::width()

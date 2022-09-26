@@ -1,5 +1,6 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
+#include <SFML/Graphics.hpp>
 #include "PlatformController.h"
 #include "Jack.h"
 
@@ -7,7 +8,7 @@ class Collisions
 {
     public:
         Collisions(float platformWidth, float platformSpeed);
-        void update(Jack& player, PlatformController& platforms);
+        void update(Jack& player, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour);
 
     private:
         float platformWidth;

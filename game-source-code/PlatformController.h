@@ -10,10 +10,11 @@ class PlatformController
     public:
         PlatformController(sf::Texture* texture);
         PlatformController(const PlatformController& controller);
-        PlatformController& operator= (const PlatformController& platformController);
+        PlatformController operator= (const PlatformController& platformController);
+        void changePlatformRowColour(unsigned int row, sf::Texture* texture); //enter a row num from 1 to 4
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
-        void spawnPlatformRow(unsigned int gameRow, bool right);
+        bool allPlatformsNewColour();
         PlatformRow getPlatformRow(const unsigned int row){ return platformRows.at(row-1); } //enter a row num from 1 to 4
         vector<float> getPlatformPositions(const unsigned int row); //enter a row num from 1 to 4
 

@@ -11,6 +11,7 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
     this->spacing = spacing;
     this->gameRow = gameRow;
     this->movingRight = movingRight;
+    isOriginalColour = true;
     for(int i = 0; i < numPlatforms; i++)
     {
         auto platform = Platform(texture, 100.0f, movingRight, gameRow);
@@ -31,7 +32,7 @@ PlatformRow::PlatformRow(const PlatformRow& platformRow)
     this->spacing = platformRow.spacing;
 }
 
-PlatformRow& PlatformRow::operator= (const PlatformRow& platformRow)
+PlatformRow PlatformRow::operator= (const PlatformRow& platformRow)
 {
     auto platformRow_ = PlatformRow{platformRow};
     return platformRow_;
@@ -54,17 +55,12 @@ void PlatformRow::changeDirection()
         platform.changeDirection();
 }
 
-/*void PlatformRow::update(float deltaTime)
+void PlatformRow::changeColour(sf::Texture* texture)
 {
-    if(platforms.front().getPositionX()-platforms.front().width()/2.0f <= 0 && !movingRight)
-        changeDirection();
-    else if(platforms.back().getPositionX()+platforms.back().width()/2.0f >= 1920 && movingRight)
-        changeDirection();
+    isOriginalColour = !isOriginalColour;
     for(auto& platform : platforms)
-    {
-        platform.update(deltaTime);
-    }
-}*/
+        platform.changeColour(texture);
+}
 
 void PlatformRow::update(float deltaTime)
 {

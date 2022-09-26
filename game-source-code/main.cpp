@@ -29,12 +29,14 @@ int main()
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    sf::Texture platformText;
-    if(!platformText.loadFromFile("resources/log.png"))
+    sf::Texture log;
+    if(!log.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
-    auto platforms = PlatformController(&platformText);
-    //auto collisionDetector = Collisions(Player_1, platforms, platforms.getPlatformRow(1).getPlatform(1).width(), 100.0f);
+    auto platforms = PlatformController(&log);
     auto collisionDetector = Collisions(platforms.getPlatformRow(1).getPlatform(1).width(), 100.0f);
+    sf::Texture white_log;
+    if(!white_log.loadFromFile("resources/white_log.png"))
+        return EXIT_FAILURE;
 
     sf::Clock clock;
     float deltaTime = 0;
@@ -65,7 +67,7 @@ int main()
         if(isPlaying)
         {
             deltaTime = clock.restart().asSeconds();
-            collisionDetector.update(Player_1, platforms);
+            collisionDetector.update(Player_1, platforms, &log, &white_log);
             Player_1.update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
         }
