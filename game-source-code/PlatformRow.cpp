@@ -54,7 +54,7 @@ void PlatformRow::changeDirection()
         platform.changeDirection();
 }
 
-void PlatformRow::update(float deltaTime)
+/*void PlatformRow::update(float deltaTime)
 {
     if(platforms.front().getPositionX()-platforms.front().width()/2.0f <= 0 && !movingRight)
         changeDirection();
@@ -62,6 +62,19 @@ void PlatformRow::update(float deltaTime)
         changeDirection();
     for(auto& platform : platforms)
     {
+        platform.update(deltaTime);
+    }
+}*/
+
+void PlatformRow::update(float deltaTime)
+{
+    for(auto& platform : platforms)
+    {
+        if(platform.getPositionX()+platform.width()/2.0f <= 0 && !movingRight)
+            platform.setPositionX(1920+platform.width()/2.0f);
+        else if(platform.getPositionX()-platform.width()/2.0f >= 1920 && movingRight)
+            platform.setPositionX(0-platform.width()/2.0f);
+
         platform.update(deltaTime);
     }
 }
