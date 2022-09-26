@@ -22,7 +22,7 @@ void Collisions::update(Jack& player, PlatformController& platforms, sf::Texture
                         platforms.changePlatformRowColour(i+1, originalColour);
                 }
                 player.addVelocityX(platformSpeed, platforms.getPlatformRow(row-1).isMovingRight());
-                if(platforms.getPlatformRow(row-1).isOriginalColour)
+                if(platforms.getPlatformRow(row-1).isOrigColour())
                     platforms.changePlatformRowColour(row-1, newColour);
             }
         }

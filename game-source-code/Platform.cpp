@@ -30,20 +30,6 @@ Platform::Platform(sf::Texture* texture, float speed, bool movingRight, unsigned
         platform.setPosition(1920.0f-platform.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
 }
 
-Platform::Platform(const Platform& platform)
-{
-    this->gameRow = platform.gameRow;
-    this->movingRight = platform.movingRight;
-    this->platform = platform.platform;
-    this->speed = platform.speed;
-}
-
-Platform Platform::operator= (const Platform& platform)
-{
-    auto platform_ = Platform{platform};
-    return platform_;
-}
-
 void Platform::changeDirection()
 {
     movingRight = !movingRight;
@@ -77,11 +63,6 @@ void Platform::update(float deltaTime)
         velocity.x += speed;
     else
         velocity.x -= speed;
-
-    /*if(platform.getPosition().x - (platform.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
-        changeDirection();
-    if(platform.getPosition().x + (platform.getGlobalBounds().width/2.0f) >= 1920 && velocity.x > 0.0f)
-        changeDirection();*/
 
     platform.move(velocity * deltaTime);
 }

@@ -11,36 +11,21 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
     this->spacing = spacing;
     this->gameRow = gameRow;
     this->movingRight = movingRight;
-    isOriginalColour = true;
-    for(int i = 0; i < numPlatforms; i++)
+    for(int i = 0; i < (int)numPlatforms; i++)
     {
-        auto platform = Platform(texture, 100.0f, movingRight, gameRow);
+        auto platform = Platform{texture, 100.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
             platform.setPositionX(platform.width()/2.0f + i*(spacing+platform.width()));
         else
             platform.setPositionX(1920 - ((numPlatforms-1-i)*(spacing+platform.width())+platform.width()/2.0f));
         platforms.push_back(platform);
     }
-}
-
-PlatformRow::PlatformRow(const PlatformRow& platformRow)
-{
-    this->numPlatforms = platformRow.numPlatforms;
-    this->gameRow = platformRow.gameRow;
-    this->movingRight = platformRow.movingRight;
-    this->platforms = platformRow.platforms;
-    this->spacing = platformRow.spacing;
-}
-
-PlatformRow PlatformRow::operator= (const PlatformRow& platformRow)
-{
-    auto platformRow_ = PlatformRow{platformRow};
-    return platformRow_;
+    this->isOriginalColour = true;
 }
 
 vector<float> PlatformRow::platformPositions()
 {
-    auto positions = vector<float>(numPlatforms);
+    vector<float> positions;
     for(auto& platform : platforms)
     {
         positions.push_back(platform.getPositionX());

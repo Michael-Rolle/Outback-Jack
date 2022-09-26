@@ -39,7 +39,7 @@ Jack::Jack(const Jack& player):
     this->velocity = player.velocity;
 }
 
-Jack& Jack::operator= (const Jack& player)
+Jack Jack::operator= (const Jack& player)
 {
     auto jack = Jack{player};
     return jack;

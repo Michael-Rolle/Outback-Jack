@@ -22,7 +22,7 @@ int main()
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
     window.setFramerateLimit(frameRate);
 
-    // Initialize the splash screen, playing field and Jack
+    // Initialize the splash screen, playing field, Jack, and platforms
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
     auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
     sf::Texture jack_spritesheet;
@@ -70,6 +70,7 @@ int main()
             collisionDetector.update(Player_1, platforms, &log, &white_log);
             Player_1.update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
+
         }
 
         // Render
