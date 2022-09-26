@@ -14,6 +14,8 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     movingLeft = false;
     movingRight = false;
     jumpHeight = 180.0f; //1/6 of the gameHeight
+    velocity.x = 0;
+    velocity.y = 0;
 
     const auto jackHeight = 100.0f; //How many pixels tall Jack is
     jack.setTexture(*texture);
@@ -21,9 +23,9 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     jack.setPosition(960.0f, 180.0f + 90.0f);
 }
 
-Jack& Jack::operator= (const Jack& player)
+Jack::Jack(const Jack& player):
+    animation(player.animation)
 {
-    this->animation = player.animation;
     this->canJump = player.canJump;
     this->facingRight = player.facingRight;
     this->gameRow = player.gameRow;
@@ -35,6 +37,12 @@ Jack& Jack::operator= (const Jack& player)
     this->movingRight = player.movingRight;
     this->speed = player.speed;
     this->velocity = player.velocity;
+}
+
+Jack& Jack::operator= (const Jack& player)
+{
+    auto jack = Jack{player};
+    return jack;
 }
 
 void Jack::update(float deltaTime)

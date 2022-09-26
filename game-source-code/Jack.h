@@ -7,6 +7,7 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
+        Jack(const Jack& player);
         Jack& operator= (const Jack& player);
         void setMovement(sf::Event event);
         void addVelocityX(float speed, bool right);

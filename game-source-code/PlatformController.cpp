@@ -15,6 +15,17 @@ PlatformController::PlatformController(sf::Texture* texture)
     }
 }
 
+PlatformController::PlatformController(const PlatformController& controller)
+{
+    this->platformRows = controller.platformRows;
+}
+
+PlatformController& PlatformController::operator= (const PlatformController& platformController)
+{
+    auto controller = PlatformController{platformController};
+    return controller;
+}
+
 void PlatformController::update(float deltaTime)
 {
     for(auto& platformRow : platformRows)
@@ -34,7 +45,6 @@ void PlatformController::spawnPlatformRow(unsigned int gameRow, bool right)
 
 vector<float> PlatformController::getPlatformPositions(const unsigned int row)
 {
-    //return plaformRows.at(row-1).platformPositions();
     auto positions = platformRows.at(row-1).platformPositions();
     return positions;
 }

@@ -22,6 +22,21 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
     }
 }
 
+PlatformRow::PlatformRow(const PlatformRow& platformRow)
+{
+    this->numPlatforms = platformRow.numPlatforms;
+    this->gameRow = platformRow.gameRow;
+    this->movingRight = platformRow.movingRight;
+    this->platforms = platformRow.platforms;
+    this->spacing = platformRow.spacing;
+}
+
+PlatformRow& PlatformRow::operator= (const PlatformRow& platformRow)
+{
+    auto platformRow_ = PlatformRow{platformRow};
+    return platformRow_;
+}
+
 vector<float> PlatformRow::platformPositions()
 {
     auto positions = vector<float>(numPlatforms);

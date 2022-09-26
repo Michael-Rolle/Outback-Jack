@@ -9,6 +9,8 @@ class PlatformController
 {
     public:
         PlatformController(sf::Texture* texture);
+        PlatformController(const PlatformController& controller);
+        PlatformController& operator= (const PlatformController& platformController);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         void spawnPlatformRow(unsigned int gameRow, bool right);

@@ -6,12 +6,10 @@
 class Collisions
 {
     public:
-        Collisions(Jack& player, PlatformController& platforms, float platformWidth, float platformSpeed);
-        void update();
+        Collisions(float platformWidth, float platformSpeed);
+        void update(Jack& player, PlatformController& platforms);
 
     private:
-        Jack player;
-        PlatformController platforms;
         float platformWidth;
         float platformSpeed;
 };

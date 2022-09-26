@@ -7,6 +7,8 @@ class Platform
 {
     public:
         Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow);
+        Platform(const Platform& platform);
+        Platform& operator= (const Platform& platform);
         void changeDirection();
         void setPositionX(float x);
         float getPositionX();
