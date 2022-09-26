@@ -21,6 +21,7 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
         platforms.push_back(platform);
     }
     this->isOriginalColour = true;
+    this->canChangeColour = true;
 }
 
 vector<float> PlatformRow::platformPositions()
@@ -40,9 +41,9 @@ void PlatformRow::changeDirection()
         platform.changeDirection();
 }
 
-void PlatformRow::changeColour(sf::Texture* texture)
+void PlatformRow::changeColour(sf::Texture* texture, bool original)
 {
-    isOriginalColour = !isOriginalColour;
+    isOriginalColour = original;
     for(auto& platform : platforms)
         platform.changeColour(texture);
 }

@@ -15,16 +15,16 @@ PlatformController::PlatformController(sf::Texture* texture)
     }
 }
 
-void PlatformController::changePlatformRowColour(unsigned int row, sf::Texture* texture)
+void PlatformController::changePlatformRowColour(unsigned int row, sf::Texture* texture, bool original)
 {
-    platformRows.at(row-1).changeColour(texture);
+    platformRows.at(row-1).changeColour(texture, original);
 }
 
 bool PlatformController::allPlatformsNewColour()
 {
     for(auto& platformRow : platformRows)
     {
-        if(platformRow.isOrigColour())
+        if(platformRow.isOriginalColour)
             return false;
     }
     return true;
@@ -42,9 +42,9 @@ void PlatformController::draw(sf::RenderWindow& window)
         platformRow.draw(window);
 }
 
-PlatformRow PlatformController::getPlatformRow(const unsigned int row)
+PlatformRow* PlatformController::getPlatformRow(const unsigned int row)
 {
-    return platformRows.at(row-1);
+    return &platformRows.at(row-1);
 }
 
 vector<float> PlatformController::getPlatformPositions(const unsigned int row)

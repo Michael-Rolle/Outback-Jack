@@ -16,14 +16,21 @@ void Collisions::update(Jack& player, PlatformController& platforms, sf::Texture
         {
             if(!player.jumping() && (player.getPositionX() >= xPos-platformWidth/2.0f) && (player.getPositionX() <= xPos+platformWidth/2.0f)) //player is in bounds of a log
             {
-                if(platforms.allPlatformsNewColour())
+                player.addVelocityX(platformSpeed, platforms.getPlatformRow(row-1)->movingRight);
+                if(platforms.getPlatformRow(row-1)->isOriginalColour && platforms.getPlatformRow(row-1)->canChangeColour)
                 {
-                    for(int i = 0; i < 4; i++)
-                        platforms.changePlatformRowColour(i+1, originalColour);
+                    platforms.changePlatformRowColour(row-1, newColour, false);
+                    if(platforms.allPlatformsNewColour())
+                        platforms.getPlatformRow(row-1)->canChangeColour = false;
                 }
-                player.addVelocityX(platformSpeed, platforms.getPlatformRow(row-1).isMovingRight());
-                if(platforms.getPlatformRow(row-1).isOrigColour())
-                    platforms.changePlatformRowColour(row-1, newColour);
+            }
+            else if(player.jumping() && platforms.allPlatformsNewColour())
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    platforms.changePlatformRowColour(i+1, originalColour, true);
+                    platforms.getPlatformRow(i+1)->canChangeColour = true;
+                }
             }
         }
     }

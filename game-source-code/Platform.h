@@ -14,12 +14,8 @@ class Platform
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         float width();
-        //isActive(Jack jack);
-        //void renderPlatform(sf::RenderWindow& window);
 
     private:
-        //bool active;
-        //sf::Texture platform;
         sf::Sprite platform;
         bool movingRight;
         unsigned int gameRow;

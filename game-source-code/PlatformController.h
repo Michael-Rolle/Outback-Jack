@@ -9,11 +9,11 @@ class PlatformController
 {
     public:
         PlatformController(sf::Texture* texture);
-        void changePlatformRowColour(unsigned int row, sf::Texture* texture); //enter a row num from 1 to 4
+        void changePlatformRowColour(unsigned int row, sf::Texture* texture, bool original); //enter a row num from 1 to 4
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         bool allPlatformsNewColour();
-        PlatformRow getPlatformRow(const unsigned int row); //enter a row num from 1 to 4
+        PlatformRow* getPlatformRow(const unsigned int row); //enter a row num from 1 to 4
         vector<float> getPlatformPositions(const unsigned int row); //enter a row num from 1 to 4
 
     private:

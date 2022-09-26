@@ -33,7 +33,7 @@ int main()
     if(!log.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
     auto platforms = PlatformController(&log);
-    auto collisionDetector = Collisions(platforms.getPlatformRow(1).getPlatform(1).width(), 100.0f);
+    auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
     sf::Texture white_log;
     if(!white_log.loadFromFile("resources/white_log.png"))
         return EXIT_FAILURE;
@@ -67,10 +67,9 @@ int main()
         if(isPlaying)
         {
             deltaTime = clock.restart().asSeconds();
-            collisionDetector.update(Player_1, platforms, &log, &white_log);
             Player_1.update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
-
+            collisionDetector.update(Player_1, platforms, &log, &white_log);
         }
 
         // Render
