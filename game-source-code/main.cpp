@@ -34,6 +34,12 @@ int main()
     if(!log.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
     auto platforms = PlatformController(&log);
+
+    sf::Texture croc;
+    if(!croc.loadFromFile("resources/croc.png"))
+        return EXIT_FAILURE;
+    auto crocs = Enemy(&croc, 500.0f, true, 1);
+
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
     sf::Texture white_log;
     //if(!white_log.loadFromFile("resources/white_log.png"))
@@ -78,6 +84,7 @@ int main()
         if(isPlaying)
         {
             playingFieldRenderer.renderPlayingField(window);
+            crocs.draw(window);
             platforms.draw(window);
             Player_1.draw(window);
         }
