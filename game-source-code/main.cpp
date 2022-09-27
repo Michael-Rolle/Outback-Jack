@@ -6,6 +6,7 @@
 #include "Jack.h"
 #include "PlatformController.h"
 #include "Collisions.h"
+#include "enemy.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -35,8 +36,8 @@ int main()
     auto platforms = PlatformController(&log);
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
     sf::Texture white_log;
-    if(!white_log.loadFromFile("resources/white_log.png"))
-        return EXIT_FAILURE;
+    //if(!white_log.loadFromFile("resources/white_log.png"))
+      //  return EXIT_FAILURE;
 
     sf::Clock clock;
     float deltaTime = 0;
