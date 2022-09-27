@@ -26,9 +26,11 @@ int main()
     // Initialize the splash screen, playing field, Jack, and platforms
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
     auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
+
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
+
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
     if(!log.loadFromFile("resources/log.png"))
@@ -41,9 +43,10 @@ int main()
     auto crocs = Enemy(&croc, 500.0f, true, 1);
 
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+
     sf::Texture white_log;
-    //if(!white_log.loadFromFile("resources/white_log.png"))
-      //  return EXIT_FAILURE;
+    if(!white_log.loadFromFile("resources/white_log.png"))
+        return EXIT_FAILURE;
 
     sf::Clock clock;
     float deltaTime = 0;
