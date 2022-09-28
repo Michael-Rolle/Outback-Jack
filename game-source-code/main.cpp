@@ -6,7 +6,8 @@
 #include "Jack.h"
 #include "PlatformController.h"
 #include "Collisions.h"
-#include "enemy.h"
+#include "Enemy.h"
+#include "Temperature.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -51,6 +52,9 @@ int main()
     sf::Clock clock;
     float deltaTime = 0;
     bool isPlaying = false;
+
+    auto temperature = Temperature(gameWidth, gameHeight);
+
     while(window.isOpen())
     {
         sf::Event event;
@@ -80,6 +84,7 @@ int main()
             Player_1.update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
             collisionDetector.update(Player_1, platforms, &log, &white_log);
+            temperature.update(window, deltaTime);
         }
 
         // Render
@@ -90,6 +95,7 @@ int main()
             crocs.draw(window);
             platforms.draw(window);
             Player_1.draw(window);
+            temperature.renderTemperature(window);
         }
         else
         {
