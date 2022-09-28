@@ -4,6 +4,7 @@
 
 #define private public //for testing purposes
 #include "../game-source-code/Jack.h"
+#include "../game-source-code/PlatformController.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -19,20 +20,18 @@ const sf::Event simulateKeypress(sf::Keyboard::Key key)
 
 TEST_CASE("All assests load correctly")
 {
-    sf::Texture arrows;
-    sf::Texture wasd;
-    sf::Texture platform;
-    sf::Texture jack;
-    sf::Texture field;
-    sf::Texture background;
+    sf::Texture texture;
     sf::Font font;
 
-    CHECK(arrows.loadFromFile("resources/arrows.png"));
-    CHECK(wasd.loadFromFile("resources/wasd.png"));
-    CHECK(platform.loadFromFile("resources/basic_platform.png"));
-    CHECK(jack.loadFromFile("resources/jack_frames.png"));
-    CHECK(field.loadFromFile("resources/playingField.png"));
-    CHECK(background.loadFromFile("resources/start_background.jpg"));
+    CHECK(texture.loadFromFile("resources/arrows.png"));
+    CHECK(texture.loadFromFile("resources/wasd.png"));
+    CHECK(texture.loadFromFile("resources/basic_platform.png"));
+    CHECK(texture.loadFromFile("resources/jack_frames.png"));
+    CHECK(texture.loadFromFile("resources/playingField.png"));
+    CHECK(texture.loadFromFile("resources/start_background.jpg"));
+    CHECK(texture.loadFromFile("resources/log.png"));
+    CHECK(texture.loadFromFile("resources/white_log.png"));
+    CHECK(texture.loadFromFile("resources/croc.png"));
     CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
 }
 
@@ -222,4 +221,29 @@ TEST_CASE("Player can't move left out of bounds")
        player.update(clock2.restart().asSeconds());
     }
     CHECK(player.jack.getPosition().x == 50);
+}
+
+TEST_CASE("Platforms move in alternate directions")
+{
+    sf::Texture log;
+    log.loadFromFile("resources/log.png");
+    auto platformController = PlatformController(&log);
+    auto rowOneDir = platformController.getPlatformRow(1)->movingRight;
+    auto rowTwoDir = platformController.getPlatformRow(2)->movingRight;
+    auto rowThreeDir = platformController.getPlatformRow(3)->movingRight;
+    auto rowFourDir = platformController.getPlatformRow(4)->movingRight;
+    CHECK(rowOneDir != rowTwoDir);
+    CHECK(rowTwoDir != rowThreeDir);
+    CHECK(rowThreeDir != rowFourDir);
+}
+
+TEST_CASE("Platforms can succesfully change colour")
+{
+    sf::Texture log;
+    log.loadFromFile("resources/log.png");
+    sf::Texture white_log;
+    white_log.loadFromFile("resources/white_log.png");
+    auto platformController = PlatformController(&log);
+    platformController.changePlatformRowColour(1, &white_log, false);
+    CHECK_FALSE(platformController.getPlatformRow(1)->isOriginalColour);
 }
