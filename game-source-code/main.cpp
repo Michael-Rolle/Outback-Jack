@@ -8,6 +8,7 @@
 #include "Collisions.h"
 #include "Enemy.h"
 #include "Temperature.h"
+#include "Tent.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -24,7 +25,7 @@ int main()
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
     window.setFramerateLimit(frameRate);
 
-    // Initialize the splash screen, playing field, Jack, and platforms
+    // Initialize the splash screen, playing field, Jack, tent, and platforms
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
 
     sf::Music splashMusic;
@@ -67,12 +68,18 @@ int main()
         return EXIT_FAILURE;
     auto crocs = Enemy(&croc, 500.0f, true, 1);
 
+    sf::Texture tent_spritesheet;
+    if(!tent_spritesheet.loadFromFile("resources/tent.png"))
+        return EXIT_FAILURE;
+    auto tent = Tent(&tent_spritesheet, 4, 3);
+
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
 
     sf::Clock clock;
     float deltaTime = 0;
     bool isPlaying = false;
     bool gameOver = false;
+    bool victory = false;
 
     auto temperature = Temperature(gameWidth, gameHeight);
 
@@ -95,13 +102,14 @@ int main()
                 playingMusic.play();
             }
 
-            if(isPlaying)
+            if(isPlaying && !victory)
             {
                 Player_1.setMovement(event);
+                victory = Player_1.wonGame(event, tent);
             }
         }
 
-        if(isPlaying)
+        if(isPlaying && !victory)
         {
             if(Player_1.isAlive)
             {
@@ -109,7 +117,7 @@ int main()
                 Player_1.update(deltaTime); //controls movement and animations
                 platforms.update(deltaTime);
                 temperature.update(Player_1, &burnt_jack, deltaTime);
-                collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log);
+                collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log, tent);
             }
             else
             {
@@ -120,9 +128,10 @@ int main()
 
         // Render
         window.clear();
-        if(isPlaying && !gameOver)
+        if(isPlaying && !gameOver && !victory)
         {
             playingFieldRenderer.renderPlayingField(window);
+            tent.draw(window);
             crocs.draw(window);
             platforms.draw(window);
             temperature.draw(window);
@@ -131,9 +140,15 @@ int main()
         else if(gameOver)
         {
             playingFieldRenderer.renderPlayingField(window);
+            tent.draw(window);
             crocs.draw(window);
             platforms.draw(window);
             temperature.draw(window);
+            Player_1.draw(window);
+        }
+        else if(victory)
+        {
+            tent.draw(window);
             Player_1.draw(window);
         }
         else

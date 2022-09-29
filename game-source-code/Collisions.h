@@ -3,12 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include "PlatformController.h"
 #include "Jack.h"
+#include "Tent.h"
 
 class Collisions
 {
     public:
         Collisions(float platformWidth, float platformSpeed);
-        void update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour);
+        void update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent);
 
     private:
         float platformWidth;

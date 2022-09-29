@@ -2,6 +2,7 @@
 #define JACK_H
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include "Tent.h"
 
 class Jack
 {
@@ -18,6 +19,7 @@ class Jack
         float getPositionX() { return jack.getPosition().x; }
         float width() { return jack.getGlobalBounds().width; }
         unsigned int row() { return gameRow; }
+        bool wonGame(sf::Event event, Tent& tent);
     private:
         void jump(); //sets the vertical velocity
 

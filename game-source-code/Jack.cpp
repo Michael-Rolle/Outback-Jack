@@ -173,6 +173,18 @@ void Jack::jump()
     }
 }
 
+bool Jack::wonGame(sf::Event event, Tent& tent)
+{
+    if(!tent.built)
+        return false;
+    if(event.type == sf::Event::KeyPressed)
+    {
+        if((event.key.code == sf::Keyboard::W) && (jack.getPosition().x < tent.getPositionX()+tent.width()/2.0f) && (jack.getPosition().x > tent.getPositionX()-tent.width()/2) && (gameRow == 1))
+            return true;
+    }
+    return false;
+}
+
 void Jack::draw(sf::RenderWindow& window)
 {
     window.draw(jack);

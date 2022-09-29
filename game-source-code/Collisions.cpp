@@ -1,13 +1,24 @@
 #include "Collisions.h"
 
+using namespace std;
+
 Collisions::Collisions(float platformWidth, float platformSpeed)
 {
     this->platformWidth = platformWidth;
     this->platformSpeed = platformSpeed;
 }
 
-void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour)
+void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent)
 {
+    if(tent.built)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            auto platformRow = platforms.getPlatformRow(i+1);
+            platformRow->changeColour(newColour, false);
+            platformRow->canChangeColour = false;
+        }
+    }
     unsigned int row = player.row();
     if(row > 1)
     {
@@ -22,11 +33,12 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
                 if(platforms.getPlatformRow(row-1)->isOriginalColour && platforms.getPlatformRow(row-1)->canChangeColour)
                 {
                     platforms.changePlatformRowColour(row-1, newColour, false);
+                    tent.nextFrame();
                     if(platforms.allPlatformsNewColour())
                         platforms.getPlatformRow(row-1)->canChangeColour = false;
                 }
             }
-            else if(player.jumping() && platforms.allPlatformsNewColour())
+            else if(player.jumping() && platforms.allPlatformsNewColour() && !tent.built)
             {
                 for(int i = 0; i < 4; i++)
                 {
