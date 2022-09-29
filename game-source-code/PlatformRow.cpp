@@ -13,7 +13,7 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
     this->movingRight = movingRight;
     for(int i = 0; i < (int)numPlatforms; i++)
     {
-        auto platform = Platform{texture, 100.0f, movingRight, gameRow};
+        auto platform = Platform{texture, 150.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
             platform.setPositionX(platform.width()/2.0f + i*(spacing+platform.width()));
         else

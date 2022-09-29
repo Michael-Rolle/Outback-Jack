@@ -53,7 +53,7 @@ int main()
         return EXIT_FAILURE;
     auto crocs = Enemy(&croc, 500.0f, true, 1);
 
-    auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
 
 
 
