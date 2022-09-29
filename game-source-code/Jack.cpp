@@ -58,7 +58,7 @@ void Jack::update(float deltaTime)
     {
         frameRow = 2; //jumping animation
         jump();
-        velocity.y += 981.0f * deltaTime;
+        velocity.y += 1500.0f * deltaTime;
     }
     else if(!movingRight && !movingLeft)
         frameRow = 0; //idle animation
@@ -157,7 +157,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f); //Initial velocity using kinematic equations
+            velocity.y = -sqrtf(2.0f * 1500.0f * 190.0f); //Initial velocity using kinematic equations
     }
     else
     {
@@ -169,7 +169,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f); //Initial velocity using kinematic equations
+            velocity.y = -sqrtf(2.0f * 1500.0f * 10.0f); //Initial velocity using kinematic equations
     }
 }
 
