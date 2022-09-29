@@ -6,16 +6,18 @@ Collisions::Collisions(float platformWidth, float platformSpeed)
     this->platformSpeed = platformSpeed;
 }
 
-void Collisions::update(Jack& player, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour)
+void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour)
 {
     unsigned int row = player.row();
     if(row > 1)
     {
         auto xPositions = platforms.getPlatformPositions(row-1);
+        bool onPlatform = false;
         for(auto xPos : xPositions)
         {
             if(!player.jumping() && (player.getPositionX() >= xPos-platformWidth/2.0f) && (player.getPositionX() <= xPos+platformWidth/2.0f)) //player is in bounds of a log
             {
+                onPlatform = true;
                 player.addVelocityX(platformSpeed, platforms.getPlatformRow(row-1)->movingRight);
                 if(platforms.getPlatformRow(row-1)->isOriginalColour && platforms.getPlatformRow(row-1)->canChangeColour)
                 {
@@ -31,7 +33,12 @@ void Collisions::update(Jack& player, PlatformController& platforms, sf::Texture
                     platforms.changePlatformRowColour(i+1, originalColour, true);
                     platforms.getPlatformRow(i+1)->canChangeColour = true;
                 }
+                return;
             }
+        }
+        if(!onPlatform && !player.jumping())
+        {
+            player.die(deathTexture);
         }
     }
 }

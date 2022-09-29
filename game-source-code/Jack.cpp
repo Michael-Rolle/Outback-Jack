@@ -8,6 +8,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     this->speed = speed; //pixels per second
     frameRow = 0; //idle animation
     facingRight = true;
+    isAlive = true;
     gameRow = 1; //safe zone
     isJumping = false;
     canJump = true;
@@ -16,10 +17,11 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     jumpHeight = 180.0f; //1/6 of the gameHeight
     velocity.x = 0;
     velocity.y = 0;
+    height = 100.0f;
 
-    const auto jackHeight = 100.0f; //How many pixels tall Jack is
+    //const auto jackHeight = 100.0f; //How many pixels tall Jack is
     jack.setTexture(*texture);
-    jack.scale(jackHeight*frameCount.y/jack.getLocalBounds().width, jackHeight*frameCount.y/jack.getLocalBounds().height);
+    jack.scale(height*frameCount.y/jack.getLocalBounds().width, height*frameCount.y/jack.getLocalBounds().height);
     jack.setPosition(960.0f, 180.0f + 90.0f);
 }
 
@@ -56,7 +58,7 @@ void Jack::update(float deltaTime)
     {
         frameRow = 2; //jumping animation
         jump();
-        velocity.y += 981.0f * deltaTime;
+        velocity.y += 1500.0f * deltaTime;
     }
     else if(!movingRight && !movingLeft)
         frameRow = 0; //idle animation
@@ -123,6 +125,26 @@ void Jack::addVelocityX(float speed, bool right)
         velocity.x = -speed;
 }
 
+void Jack::die(sf::Texture* texture)
+{
+    isAlive = false;
+    jack.setTexture(*texture);
+    sf::IntRect textRect;
+    textRect.top = jack.getLocalBounds().top;
+    textRect.height = jack.getLocalBounds().height;
+    if(facingRight)
+    {
+        textRect.left = jack.getLocalBounds().left;
+        textRect.width = jack.getLocalBounds().width;
+    }
+    else //flips to face the other direction
+    {
+        textRect.left = jack.getLocalBounds().left + jack.getLocalBounds().width;
+        textRect.width = -jack.getLocalBounds().width;
+    }
+    jack.setTextureRect(textRect);
+}
+
 void Jack::jump()
 {
     if(jumpingUp)
@@ -135,7 +157,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 190.0f); //Initial velocity using kinematic equations
+            velocity.y = -sqrtf(2.0f * 1500.0f * 190.0f); //Initial velocity using kinematic equations
     }
     else
     {
@@ -147,7 +169,7 @@ void Jack::jump()
             return;
         }
         if(velocity.y == 0)
-            velocity.y = -sqrtf(2.0f * 981.0f * 10.0f); //Initial velocity using kinematic equations
+            velocity.y = -sqrtf(2.0f * 1500.0f * 10.0f); //Initial velocity using kinematic equations
     }
 }
 

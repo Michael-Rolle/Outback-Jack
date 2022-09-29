@@ -13,6 +13,7 @@ class Jack
         void addVelocityX(float speed, bool right);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
+        void die(sf::Texture* texture);
         bool jumping(){ return isJumping; }
         float getPositionX() { return jack.getPosition().x; }
         float width() { return jack.getGlobalBounds().width; }
@@ -20,6 +21,8 @@ class Jack
     private:
         void jump(); //sets the vertical velocity
 
+    public:
+        bool isAlive;
     private:
         sf::Sprite jack;
         Animation animation;
@@ -33,6 +36,7 @@ class Jack
         bool movingRight;
         bool movingLeft;
         float jumpHeight;
+        float height;
         sf::Vector2f velocity;
 };
 
