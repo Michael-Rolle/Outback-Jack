@@ -39,7 +39,7 @@ int main()
     if(!burnt_jack.loadFromFile("resources/burnt_jack.png"))
         return EXIT_FAILURE;
 
-    auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 600.0f);
     sf::Texture log;
     if(!log.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
