@@ -26,6 +26,20 @@ int main()
 
     // Initialize the splash screen, playing field, Jack, and platforms
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
+
+    sf::Music splashMusic;
+    if(!splashMusic.openFromFile("resources/18 The Archives.wav"))
+        throw "cannot load music file";
+    splashMusic.setLoop(true);
+    splashMusic.setVolume(10);
+    splashMusic.play();
+
+    sf::Music playingMusic;
+    if(!playingMusic.openFromFile("resources/05 Den of Thieves.wav"))
+        throw "cannot load music file";
+    playingMusic.setLoop(true);
+    playingMusic.setVolume(10);
+
     auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
 
     sf::Texture jack_spritesheet;
@@ -70,6 +84,8 @@ int main()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
             {
                 isPlaying = true;
+                splashMusic.stop();
+                playingMusic.play();
             }
 
             if(isPlaying)

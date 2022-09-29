@@ -1,7 +1,7 @@
 #ifndef SPLASHSCREENRENDERER_H
 #define SPLASHSCREENRENDERER_H
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Audio.hpp>
 
 class SplashScreenRenderer
 {

@@ -1,5 +1,6 @@
 #include "SplashScreenRenderer.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float gameHeight)
 {
