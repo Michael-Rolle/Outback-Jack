@@ -95,7 +95,7 @@ int main()
             crocs.draw(window);
             platforms.draw(window);
             Player_1.draw(window);
-            temperature.renderTemperature(window);
+            temperature.draw(window);
         }
         else
         {

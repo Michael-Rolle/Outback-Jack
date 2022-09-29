@@ -35,7 +35,7 @@ Temperature::Temperature(const float gameWidth, const float gameHeight)
     degrees.setPosition(gameWidth/13, gameHeight/2 - 50*degrees.getCharacterSize());
 }
 
-void Temperature::renderTemperature(sf::RenderWindow& window)
+void Temperature::draw(sf::RenderWindow& window)
 {
     window.draw(temperature);
     window.draw(degrees);
@@ -46,5 +46,4 @@ void Temperature::update(sf::RenderWindow& window, float deltaTime)
     totalTime += deltaTime;
     int time = round(totalTime);
     temperature.setString(std::to_string(time));
-    window.draw(temperature);
 }

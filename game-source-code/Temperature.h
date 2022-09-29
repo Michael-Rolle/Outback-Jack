@@ -6,7 +6,7 @@ class Temperature
 {
     public:
         Temperature(const float gameWidth, const float gameHeight);
-        void renderTemperature(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window);
         void update(sf::RenderWindow& window, float deltaTime);
 
     private:
