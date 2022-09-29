@@ -32,9 +32,16 @@ int main()
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
 
+    sf::Texture dead_jack;
+    if(!dead_jack.loadFromFile("resources/dead_jack.png"))
+        return EXIT_FAILURE;
+
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
     if(!log.loadFromFile("resources/log.png"))
+        return EXIT_FAILURE;
+    sf::Texture white_log;
+    if(!white_log.loadFromFile("resources/white_log.png"))
         return EXIT_FAILURE;
     auto platforms = PlatformController(&log);
 
@@ -45,13 +52,12 @@ int main()
 
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
 
-    sf::Texture white_log;
-    if(!white_log.loadFromFile("resources/white_log.png"))
-        return EXIT_FAILURE;
+
 
     sf::Clock clock;
     float deltaTime = 0;
     bool isPlaying = false;
+    bool gameOver = false;
 
     auto temperature = Temperature(gameWidth, gameHeight);
 
@@ -80,20 +86,35 @@ int main()
 
         if(isPlaying)
         {
-            deltaTime = clock.restart().asSeconds();
-            Player_1.update(deltaTime); //controls movement and animations
-            platforms.update(deltaTime);
-            collisionDetector.update(Player_1, platforms, &log, &white_log);
-            temperature.update(window, deltaTime);
+            if(Player_1.isAlive)
+            {
+                deltaTime = clock.restart().asSeconds();
+                Player_1.update(deltaTime); //controls movement and animations
+                platforms.update(deltaTime);
+                temperature.update(window, deltaTime);
+                collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log);
+            }
+            else
+            {
+                isPlaying = false;
+                gameOver = true;
+            }
         }
 
         // Render
         window.clear();
-        if(isPlaying)
+        if(isPlaying && !gameOver)
         {
             playingFieldRenderer.renderPlayingField(window);
             crocs.draw(window);
             platforms.draw(window);
+            Player_1.draw(window);
+            temperature.renderTemperature(window);
+        }
+        else if(gameOver)
+        {
+            playingFieldRenderer.renderPlayingField(window);
+            platforms.getPlatformRow(Player_1.row()-1)->draw(window);
             Player_1.draw(window);
             temperature.renderTemperature(window);
         }
