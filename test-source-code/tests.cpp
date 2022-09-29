@@ -5,6 +5,7 @@
 #define private public //for testing purposes
 #include "../game-source-code/Jack.h"
 #include "../game-source-code/PlatformController.h"
+#include "../game-source-code/Collisions.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -246,4 +247,30 @@ TEST_CASE("Platforms can succesfully change colour")
     auto platformController = PlatformController(&log);
     platformController.changePlatformRowColour(1, &white_log, false);
     CHECK_FALSE(platformController.getPlatformRow(1)->isOriginalColour);
+}
+
+TEST_CASE("Player moves along with platform when on top of one")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    sf::Texture log;
+    log.loadFromFile("resources/log.png");
+    auto platformController = PlatformController(&log);
+    auto platformPositions = platformController.getPlatformPositions(1);
+    auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
+    auto previousPos = player.getPositionX();
+    player.gameRow = 2;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        player.update(deltaTime);
+        platformController.update(deltaTime);
+        collisionDetector.update(player, platformController, &log, &log);
+    }
+    CHECK(player.getPositionX() != previousPos);
 }
