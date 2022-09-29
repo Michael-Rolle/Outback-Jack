@@ -10,7 +10,8 @@ VictoryScreenRenderer::VictoryScreenRenderer(sf::Font* font)
     restartText.setOrigin(restartText.getLocalBounds().width/2.0f, restartText.getLocalBounds().height/2.0f);
     winText.setPosition(1920/2.0f, 0.3*1080);
     restartText.setPosition(1920/2.0f, 0.6*1080);
-    winText.setScale(0.33.0f*1920.0f/winText.getLocalBounds().width, 0.33.0f*1920.0f/winText.getLocalBounds().height)
+    winText.setCharacterSize(100);
+    restartText.setCharacterSize(50);
 }
 
 void VictoryScreenRenderer::draw(sf::RenderWindow& window)
