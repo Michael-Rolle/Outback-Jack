@@ -33,6 +33,8 @@ Temperature::Temperature(const float gameWidth, const float gameHeight)
 
     degrees.setOrigin(degreesRect.left + degreesRect.width/2.0f, degreesRect.top + degreesRect.height/2.0f);
     degrees.setPosition(gameWidth/13, gameHeight/2 - 50*degrees.getCharacterSize());
+
+    totalTime = 0;
 }
 
 void Temperature::draw(sf::RenderWindow& window)

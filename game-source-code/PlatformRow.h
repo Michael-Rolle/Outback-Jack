@@ -9,6 +9,7 @@ class PlatformRow
 {
     public:
         PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, const float spacing, const unsigned int gameRow, const bool movingRight);
+        ~PlatformRow(){}
         vector<float> platformPositions();
         Platform getPlatform(const unsigned int platformNum){ return platforms.at(platformNum-1); } //enter a number from 1 to numPlatforms
         void changeDirection();

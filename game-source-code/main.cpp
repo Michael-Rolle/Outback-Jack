@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "SplashScreenRenderer.h"
 #include "PlayingFieldRenderer.h"
+#include "VictoryScreenRenderer.h"
 #include "Jack.h"
 #include "PlatformController.h"
 #include "Collisions.h"
@@ -26,7 +27,12 @@ int main()
     window.setFramerateLimit(frameRate);
 
     // Initialize the splash screen, playing field, Jack, tent, and platforms
+    sf::Font font;
+    if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
+        return EXIT_FAILURE;
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
+    auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
+    auto victoryScreenRenderer = VictoryScreenRenderer(&font);
 
     sf::Music splashMusic;
     if(!splashMusic.openFromFile("resources/18 The Archives.wav"))
@@ -41,8 +47,6 @@ int main()
     playingMusic.setLoop(true);
     playingMusic.setVolume(10);
 
-    auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
-
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
@@ -55,6 +59,7 @@ int main()
         return EXIT_FAILURE;
 
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 600.0f);
+
     sf::Texture log;
     if(!log.loadFromFile("resources/log.png"))
         return EXIT_FAILURE;
@@ -150,6 +155,7 @@ int main()
         {
             tent.draw(window);
             Player_1.draw(window);
+            victoryScreenRenderer.draw(window);
         }
         else
         {
