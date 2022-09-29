@@ -35,6 +35,9 @@ int main()
     sf::Texture dead_jack;
     if(!dead_jack.loadFromFile("resources/dead_jack.png"))
         return EXIT_FAILURE;
+    sf::Texture burnt_jack;
+    if(!burnt_jack.loadFromFile("resources/burnt_jack.png"))
+        return EXIT_FAILURE;
 
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
@@ -91,7 +94,7 @@ int main()
                 deltaTime = clock.restart().asSeconds();
                 Player_1.update(deltaTime); //controls movement and animations
                 platforms.update(deltaTime);
-                temperature.update(window, deltaTime);
+                temperature.update(Player_1, &burnt_jack, deltaTime);
                 collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log);
             }
             else
@@ -108,15 +111,16 @@ int main()
             playingFieldRenderer.renderPlayingField(window);
             crocs.draw(window);
             platforms.draw(window);
+            temperature.draw(window);
             Player_1.draw(window);
-            temperature.renderTemperature(window);
         }
         else if(gameOver)
         {
             playingFieldRenderer.renderPlayingField(window);
-            platforms.getPlatformRow(Player_1.row()-1)->draw(window);
+            crocs.draw(window);
+            platforms.draw(window);
+            temperature.draw(window);
             Player_1.draw(window);
-            temperature.renderTemperature(window);
         }
         else
         {

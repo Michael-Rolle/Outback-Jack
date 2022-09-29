@@ -1,13 +1,14 @@
 #ifndef TEMPERATURE_H
 #define TEMPERATURE_H
 #include <SFML/Graphics.hpp>
+#include "Jack.h"
 
 class Temperature
 {
     public:
         Temperature(const float gameWidth, const float gameHeight);
-        void renderTemperature(sf::RenderWindow& window);
-        void update(sf::RenderWindow& window, float deltaTime);
+        void draw(sf::RenderWindow& window);
+        void update(Jack& player, sf::Texture* deathTexture, float deltaTime);
 
     private:
         sf::Font font;
