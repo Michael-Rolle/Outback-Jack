@@ -47,7 +47,7 @@ Jack Jack::operator= (const Jack& player)
     return jack;
 }
 
-void Jack::update(float deltaTime)
+void Jack::update(float deltaTime, sf::Texture* deathTexture)
 {
     if(movingLeft)
         velocity.x -= speed;
@@ -74,9 +74,23 @@ void Jack::update(float deltaTime)
         velocity.y = 0;
 
     if(jack.getPosition().x - (jack.getGlobalBounds().width/2.0f) <= 0.0f && velocity.x < 0.0f)
+    {
         velocity.x = 0;
+        if(gameRow != 1)
+        {
+            die(deathTexture);
+            return;
+        }
+    }
     if(jack.getPosition().x + (jack.getGlobalBounds().width/2.0f) >= 1920 && velocity.x > 0.0f)
+    {
         velocity.x = 0;
+        if(gameRow != 1)
+        {
+            die(deathTexture);
+            return;
+        }
+    }
 
     animation.update(frameRow, deltaTime, facingRight);
     jack.setTextureRect(animation.textRect);

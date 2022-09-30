@@ -119,7 +119,7 @@ int main()
             if(Player_1.isAlive)
             {
                 deltaTime = clock.restart().asSeconds();
-                Player_1.update(deltaTime); //controls movement and animations
+                Player_1.update(deltaTime, &dead_jack); //controls movement and animations
                 platforms.update(deltaTime);
                 temperature.update(Player_1, &burnt_jack, deltaTime);
                 collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log, tent);
