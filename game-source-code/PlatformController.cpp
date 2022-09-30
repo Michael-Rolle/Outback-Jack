@@ -9,7 +9,7 @@ PlatformController::PlatformController(sf::Texture* texture)
     bool direction = true;
     for(int i = 0; i < 4; i++)
     {
-        auto platformRow = PlatformRow{texture, 6, 75, (unsigned int)(i+2), direction};
+        auto platformRow = PlatformRow{texture, 6, 100, (unsigned int)(i+2), direction};
         direction = !direction;
         platformRows.push_back(platformRow);
     }

@@ -61,10 +61,10 @@ int main()
     auto Player_1 = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 600.0f);
 
     sf::Texture log;
-    if(!log.loadFromFile("resources/log.png"))
+    if(!log.loadFromFile("resources/wide_log.png"))
         return EXIT_FAILURE;
     sf::Texture white_log;
-    if(!white_log.loadFromFile("resources/white_log.png"))
+    if(!white_log.loadFromFile("resources/wide_log_white.png"))
         return EXIT_FAILURE;
     auto platforms = PlatformController(&log);
 
