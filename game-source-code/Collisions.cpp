@@ -26,7 +26,7 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
         bool onPlatform = false;
         for(auto xPos : xPositions)
         {
-            if(!player.jumping() && (player.getPositionX() >= xPos-platformWidth/2.0f) && (player.getPositionX() <= xPos+platformWidth/2.0f)) //player is in bounds of a log
+            if(!player.jumping() && (player.getPositionX()+player.width()/5.0f >= xPos-platformWidth/2.0f) && (player.getPositionX()-player.width()/5.0f <= xPos+platformWidth/2.0f)) //player is in bounds of a log
             {
                 onPlatform = true;
                 player.addVelocityX(platformSpeed, platforms.getPlatformRow(row-1)->movingRight);
