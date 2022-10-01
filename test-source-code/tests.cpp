@@ -257,6 +257,7 @@ TEST_CASE("Player moves along with platform when on top of one")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
     log.loadFromFile("resources/log.png");
+    auto tent = Tent(&log, 4, 3);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
@@ -271,7 +272,7 @@ TEST_CASE("Player moves along with platform when on top of one")
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, platformController, &log, &log);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent);
     }
     CHECK(player.getPositionX() != previousPos);
 }
