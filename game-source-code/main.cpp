@@ -105,6 +105,7 @@ int main()
                 isPlaying = true;
                 splashMusic.stop();
                 playingMusic.play();
+                clock.restart();
             }
 
             if(isPlaying && !victory)

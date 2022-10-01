@@ -25,7 +25,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     jack.setPosition(960.0f, 180.0f + 90.0f);
 }
 
-Jack::Jack(const Jack& player):
+/*Jack::Jack(const Jack& player):
     animation(player.animation)
 {
     this->canJump = player.canJump;
@@ -39,13 +39,13 @@ Jack::Jack(const Jack& player):
     this->movingRight = player.movingRight;
     this->speed = player.speed;
     this->velocity = player.velocity;
-}
+}*/
 
-Jack Jack::operator= (const Jack& player)
+/*Jack Jack::operator= (const Jack& player)
 {
     auto jack = Jack{player};
     return jack;
-}
+}*/
 
 void Jack::update(float deltaTime)
 {
