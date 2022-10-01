@@ -6,6 +6,7 @@
 #include "../game-source-code/Jack.h"
 #include "../game-source-code/PlatformController.h"
 #include "../game-source-code/Collisions.h"
+#include "../game-source-code/Tent.h"
 
 //Global Constants
 const float gameWidth = 1920;

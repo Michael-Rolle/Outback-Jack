@@ -22,6 +22,11 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
     unsigned int row = player.row();
     if(row > 1)
     {
+        if((player.getPositionX() <= 0.0f) || (player.getPositionX() >= 1920))
+        {
+            player.die(deathTexture);
+            return;
+        }
         auto xPositions = platforms.getPlatformPositions(row-1);
         bool onPlatform = false;
         for(auto xPos : xPositions)

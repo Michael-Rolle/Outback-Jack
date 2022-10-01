@@ -12,7 +12,7 @@ class Jack
         Jack operator= (const Jack& player);
         void setMovement(sf::Event event);
         void addVelocityX(float speed, bool right);
-        void update(float deltaTime, sf::Texture* deathTexture);
+        void update(float deltaTime);
         void draw(sf::RenderWindow& window);
         void die(sf::Texture* texture);
         bool jumping(){ return isJumping; }
