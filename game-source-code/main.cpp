@@ -76,7 +76,7 @@ int main()
     sf::Texture tent_spritesheet;
     if(!tent_spritesheet.loadFromFile("resources/tent.png"))
         return EXIT_FAILURE;
-    auto tent = Tent(&tent_spritesheet, 4, 3);
+    auto tent = Tent(&tent_spritesheet, 4, 4);
 
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
 
@@ -145,6 +145,7 @@ int main()
         }
         else if(gameOver)
         {
+            playingMusic.stop();
             playingFieldRenderer.renderPlayingField(window);
             tent.draw(window);
             crocs.draw(window);
@@ -154,6 +155,7 @@ int main()
         }
         else if(victory)
         {
+            playingMusic.stop();
             tent.draw(window);
             Player_1.draw(window);
             victoryScreenRenderer.draw(window);
