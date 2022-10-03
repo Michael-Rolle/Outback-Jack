@@ -5,7 +5,7 @@
 class Tent
 {
     public:
-        Tent(sf::Texture* texture, unsigned int rows, unsigned int columns);
+        Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float height);
         Tent(){};
         void nextFrame();
         float getPositionX();
@@ -19,7 +19,7 @@ class Tent
         sf::Vector2u numFrames;
         sf::Vector2u currentFrame;
         sf::IntRect textRect;
-        const float height = 200.0f;
+        float height;
 };
 
 #endif // TENT_H

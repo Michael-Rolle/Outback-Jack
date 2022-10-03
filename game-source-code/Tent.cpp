@@ -1,7 +1,8 @@
 #include "Tent.h"
 
-Tent::Tent(sf::Texture* texture, unsigned int rows, unsigned int columns)
+Tent::Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float height)
 {
+    this->height = height;
     tent.setTexture(*texture);
     tent.scale(height*rows/tent.getLocalBounds().width, height*rows/tent.getLocalBounds().height);
     tent.setPosition(0.75*1920.0f, 310); //assuming the origin of the tent will be the bottom of the tent

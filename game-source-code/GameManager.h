@@ -22,7 +22,7 @@ using std::shared_ptr;
 class GameManager
 {
     public:
-        GameManager(bool twoPlayer_);
+        GameManager();
         void run();
 
     private:

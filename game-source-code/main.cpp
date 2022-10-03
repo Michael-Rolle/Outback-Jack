@@ -88,7 +88,7 @@ int main()
     sf::Texture tent_spritesheet;
     if(!tent_spritesheet.loadFromFile("resources/tent.png"))
         return EXIT_FAILURE;
-    auto tent = Tent(&tent_spritesheet, 4, 4);
+    auto tent = Tent(&tent_spritesheet, 4, 4, 200.0f);
 
     auto collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
 
