@@ -123,6 +123,7 @@ int main()
             if(isPlaying && !victory)
             {
                 Player_1.setMovement(event);
+                gameSounds.play(Player_1);
                 victory = Player_1.wonGame(event, tent);
                 if(victory)
                     victorySound.play();
