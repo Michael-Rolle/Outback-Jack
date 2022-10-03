@@ -173,4 +173,5 @@ void GameManager::resetGame()
     victory = false;
     deltaTime= 0.0f;
     clock.restart().asSeconds();
+    playingMusic.play();
 }
