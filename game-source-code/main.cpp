@@ -47,6 +47,13 @@ int main()
     playingMusic.setLoop(true);
     playingMusic.setVolume(10);
 
+    //Game sounds
+    sf::SoundBuffer jumpSoundBuffer;
+    sf::SoundBuffer gameOverSoundBuffer;
+    sf::SoundBuffer victorySoundBuffer;
+    if(!jumpSoundBuffer.loadFromFile("resources/quick-jump.wav") || !gameOverSoundBuffer.loadFromFile("resources/ominous-drums.wav") || !victorySoundBuffer.loadFromFile("resources/completion-of-a-level.wav"))
+        return EXIT_FAILURE;
+
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
         return EXIT_FAILURE;
