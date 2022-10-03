@@ -39,14 +39,14 @@ class GameManager
         VictoryScreenRenderer victoryRenderer;
         sf::Music splashMusic;
         sf::Music playingMusic;
-        shared_ptr<sf::SoundBuffer> jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf;
+        sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf;
         GameSounds gameSounds;
-        shared_ptr<sf::Texture> jackSpritesheetText, deadJackText, burntJackText, logText, whiteLogText;
+        sf::Texture jackSpritesheetText, deadJackText, burntJackText, logText, whiteLogText;
         vector<Jack> players;
         PlatformController platforms;
         Collisions collisionDetector;
         Temperature temperature;
-        shared_ptr<sf::Texture> tentSpritesheetText;
+        sf::Texture tentSpritesheetText;
         Tent tent;
         sf::Clock clock;
         float deltaTime;

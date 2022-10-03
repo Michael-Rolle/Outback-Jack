@@ -1,5 +1,5 @@
 // Headers
-#include <SFML/Audio.hpp>
+/*#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "SplashScreenRenderer.h"
 #include "PlayingFieldRenderer.h"
@@ -12,8 +12,10 @@
 #include "Tent.h"
 #include "GameSounds.h"
 #include <cstdlib>
-#include <iostream>
+#include <iostream>*/
+#include "GameManager.h"
 
+/*
 using namespace std;
 
 // Global Constants
@@ -185,5 +187,13 @@ int main()
         window.display();
     }
 
+    return EXIT_SUCCESS;
+}
+*/
+
+int main()
+{
+    auto gameManager = GameManager();
+    gameManager.run();
     return EXIT_SUCCESS;
 }

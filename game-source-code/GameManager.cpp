@@ -24,28 +24,28 @@ GameManager::GameManager():
 
     //Game Sounds
     //shared_ptr<sf::SoundBuffer> jumpSound, landSound, victorySound, gameOverSound;
-    if(!jumpSoundBuf->loadFromFile("resources/quick-jump.wav") || !landSoundBuf->loadFromFile("resources/landing.wav") || !victorySoundBuf->loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf->loadFromFile("resources/ominous-drums.wav"))
+    if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav"))
         throw "cannot load sound";
-    gameSounds = GameSounds{*jumpSoundBuf, *landSoundBuf, *victorySoundBuf, *gameOverSoundBuf};
+    gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf};
 
     //Player
     //shared_ptr<sf::Texture> jack_spritesheet, dead_jack, burnt_jack;
-    if(!jackSpritesheetText->loadFromFile("resources/jack_frames.png") || !deadJackText->loadFromFile("resources/dead_jack.png") || !burntJackText->loadFromFile("resources/burnt_jack.png"))
+    if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
         throw "cannot load textures";
-    auto player_1 = Jack(jackSpritesheetText.get(), sf::Vector2u(3, 3), 0.2f, 600.0f);
+    auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f);
     players.push_back(player_1);
 
     //Platforms
     //shared_ptr<sf::Texture> log;
-    if(!logText->loadFromFile("resources/wide_log.png") || !whiteLogText->loadFromFile("resources/wide_log_white.png"))
+    if(!logText.loadFromFile("resources/wide_log.png") || !whiteLogText.loadFromFile("resources/wide_log_white.png"))
         throw "cannot load textures";
-    platforms = PlatformController(logText.get());
+    platforms = PlatformController(&logText);
 
     //Tent
     //shared_ptr<sf::Texture> tent_spritesheet;
-    if(!tentSpritesheetText->loadFromFile("resources/tent.png"))
+    if(!tentSpritesheetText.loadFromFile("resources/tent.png"))
         throw "cannot load texture";
-    tent = Tent{tentSpritesheetText.get(), 4, 4, 200.0f};
+    tent = Tent{&tentSpritesheetText, 4, 4, 200.0f};
 
     //Collisions
     collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
@@ -107,8 +107,8 @@ void GameManager::update()
             deltaTime = clock.restart().asSeconds();
             players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
-            temperature.update(players.at(0), burntJackText.get(), deltaTime);
-            collisionDetector.update(players.at(0), deadJackText.get(), platforms, logText.get(), whiteLogText.get(), tent);
+            temperature.update(players.at(0), &burntJackText, deltaTime);
+            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             gameSounds.play(players.at(0));
         }
         else
