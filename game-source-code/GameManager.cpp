@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+//Constructor intializes all variables
 GameManager::GameManager():
     window{sf::VideoMode(1280, 720), "Outback Jack"},
     splashRenderer{gameWidth, gameHeight},
@@ -23,26 +24,22 @@ GameManager::GameManager():
     playingMusic.setVolume(10);
 
     //Game Sounds
-    //shared_ptr<sf::SoundBuffer> jumpSound, landSound, victorySound, gameOverSound;
     if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav"))
         throw "cannot load sound";
     gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf};
 
     //Player
-    //shared_ptr<sf::Texture> jack_spritesheet, dead_jack, burnt_jack;
     if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
         throw "cannot load textures";
     auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f);
     players.push_back(player_1);
 
     //Platforms
-    //shared_ptr<sf::Texture> log;
     if(!logText.loadFromFile("resources/wide_log.png") || !whiteLogText.loadFromFile("resources/wide_log_white.png"))
         throw "cannot load textures";
     platforms = PlatformController(&logText);
 
     //Tent
-    //shared_ptr<sf::Texture> tent_spritesheet;
     if(!tentSpritesheetText.loadFromFile("resources/tent.png"))
         throw "cannot load texture";
     tent = Tent{&tentSpritesheetText, 4, 4, 200.0f};
@@ -57,17 +54,18 @@ GameManager::GameManager():
     deltaTime= 0.0f;
 }
 
+//Main game loop
 void GameManager::run()
 {
     while(window.isOpen())
     {
-        pollEvents();
+        pollEvent();
         update();
         render();
     }
 }
 
-void GameManager::pollEvents()
+void GameManager::pollEvent()
 {
     sf::Event event;
     while(window.pollEvent(event))
@@ -92,8 +90,13 @@ void GameManager::pollEvents()
             players.at(0).setMovement(event);
             gameSounds.play(players.at(0));
             victory = players.at(0).wonGame(event, tent);
-            //if(victory)
-            //    victorySound.play();
+            if(victory)
+                gameSounds.playVictorySound();
+        }
+
+        if((gameOver || victory) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            resetGame();
         }
     }
 }
@@ -115,7 +118,7 @@ void GameManager::update()
         {
             isPlaying = false;
             gameOver = true;
-            //gameOverSound.play();
+            gameSounds.playGameOverSound();
         }
     }
 }
@@ -153,4 +156,21 @@ void GameManager::render()
         splashRenderer.renderSplashScreen(window);
     }
     window.display();
+}
+
+void GameManager::resetGame()
+{
+    for(auto& player : players)
+    {
+        player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f};
+    }
+    platforms = PlatformController(&logText);
+    tent.reset();
+    temperature.reset();
+
+    isPlaying = true;
+    gameOver = false;
+    victory = false;
+    deltaTime= 0.0f;
+    clock.restart().asSeconds();
 }

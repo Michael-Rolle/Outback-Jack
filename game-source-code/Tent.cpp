@@ -54,3 +54,15 @@ void Tent::draw(sf::RenderWindow& window)
 {
     window.draw(tent);
 }
+
+void Tent::reset()
+{
+    currentFrame.x = 0;
+    currentFrame.y = 1;
+    textRect.height = tent.getLocalBounds().height;
+    textRect.width = tent.getLocalBounds().width;
+    textRect.left = tent.getLocalBounds().width*numFrames.x;
+    textRect.top = tent.getLocalBounds().height*numFrames.y;
+    tent.setTextureRect(textRect);
+    built = false;
+}

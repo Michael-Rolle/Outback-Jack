@@ -11,6 +11,8 @@ class GameSounds
         GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSoundBuf, sf::SoundBuffer& victorySoundBuf, sf::SoundBuffer& gameOverSoundBuf);
         GameSounds(){};
         void play(Jack& player);
+        void playVictorySound() { victorySound.play(); }
+        void playGameOverSound() { gameOverSound.play(); }
 
     private:
         sf::Sound jumpSound;

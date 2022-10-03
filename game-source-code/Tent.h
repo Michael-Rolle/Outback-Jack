@@ -11,6 +11,7 @@ class Tent
         float getPositionX();
         float width();
         void draw(sf::RenderWindow& window);
+        void reset();
 
     public:
         bool built;

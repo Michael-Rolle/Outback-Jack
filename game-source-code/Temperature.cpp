@@ -34,7 +34,7 @@ Temperature::Temperature(const float gameWidth, const float gameHeight)
     degrees.setOrigin(degreesRect.left + degreesRect.width/2.0f, degreesRect.top + degreesRect.height/2.0f);
     degrees.setPosition(gameWidth/13, gameHeight/2 - 50*degrees.getCharacterSize());
 
-    totalTime = 0;
+    totalTime = 0.0f;
 }
 
 void Temperature::draw(sf::RenderWindow& window)
@@ -50,4 +50,9 @@ void Temperature::update(Jack& player, sf::Texture* deathTexture, float deltaTim
     temperature.setString(std::to_string(time));
     if(time >= 50)
         player.die(deathTexture);
+}
+
+void Temperature::reset()
+{
+    totalTime = 0.0f;
 }

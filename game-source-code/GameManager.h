@@ -17,7 +17,6 @@
 #include <cstdlib>
 
 using std::vector;
-using std::shared_ptr;
 
 class GameManager
 {
@@ -25,9 +24,10 @@ class GameManager
         GameManager();
         void run();
     private:
-        void pollEvents();
+        void pollEvent();
         void update();
         void render();
+        void resetGame();
 
     private:
         sf::RenderWindow window;

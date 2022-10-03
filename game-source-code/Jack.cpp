@@ -21,7 +21,6 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     velocity.y = 0;
     height = 100.0f;
 
-    //const auto jackHeight = 100.0f; //How many pixels tall Jack is
     jack.setTexture(*texture);
     jack.scale(height*frameCount.y/jack.getLocalBounds().width, height*frameCount.y/jack.getLocalBounds().height);
     jack.setPosition(960.0f, 180.0f + 90.0f);
