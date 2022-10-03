@@ -38,6 +38,7 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
                 if(platforms.getPlatformRow(row-1)->isOriginalColour && platforms.getPlatformRow(row-1)->canChangeColour)
                 {
                     platforms.changePlatformRowColour(row-1, newColour, false);
+                    player.playLandingSound = true;
                     tent.nextFrame();
                     if(platforms.allPlatformsNewColour())
                         platforms.getPlatformRow(row-1)->canChangeColour = false;

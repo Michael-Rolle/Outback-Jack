@@ -50,13 +50,14 @@ int main()
 
     //Game sounds
     sf::SoundBuffer jumpSoundBuffer;
+    sf::SoundBuffer landingSoundBuffer;
     sf::SoundBuffer gameOverSoundBuffer;
     sf::SoundBuffer victorySoundBuffer;
-    if(!jumpSoundBuffer.loadFromFile("resources/quick-jump.wav") || !gameOverSoundBuffer.loadFromFile("resources/ominous-drums.wav") || !victorySoundBuffer.loadFromFile("resources/completion-of-a-level.wav"))
+    if(!jumpSoundBuffer.loadFromFile("resources/quick-jump.wav") || !landingSoundBuffer.loadFromFile("resources/landing.wav") || !gameOverSoundBuffer.loadFromFile("resources/ominous-drums.wav") || !victorySoundBuffer.loadFromFile("resources/completion-of-a-level.wav"))
         return EXIT_FAILURE;
     auto victorySound = sf::Sound{victorySoundBuffer};
     auto gameOverSound = sf::Sound{gameOverSoundBuffer};
-    auto gameSounds = GameSounds{jumpSoundBuffer, victorySoundBuffer, gameOverSoundBuffer};
+    auto gameSounds = GameSounds{jumpSoundBuffer, landingSoundBuffer, victorySoundBuffer, gameOverSoundBuffer};
 
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
@@ -133,11 +134,11 @@ int main()
             if(Player_1.isAlive)
             {
                 deltaTime = clock.restart().asSeconds();
-                gameSounds.play(Player_1);
                 Player_1.update(deltaTime); //controls movement and animations
                 platforms.update(deltaTime);
                 temperature.update(Player_1, &burnt_jack, deltaTime);
                 collisionDetector.update(Player_1, &dead_jack, platforms, &log, &white_log, tent);
+                gameSounds.play(Player_1);
             }
             else
             {
