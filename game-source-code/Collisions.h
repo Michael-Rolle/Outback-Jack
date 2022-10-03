@@ -9,6 +9,7 @@ class Collisions
 {
     public:
         Collisions(float platformWidth, float platformSpeed);
+        Collisions(){};
         void update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent);
 
     private:

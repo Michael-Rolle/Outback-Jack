@@ -22,7 +22,7 @@ using std::shared_ptr;
 class GameManager
 {
     public:
-        GameManager();
+        GameManager(bool twoPlayer_);
         void run();
 
     private:
@@ -40,6 +40,7 @@ class GameManager
         PlatformController platforms;
         Collisions collisionDetector;
         Temperature temperature;
+        Tent tent;
         sf::Clock clock;
         bool twoPlayer;
         bool isPlaying;

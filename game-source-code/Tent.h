@@ -6,6 +6,7 @@ class Tent
 {
     public:
         Tent(sf::Texture* texture, unsigned int rows, unsigned int columns);
+        Tent(){};
         void nextFrame();
         float getPositionX();
         float width();
