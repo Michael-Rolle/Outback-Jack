@@ -9,6 +9,7 @@ class VictoryScreenRenderer
         void draw(sf::RenderWindow& window);
 
     private:
+        sf::Font font;
         sf::Text winText;
         sf::Text restartText;
 };

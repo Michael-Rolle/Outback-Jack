@@ -2,7 +2,6 @@
 
 VictoryScreenRenderer::VictoryScreenRenderer(const float gameWidth, const float gameHeight)
 {
-    sf::Font font;
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         throw "cannot load font";
     winText.setFont(font);
