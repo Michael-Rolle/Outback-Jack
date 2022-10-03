@@ -33,7 +33,7 @@ int main()
         return EXIT_FAILURE;
     auto splashRenderer = SplashScreenRenderer(gameWidth, gameHeight);
     auto playingFieldRenderer = PlayingFieldRenderer(gameWidth, gameHeight);
-    auto victoryScreenRenderer = VictoryScreenRenderer(&font);
+    auto victoryScreenRenderer = VictoryScreenRenderer(gameWidth, gameHeight);
 
     sf::Music splashMusic;
     if(!splashMusic.openFromFile("resources/18 The Archives.wav"))

@@ -5,7 +5,7 @@
 class VictoryScreenRenderer
 {
     public:
-        VictoryScreenRenderer(sf::Font* font);
+        VictoryScreenRenderer(const float gameWidth, const float gameHeight);
         void draw(sf::RenderWindow& window);
 
     private:

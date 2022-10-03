@@ -1,9 +1,12 @@
 #include "VictoryScreenRenderer.h"
 
-VictoryScreenRenderer::VictoryScreenRenderer(sf::Font* font)
+VictoryScreenRenderer::VictoryScreenRenderer(const float gameWidth, const float gameHeight)
 {
-    winText.setFont(*font);
-    restartText.setFont(*font);
+    sf::Font font;
+    if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
+        throw "cannot load font";
+    winText.setFont(font);
+    restartText.setFont(font);
     winText.setString("You Win!");
     restartText.setString("Press Space to Replay");
     winText.setCharacterSize(100);
@@ -18,8 +21,8 @@ VictoryScreenRenderer::VictoryScreenRenderer(sf::Font* font)
     restartText.setOutlineColor(sf::Color::White);
     winText.setOrigin(winText.getLocalBounds().width/2.0f, winText.getLocalBounds().height/2.0f);
     restartText.setOrigin(restartText.getLocalBounds().width/2.0f, restartText.getLocalBounds().height/2.0f);
-    winText.setPosition(1920/2.0f, 0.3*1080);
-    restartText.setPosition(1920/2.0f, 0.6*1080);
+    winText.setPosition(gameWidth/2.0f, 0.3*gameHeight);
+    restartText.setPosition(gameWidth/2.0f, 0.6*gameHeight);
 }
 
 void VictoryScreenRenderer::draw(sf::RenderWindow& window)
