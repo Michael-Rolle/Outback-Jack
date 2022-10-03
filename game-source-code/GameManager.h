@@ -24,6 +24,10 @@ class GameManager
     public:
         GameManager();
         void run();
+    private:
+        void pollEvents();
+        void update();
+        void render();
 
     private:
         sf::RenderWindow window;
@@ -35,13 +39,17 @@ class GameManager
         VictoryScreenRenderer victoryRenderer;
         sf::Music splashMusic;
         sf::Music playingMusic;
+        shared_ptr<sf::SoundBuffer> jumpSound, landSound, victorySound, gameOverSound;
         GameSounds gameSounds;
+        shared_ptr<sf::Texture> jack_spritesheet, dead_jack, burnt_jack, log, white_log;
         vector<Jack> players;
         PlatformController platforms;
         Collisions collisionDetector;
         Temperature temperature;
+        shared_ptr<sf::Texture> tent_spritesheet;
         Tent tent;
         sf::Clock clock;
+        float deltaTime;
         bool twoPlayer;
         bool isPlaying;
         bool gameOver;
