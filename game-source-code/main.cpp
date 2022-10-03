@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Temperature.h"
 #include "Tent.h"
+#include "GameSounds.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -53,6 +54,9 @@ int main()
     sf::SoundBuffer victorySoundBuffer;
     if(!jumpSoundBuffer.loadFromFile("resources/quick-jump.wav") || !gameOverSoundBuffer.loadFromFile("resources/ominous-drums.wav") || !victorySoundBuffer.loadFromFile("resources/completion-of-a-level.wav"))
         return EXIT_FAILURE;
+    auto victorySound = sf::Sound{victorySoundBuffer};
+    auto gameOverSound = sf::Sound{gameOverSoundBuffer};
+    auto gameSounds = GameSounds{jumpSoundBuffer, victorySoundBuffer, gameOverSoundBuffer};
 
     sf::Texture jack_spritesheet;
     if(!jack_spritesheet.loadFromFile("resources/jack_frames.png"))
@@ -119,6 +123,8 @@ int main()
             {
                 Player_1.setMovement(event);
                 victory = Player_1.wonGame(event, tent);
+                if(victory)
+                    victorySound.play();
             }
         }
 
@@ -127,6 +133,7 @@ int main()
             if(Player_1.isAlive)
             {
                 deltaTime = clock.restart().asSeconds();
+                gameSounds.play(Player_1);
                 Player_1.update(deltaTime); //controls movement and animations
                 platforms.update(deltaTime);
                 temperature.update(Player_1, &burnt_jack, deltaTime);
@@ -136,6 +143,7 @@ int main()
             {
                 isPlaying = false;
                 gameOver = true;
+                gameOverSound.play();
             }
         }
 

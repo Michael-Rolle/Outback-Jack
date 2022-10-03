@@ -1,6 +1,7 @@
 #ifndef JACK_H
 #define JACK_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Animation.h"
 #include "Tent.h"
 
@@ -23,6 +24,7 @@ class Jack
 
     public:
         bool isAlive;
+        bool playJumpSound;
     private:
         sf::Sprite jack;
         Animation animation;

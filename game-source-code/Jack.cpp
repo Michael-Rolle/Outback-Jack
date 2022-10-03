@@ -14,6 +14,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     canJump = true;
     movingLeft = false;
     movingRight = false;
+    playJumpSound = false;
     jumpHeight = 180.0f; //1/6 of the gameHeight
     velocity.x = 0;
     velocity.y = 0;
@@ -74,15 +75,29 @@ void Jack::setMovement(sf::Event event)
             movingLeft = true;
         if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1 && canJump)
         {
+            //auto jumpSound = sf::Sound{};
+            //sf::Sound jumpSound;
+            //jumpSound.setBuffer(soundBuffer);
+            //jumpSound.setVolume(10);
+            //jumpSound.play();
+            playJumpSound = true;
             isJumping = true;
             jumpingUp = true;
             canJump = false;
+            return;
         }
         if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5 && canJump)
         {
+            //auto jumpSound = sf::Sound{};
+            //sf::Sound jumpSound;
+            //jumpSound.setBuffer(soundBuffer);
+            //jumpSound.setVolume(10);
+            //jumpSound.play();
+            playJumpSound = true;
             isJumping = true;
             jumpingUp = false;
             canJump = false;
+            return;
         }
     }
     else if(event.type == sf::Event::KeyReleased)
@@ -126,6 +141,7 @@ void Jack::die(sf::Texture* texture)
 
 void Jack::jump()
 {
+    playJumpSound = false;
     if(jumpingUp)
     {
         if(velocity.y > 0 && jack.getPosition().y >= (gameRow*180)-90)
