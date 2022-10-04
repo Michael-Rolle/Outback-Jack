@@ -13,9 +13,9 @@ Enemy::Enemy(sf::Texture* texture, float speed, bool movingRight, unsigned int g
     enemy.scale(height/enemy.getLocalBounds().width, height/enemy.getLocalBounds().height);
     enemy.setOrigin(enemy.getLocalBounds().width/2.0f, enemy.getLocalBounds().top); //So the enemy will spawn at the bottom of the game row.
     if(movingRight)
-        enemy.setPosition(0.0f+enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
+        enemy.setPosition(0.0f+enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)-5.0f);
     else
-        enemy.setPosition(1920.0f-enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
+        enemy.setPosition(1920.0f-enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)-5.0f);
 }
 
 void Enemy::changeDirection()

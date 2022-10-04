@@ -13,15 +13,13 @@ EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const fl
     this->movingRight = movingRight;
     for(int i = 0; i < (int)numEnemies; i++)
     {
-        auto enemy = Enemy{texture, 150.0f, movingRight, gameRow};
+        auto enemy = Enemy{texture, 400.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
-            enemy.setPositionX(enemy.width()/2.0f + i*(spacing+enemy.width()));
-        else
             enemy.setPositionX(1920 - ((numEnemies-1-i)*(spacing+enemy.width())+enemy.width()/2.0f));
+        else
+            enemy.setPositionX(enemy.width()/2.0f + i*(spacing+enemy.width()));
         enemies.push_back(enemy);
     }
-    //this->isOriginalColour = true;
-    //this->canChangeColour = true;
 }
 
 vector<float> EnemyRow::enemyPositions()
@@ -40,13 +38,6 @@ void EnemyRow::changeDirection()
     for(auto& enemy : enemies)
         enemy.changeDirection();
 }
-
-//void EnemyRow::changeColour(sf::Texture* texture, bool original)
-//{
-//    isOriginalColour = original;
-//    for(auto& enemy : enemies)
-//        enemy.changeColour(texture);
-//}
 
 void EnemyRow::update(float deltaTime)
 {
