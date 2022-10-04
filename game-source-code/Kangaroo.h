@@ -9,9 +9,10 @@ class Kangaroo
 {
     public:
         Kangaroo(sf::Texture* spritesheet, float height, float speed);
+        Kangaroo(){}
         float getPositionX(){ return joey.getPosition().x; }
         float width(){ return joey.getGlobalBounds().width; }
-        void update(Jack& player);
+        void update(Jack& player, float deltaTime);
         void draw(sf::RenderWindow& window);
 
     private:
@@ -20,6 +21,8 @@ class Kangaroo
         float height;
         float speed;
         bool movingRight;
+        unsigned int frameRow;
+        sf::Vector2f velocity;
 };
 
 #endif // KANGAROO_H
