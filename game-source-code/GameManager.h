@@ -11,6 +11,8 @@
 #include "PlatformController.h"
 #include "Collisions.h"
 #include "Enemy.h"
+#include "EnemyCollisions.h"
+#include "EnemyController.h"
 #include "Temperature.h"
 #include "Tent.h"
 #include "GameSounds.h"
@@ -45,6 +47,9 @@ class GameManager
         vector<Jack> players;
         PlatformController platforms;
         Collisions collisionDetector;
+        sf::Texture crocText;
+        EnemyController enemies;
+        EnemyCollisions enemyCollisionDetector;
         Temperature temperature;
         sf::Texture tentSpritesheetText;
         Tent tent;

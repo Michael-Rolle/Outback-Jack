@@ -10,11 +10,6 @@ EnemyCollisions::EnemyCollisions(float enemyWidth, float enemySpeed)
 
 void EnemyCollisions::update(Jack& player, sf::Texture* deathTexture, EnemyController& enemies)
 {
-    for(int i = 0; i < 4; i++)
-    {
-        auto enemyRow = enemies.getEnemyRow(i+1);
-    }
-
     unsigned int row = player.row();
 
     if(row > 1)
@@ -31,10 +26,9 @@ void EnemyCollisions::update(Jack& player, sf::Texture* deathTexture, EnemyContr
             if(!player.jumping() && (player.getPositionX()+player.width()/5.0f >= xPos-enemyWidth/2.0f) && (player.getPositionX()-player.width()/5.0f <= xPos+enemyWidth/2.0f)) //player is in bounds of a enemy
             {
                 onEnemy = true;
-                player.addVelocityX(enemySpeed, enemies.getEnemyRow(row-1)->movingRight);
             }
         }
-        if(!onEnemy && !player.jumping())
+        if(onEnemy && !player.jumping())
         {
             player.die(deathTexture);
         }

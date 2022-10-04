@@ -9,26 +9,11 @@ EnemyController::EnemyController(sf::Texture* texture)
     bool direction = true;
     for(int i = 0; i < 4; i++)
     {
-        auto enemyRow = EnemyRow{texture, 6, 100, (unsigned int)(i+2), direction};
+        auto enemyRow = EnemyRow{texture, 3, 10, (unsigned int)(i+2), direction};
         direction = !direction;
         enemyRows.push_back(enemyRow);
     }
 }
-
-//void EnemyController::changePlatformRowColour(unsigned int row, sf::Texture* texture, bool original)
-//{
-//    enemyRows.at(row-1).changeColour(texture, original);
-//}
-
-//bool EnemyController::allPlatformsNewColour()
-//{
-//    for(auto& enemyRow : enemyRows)
-//    {
-//        if(enemyRow.isOriginalColour)
-//            return false;
-//    }
-//    return true;
-//}
 
 void EnemyController::update(float deltaTime)
 {

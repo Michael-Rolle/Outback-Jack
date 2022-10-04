@@ -34,6 +34,13 @@ GameManager::GameManager():
     auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f);
     players.push_back(player_1);
 
+    //Enemies
+    if(!crocText.loadFromFile("resources/croc.png"))
+    {
+       throw "cannot load texture";
+    }
+    enemies = EnemyController(&crocText);
+
     //Platforms
     if(!logText.loadFromFile("resources/wide_log.png") || !whiteLogText.loadFromFile("resources/wide_log_white.png"))
         throw "cannot load textures";
@@ -46,6 +53,7 @@ GameManager::GameManager():
 
     //Collisions
     collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
+    enemyCollisionDetector = EnemyCollisions(enemies.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
 
     //Game State
     isPlaying = false;
@@ -110,8 +118,10 @@ void GameManager::update()
             deltaTime = clock.restart().asSeconds();
             players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
+            enemies.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
+            enemyCollisionDetector.update(players.at(0), &deadJackText, enemies);
             gameSounds.play(players.at(0));
         }
         else
@@ -131,6 +141,7 @@ void GameManager::render()
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
         platforms.draw(window);
+        enemies.draw(window);
         temperature.draw(window);
         players.at(0).draw(window);
     }
@@ -140,6 +151,7 @@ void GameManager::render()
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
         platforms.draw(window);
+        //enemies.draw(window);
         temperature.draw(window);
         players.at(0).draw(window);
     }
@@ -165,6 +177,7 @@ void GameManager::resetGame()
         player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f};
     }
     platforms = PlatformController(&logText);
+    enemies = EnemyController(&crocText);
     tent.reset();
     temperature.reset();
 
