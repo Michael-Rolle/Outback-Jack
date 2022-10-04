@@ -146,11 +146,11 @@ void GameManager::render()
     {
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
-        kangaroo.draw(window);
         platforms.draw(window);
         enemies.draw(window);
-        temperature.draw(window);
+        kangaroo.draw(window);
         players.at(0).draw(window);
+        temperature.draw(window);
     }
     else if(gameOver)
     {
@@ -160,8 +160,8 @@ void GameManager::render()
         platforms.draw(window);
         enemies.draw(window);
         kangaroo.draw(window);
-        temperature.draw(window);
         players.at(0).draw(window);
+        temperature.draw(window);
     }
     else if(victory)
     {
@@ -184,6 +184,7 @@ void GameManager::resetGame()
     {
         player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f};
     }
+    kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);
     platforms = PlatformController(&logText);
     enemies = EnemyController(&crocText);
     tent.reset();
