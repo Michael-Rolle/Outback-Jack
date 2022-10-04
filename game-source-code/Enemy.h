@@ -6,6 +6,7 @@ class Enemy
 {
     public:
         Enemy(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow);
+        ~Enemy(){}
         void changeDirection();
         void setPositionX(float x);
         float getPositionX();
