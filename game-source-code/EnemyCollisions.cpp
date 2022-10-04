@@ -14,7 +14,7 @@ void EnemyCollisions::update(Jack& player, sf::Texture* deathTexture, EnemyContr
 
     if(row == 1) //in safe zone
     {
-        if(abs(player.getPositionX()-kangaroo.getPositionX()) <= (player.width()+kangaroo.width())/2.0f)
+        if(!player.jumping() && abs(player.getPositionX()-kangaroo.getPositionX()) <= (player.width()+kangaroo.width())/2.0f)
             player.die(deathTexture);
     }
     else
