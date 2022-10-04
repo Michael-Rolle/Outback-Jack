@@ -8,17 +8,17 @@ EnemyCollisions::EnemyCollisions(float enemyWidth, float enemySpeed)
     this->enemySpeed = enemySpeed;
 }
 
-void EnemyCollisions::update(Jack& player, sf::Texture* deathTexture, EnemyController& enemies)
+void EnemyCollisions::update(Jack& player, sf::Texture* deathTexture, EnemyController& enemies, Kangaroo& kangaroo)
 {
     unsigned int row = player.row();
 
+    if(row == 1)
+    {
+        if(abs(player.getPositionX()-kangaroo.getPositionX()) <= (player.width()+kangaroo.width())/2.0f)
+            player.die(deathTexture);
+    }
     if(row > 1)
     {
-        if((player.getPositionX() <= 0.0f) || (player.getPositionX() >= 1920))
-        {
-            player.die(deathTexture);
-            return;
-        }
         auto xPositions = enemies.getEnemyPositions(row-1);
         bool onEnemy = false;
         for(auto xPos : xPositions)

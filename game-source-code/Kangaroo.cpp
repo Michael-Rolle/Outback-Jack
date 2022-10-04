@@ -3,12 +3,12 @@
 Kangaroo::Kangaroo(sf::Texture* spritesheet, sf::Vector2u frameCount, float switchTime, float speed):
     animation{spritesheet, frameCount, switchTime}
 {
-    height = 150.0f;
+    height = 100.0f;
     frameRow = 0;
     this->speed = speed;
     joey.setTexture(*spritesheet);
     joey.setPosition(1800, 270); //assuming origin is the centre of the kangaroo
-    joey.scale(height*frameCount.y/joey.getLocalBounds().width, height*frameCount.y/joey.getLocalBounds().height);
+    joey.scale(height*frameCount.x/joey.getGlobalBounds().width, height*frameCount.y/joey.getGlobalBounds().height);
     velocity.x = 0;
     velocity.y = 0;
     movingRight = false;

@@ -3,14 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include "EnemyController.h"
 #include "Jack.h"
-//#include "Tent.h"
+#include "Kangaroo.h"
 
 class EnemyCollisions
 {
     public:
         EnemyCollisions(float enemyWidth, float enemySpeed);
         EnemyCollisions(){};
-        void update(Jack& player, sf::Texture* deathTexture, EnemyController& enemies);
+        void update(Jack& player, sf::Texture* deathTexture, EnemyController& enemies, Kangaroo& kangaroo);
 
     private:
         float enemyWidth;
