@@ -8,6 +8,7 @@ Enemy::Enemy(sf::Texture* texture, float speed, bool movingRight, unsigned int g
     this->speed = speed;
     this->movingRight = movingRight;
     this->gameRow = gameRow;
+    //facingRight = true;
     velocity.y = 0.0f;
     enemy.setTexture(*texture);
     enemy.scale(height/enemy.getLocalBounds().width, height/enemy.getLocalBounds().height);
@@ -41,12 +42,35 @@ float Enemy::getPositionX()
 void Enemy::update(float deltaTime)
 {
     velocity.x = 0.0f;
+    sf::IntRect textRect;
+    textRect.top = enemy.getLocalBounds().top;
+    textRect.height = enemy.getLocalBounds().height;
 
     if(movingRight)
+    {
         velocity.x += speed;
-    else
-        velocity.x -= speed;
+        facingRight = true;
+    }
 
+    if(!movingRight)
+    {
+        velocity.x -= speed;
+        facingRight = false;
+    }
+
+    if(facingRight)
+    {
+        textRect.left = enemy.getLocalBounds().left + enemy.getLocalBounds().width;
+        textRect.width = -enemy.getLocalBounds().width;
+    }
+
+    if(!facingRight)
+    {
+        textRect.left = enemy.getLocalBounds().left;
+        textRect.width = enemy.getLocalBounds().width;
+    }
+
+    enemy.setTextureRect(textRect);
     enemy.move(velocity * deltaTime);
 }
 

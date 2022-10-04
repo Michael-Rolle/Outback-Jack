@@ -17,6 +17,7 @@ class Enemy
     private:
         sf::Sprite enemy;
         bool movingRight;
+        bool facingRight;
         unsigned int gameRow;
         float speed;
         sf::Vector2f velocity;

@@ -13,7 +13,7 @@ EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const fl
     this->movingRight = movingRight;
     for(int i = 0; i < (int)numEnemies; i++)
     {
-        auto enemy = Enemy{texture, 400.0f, movingRight, gameRow};
+        auto enemy = Enemy{texture, 200.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
             enemy.setPositionX(1920 - ((numEnemies-1-i)*(spacing+enemy.width())+enemy.width()/2.0f));
         else
