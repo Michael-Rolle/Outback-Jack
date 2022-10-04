@@ -14,6 +14,10 @@ Kangaroo::Kangaroo(sf::Texture* spritesheet, sf::Vector2u frameCount, float swit
     movingRight = false;
 }
 
+Kangaroo::Kangaroo():
+    animation{}
+{}
+
 void Kangaroo::update(Jack& player, float deltaTime)
 {
     if(player.row() == 1) //tracks player if in the safe zone with joey
@@ -25,7 +29,7 @@ void Kangaroo::update(Jack& player, float deltaTime)
         }
         else if(player.getPositionX() >= joey.getPosition().x)
         {
-            vecocity.x = speed*deltaTime;
+            velocity.x = speed*deltaTime;
             movingRight = true;
         }
     }

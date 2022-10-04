@@ -41,6 +41,11 @@ GameManager::GameManager():
     }
     enemies = EnemyController(&crocText);
 
+    //Kangaroo
+    if(!kangarooSpritesheetText.loadFromFile("resources/kangaroo.png"))
+        throw "cannot load texture";
+    kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 300.0f};
+
     //Platforms
     if(!logText.loadFromFile("resources/wide_log.png") || !whiteLogText.loadFromFile("resources/wide_log_white.png"))
         throw "cannot load textures";
@@ -123,6 +128,7 @@ void GameManager::update()
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies);
             gameSounds.play(players.at(0));
+            kangaroo.update(players.at(0), deltaTime);
         }
         else
         {
@@ -140,6 +146,7 @@ void GameManager::render()
     {
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
+        kangaroo.draw(window);
         platforms.draw(window);
         enemies.draw(window);
         temperature.draw(window);

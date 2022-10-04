@@ -8,6 +8,7 @@
 #include "PlayingFieldRenderer.h"
 #include "VictoryScreenRenderer.h"
 #include "Jack.h"
+#include "Kangaroo.h"
 #include "PlatformController.h"
 #include "Collisions.h"
 #include "Enemy.h"
@@ -45,6 +46,8 @@ class GameManager
         GameSounds gameSounds;
         sf::Texture jackSpritesheetText, deadJackText, burntJackText, logText, whiteLogText;
         vector<Jack> players;
+        sf::Texture kangarooSpritesheetText;
+        Kangaroo kangaroo;
         PlatformController platforms;
         Collisions collisionDetector;
         sf::Texture crocText;

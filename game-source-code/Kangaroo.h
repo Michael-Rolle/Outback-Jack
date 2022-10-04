@@ -8,8 +8,8 @@
 class Kangaroo
 {
     public:
-        Kangaroo(sf::Texture* spritesheet, float height, float speed);
-        Kangaroo(){}
+        Kangaroo(sf::Texture* spritesheet, sf::Vector2u frameCount, float switchTime, float speed);
+        Kangaroo();
         float getPositionX(){ return joey.getPosition().x; }
         float width(){ return joey.getGlobalBounds().width; }
         void update(Jack& player, float deltaTime);

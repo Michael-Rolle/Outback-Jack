@@ -7,6 +7,7 @@ class Animation
 {
     public:
         Animation(sf::Texture* texture, sf::Vector2u frameCount, float switchTime);
+        Animation(){}
         void update(int row, float deltaTime, bool facingRight);
         sf::IntRect textRect;
 
