@@ -9,12 +9,17 @@ using std::vector;
 class FishController
 {
     public:
-        FishController(unsigned int numFish);
+        FishController(sf::Texture* fishTexture, unsigned int numFish);
+        vector<float> fishPositions();
         void update();
-        void draw();
+        void draw(sf::RenderWindow& window);
+    private:
+        void newFishRow();
 
     private:
-        vector<Enemy> fish;
+        vector<Enemy> fishRow;
+        unsigned int gameRow;
+        unsigned int numFish;
 };
 
 #endif // FISHCONTROLLER_H
