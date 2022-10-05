@@ -4,12 +4,12 @@
 
 using namespace std;
 
-EnemyController::EnemyController(sf::Texture* texture)
+EnemyController::EnemyController(sf::Texture* texture, float pos)
 {
     bool direction = true;
     for(int i = 0; i < 4; i++)
     {
-        auto enemyRow = EnemyRow{texture, 3, 10, (unsigned int)(i+2), direction};
+        auto enemyRow = EnemyRow{texture, 3, 10, (unsigned int)(i+2), direction, pos};
         direction = !direction;
         enemyRows.push_back(enemyRow);
     }

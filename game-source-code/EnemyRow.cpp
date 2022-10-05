@@ -5,7 +5,7 @@
 
 using namespace std;
 
-EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const float spacing, const unsigned int gameRow, const bool movingRight)
+EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const float spacing, const unsigned int gameRow, const bool movingRight, float pos)
 {
     this->numEnemies = numEnemies;
     this->spacing = spacing;
@@ -15,9 +15,9 @@ EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const fl
     {
         auto enemy = Enemy{texture, 200.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
-            enemy.setPositionX(1920 - ((numEnemies-1-i)*(spacing+enemy.width())+enemy.width()/2.0f));
+            enemy.setPositionX(pos - ((numEnemies-1-i)*(spacing+enemy.width())+enemy.width()/2.0f));
         else
-            enemy.setPositionX(enemy.width()/2.0f + i*(spacing+enemy.width()));
+            enemy.setPositionX(pos + enemy.width()/2.0f + i*(spacing+enemy.width()));
         enemies.push_back(enemy);
     }
 }

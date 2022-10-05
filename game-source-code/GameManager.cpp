@@ -40,14 +40,14 @@ GameManager::GameManager():
     {
        throw "cannot load texture";
     }
-    enemies = EnemyController(&crocText);
+    enemies = EnemyController(&crocText, 1920);
 
     //Points
     if(!fishText.loadFromFile("resources/Fish.png"))
     {
        throw "cannot load texture";
     }
-    friends = EnemyController(&fishText);
+    friends = EnemyController(&fishText, 960);
 
     //Kangaroo
     if(!kangarooSpritesheetText.loadFromFile("resources/kangaroo.png"))
@@ -201,8 +201,8 @@ void GameManager::resetGame()
     }
     kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);
     platforms = PlatformController(&logText);
-    enemies = EnemyController(&crocText);
-    friends = EnemyController(&fishText);
+    enemies = EnemyController(&crocText, 1920);
+    friends = EnemyController(&fishText, 960);
     tent.reset();
     temperature.reset();
     score.reset();
