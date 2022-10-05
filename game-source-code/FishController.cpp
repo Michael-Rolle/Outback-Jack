@@ -54,10 +54,6 @@ void FishController::removeFish(unsigned int fishNum)
 {
     if(fishNum < 1 || fishNum > fishRow.size())
         throw "Invalid index";
-    /*if(fishRow.at(fishNum-1) == nullptr && !movingRight)
-        removeFish(fishNum+1);
-    if(fishRow.at(fishNum-1) == nullptr && movingRight)
-        removeFish(fishNum-1);*/
     delete fishRow.at(fishNum-1);
     fishRow.at(fishNum-1) = nullptr;
 }
