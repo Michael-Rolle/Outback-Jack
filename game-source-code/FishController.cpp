@@ -11,11 +11,11 @@ FishController::FishController(sf::Texture* fishTexture, const unsigned int numF
     this->numFish = numFish;
     for(int i = 0; i < (int)numFish; i++)
     {
-        auto fish = new Enemy{fishTexture, 200.0f, movingRight, gameRow};
-        if(movingRight) //ensure the first element in the vector is the left most element
-            fish->setPositionX(1920.0f - ((numFish-1-i)*(spacing+fish->width())+fish->width()/2.0f));
+        auto fish = new Enemy{fishTexture, 300.0f, movingRight, gameRow};
+        if(!movingRight) //ensure the first element in the vector is the left most element
+            fish->setPositionX(1920.0f + 400.0f + ((i)*(spacing+fish->width())+fish->width()/2.0f));
         else
-            fish->setPositionX(fish->width()/2.0f + i*(spacing+fish->width()));
+            fish->setPositionX(-400.0f - fish->width()/2.0f - (numFish-1-i)*(spacing+fish->width()));
         fishRow.push_back(fish);
     }
 }
@@ -28,11 +28,11 @@ void FishController::newFishRow()
     gameRow = rand()%4+2; //generates a random number between 2 and 5
     for(int i = 0; i < (int)numFish; i++)
     {
-        auto fish = new Enemy{&fishText, 200.0f, movingRight, gameRow};
-        if(movingRight) //ensure the first element in the vector is the left most element
-            fish->setPositionX(1920.0f - ((numFish-1-i)*(spacing+fish->width())+fish->width()/2.0f));
+        auto fish = new Enemy{&fishText, 300.0f, movingRight, gameRow};
+        if(!movingRight) //ensure the first element in the vector is the left most element
+            fish->setPositionX(1920.0f + 400.0f + ((i)*(spacing+fish->width())+fish->width()/2.0f));
         else
-            fish->setPositionX(fish->width()/2.0f + i*(spacing+fish->width()));
+            fish->setPositionX(-400.0f - fish->width()/2.0f - (numFish-1-i)*(spacing+fish->width()));
         fishRow.push_back(fish);
     }
 }
@@ -41,7 +41,10 @@ vector<float> FishController::fishPositions()
 {
     vector<float> positions;
     for(auto& fish : fishRow)
-        positions.push_back(fish->getPositionX());
+    {
+        if(fish != nullptr)
+            positions.push_back(fish->getPositionX());
+    }
     return positions;
 }
 
@@ -65,7 +68,17 @@ void FishController::update(float deltaTime)
         newFishRow();
 
     for(auto& fish : fishRow)
-        fish->update(deltaTime);
+    {
+        if(fish != nullptr)
+        {
+            if(fish->getPositionX()+fish->width()/2.0f <= 0 && !movingRight)
+                fish->setPositionX(1920+fish->width()/2.0f);
+            else if(fish->getPositionX()-fish->width()/2.0f >= 1920 && movingRight)
+                fish->setPositionX(0-fish->width()/2.0f);
+
+            fish->update(deltaTime);
+        }
+    }
 }
 
 void FishController::draw(sf::RenderWindow& window)

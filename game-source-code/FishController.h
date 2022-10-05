@@ -12,6 +12,8 @@ class FishController
         FishController(sf::Texture* fishTexture, const unsigned int numFish, const float spacing);
         FishController(){}
         vector<float> fishPositions();
+        unsigned int row(){ return gameRow; }
+        Enemy getFish(unsigned int fishNum){ return *fishRow.at(fishNum-1); } //enter a value from 1 to numFish
         void removeFish(unsigned int fishNum);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);

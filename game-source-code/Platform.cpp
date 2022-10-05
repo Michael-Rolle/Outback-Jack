@@ -3,7 +3,7 @@
 
 Platform::Platform(sf::Texture* texture, float speed, bool movingRight, unsigned int gameRow)
 {
-    if(gameRow < 1 || gameRow > 5)
+    if(gameRow < 2 || gameRow > 5)
         throw "Trying to spawn platform out of bounds";
     this->speed = speed;
     this->movingRight = movingRight;
