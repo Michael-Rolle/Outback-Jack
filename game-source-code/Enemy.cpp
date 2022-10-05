@@ -8,7 +8,6 @@ Enemy::Enemy(sf::Texture* texture, float speed, bool movingRight, unsigned int g
     this->speed = speed;
     this->movingRight = movingRight;
     this->gameRow = gameRow;
-    //facingRight = true;
     velocity.y = 0.0f;
     enemy.setTexture(*texture);
     enemy.scale(height/enemy.getLocalBounds().width, height/enemy.getLocalBounds().height);
@@ -17,11 +16,6 @@ Enemy::Enemy(sf::Texture* texture, float speed, bool movingRight, unsigned int g
         enemy.setPosition(0.0f+enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)-5.0f);
     else
         enemy.setPosition(1920.0f-enemy.getGlobalBounds().width/2.0f, (gameRow*180.0f)-5.0f);
-}
-
-void Enemy::changeDirection()
-{
-    movingRight = !movingRight;
 }
 
 float Enemy::width()
@@ -49,23 +43,13 @@ void Enemy::update(float deltaTime)
     if(movingRight)
     {
         velocity.x += speed;
-        facingRight = true;
+        textRect.left = enemy.getLocalBounds().left + enemy.getLocalBounds().width;
+        textRect.width = -enemy.getLocalBounds().width;
     }
 
     if(!movingRight)
     {
         velocity.x -= speed;
-        facingRight = false;
-    }
-
-    if(facingRight)
-    {
-        textRect.left = enemy.getLocalBounds().left + enemy.getLocalBounds().width;
-        textRect.width = -enemy.getLocalBounds().width;
-    }
-
-    if(!facingRight)
-    {
         textRect.left = enemy.getLocalBounds().left;
         textRect.width = enemy.getLocalBounds().width;
     }

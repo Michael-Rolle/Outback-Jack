@@ -32,13 +32,6 @@ vector<float> EnemyRow::enemyPositions()
     return positions;
 }
 
-void EnemyRow::changeDirection()
-{
-    movingRight = !movingRight;
-    for(auto& enemy : enemies)
-        enemy.changeDirection();
-}
-
 void EnemyRow::update(float deltaTime)
 {
     for(auto& enemy : enemies)
