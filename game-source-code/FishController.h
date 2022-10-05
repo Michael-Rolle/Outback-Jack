@@ -9,7 +9,7 @@ using std::vector;
 class FishController
 {
     public:
-        FishController(sf::Texture* fishTexture, unsigned int numFish);
+        FishController(sf::Texture* fishTexture, const unsigned int numFish, const float spacing);
         vector<float> fishPositions();
         void update();
         void draw(sf::RenderWindow& window);
@@ -20,6 +20,9 @@ class FishController
         vector<Enemy> fishRow;
         unsigned int gameRow;
         unsigned int numFish;
+        float spacing;
+        bool movingRight;
+        sf::Texture fishText;
 };
 
 #endif // FISHCONTROLLER_H
