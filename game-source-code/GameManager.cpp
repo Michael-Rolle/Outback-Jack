@@ -25,9 +25,9 @@ GameManager::GameManager():
     playingMusic.setVolume(10);
 
     //Game Sounds
-    if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav"))
+    if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav") || !fishSoundBuf.loadFromFile("resources/bonus.wav"))
         throw "cannot load sound";
-    gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf};
+    gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf};
 
     //Player
     if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
@@ -137,7 +137,7 @@ void GameManager::update()
             temperature.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent, score);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
-            pointCollisionDetector.update(players.at(0), score, fishRow);
+            pointCollisionDetector.update(players.at(0), score, fishRow, gameSounds);
             gameSounds.play(players.at(0));
             kangaroo.update(players.at(0), deltaTime);
         }

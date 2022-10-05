@@ -5,13 +5,10 @@ using namespace std;
 PointCollisions::PointCollisions(float fishWidth)
 {
     this->fishWidth = fishWidth;
-    //this->enemySpeed = enemySpeed;
 }
 
-void PointCollisions::update(Jack& player, Score& score, FishController& fishRow)
+void PointCollisions::update(Jack& player, Score& score, FishController& fishRow, GameSounds& gameSounds)
 {
-    //unsigned int row = player.row();
-
     if(player.row() == fishRow.row())
     {
         auto xPositions = fishRow.fishPositions();
@@ -23,6 +20,7 @@ void PointCollisions::update(Jack& player, Score& score, FishController& fishRow
             {
                 score.update(player);
                 fishRow.removeFish(i);
+                gameSounds.playFishCollection();
             }
         }
     }

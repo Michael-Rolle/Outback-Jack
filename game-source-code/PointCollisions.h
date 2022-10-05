@@ -5,13 +5,14 @@
 #include "FishController.h"
 #include "Jack.h"
 #include "Score.h"
+#include "GameSounds.h"
 
 class PointCollisions
 {
     public:
         PointCollisions(float enemyWidth);
         PointCollisions(){};
-        void update(Jack& player, Score& score, FishController& fishRow);
+        void update(Jack& player, Score& score, FishController& fishRow, GameSounds& gameSounds);
 
     private:
         float fishWidth;
