@@ -42,7 +42,9 @@ vector<float> FishController::fishPositions()
     vector<float> positions;
     for(auto& fish : fishRow)
     {
-        if(fish != nullptr)
+        if(fish == nullptr)
+            positions.push_back(-1);
+        else
             positions.push_back(fish->getPositionX());
     }
     return positions;
@@ -52,6 +54,10 @@ void FishController::removeFish(unsigned int fishNum)
 {
     if(fishNum < 1 || fishNum > fishRow.size())
         throw "Invalid index";
+    /*if(fishRow.at(fishNum-1) == nullptr && !movingRight)
+        removeFish(fishNum+1);
+    if(fishRow.at(fishNum-1) == nullptr && movingRight)
+        removeFish(fishNum-1);*/
     delete fishRow.at(fishNum-1);
     fishRow.at(fishNum-1) = nullptr;
 }

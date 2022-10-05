@@ -45,7 +45,7 @@ void Score::draw(sf::RenderWindow& window)
 
 void Score::update()
 {
-    ++score;
+    score += 10;
     points.setString(std::to_string(score));
 }
 
