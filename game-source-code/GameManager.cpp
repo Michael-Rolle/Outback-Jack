@@ -42,6 +42,13 @@ GameManager::GameManager():
     }
     enemies = EnemyController(&crocText);
 
+    //Points
+    if(!fishText.loadFromFile("resources/Fish.png"))
+    {
+       throw "cannot load texture";
+    }
+    friends = EnemyController(&fishText);
+
     //Kangaroo
     if(!kangarooSpritesheetText.loadFromFile("resources/kangaroo.png"))
         throw "cannot load texture";
@@ -60,6 +67,7 @@ GameManager::GameManager():
     //Collisions
     collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
     enemyCollisionDetector = EnemyCollisions(enemies.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
+    pointCollisionDetector = PointCollisions(friends.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
 
     //Game State
     isPlaying = false;
@@ -125,10 +133,11 @@ void GameManager::update()
             players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
             enemies.update(deltaTime);
+            friends.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
-            //score.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
+            pointCollisionDetector.update(players.at(0), score, friends);
             gameSounds.play(players.at(0));
             kangaroo.update(players.at(0), deltaTime);
         }
@@ -150,6 +159,7 @@ void GameManager::render()
         tent.draw(window);
         platforms.draw(window);
         enemies.draw(window);
+        friends.draw(window);
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
@@ -162,6 +172,7 @@ void GameManager::render()
         tent.draw(window);
         platforms.draw(window);
         enemies.draw(window);
+        friends.draw(window);
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
@@ -191,6 +202,7 @@ void GameManager::resetGame()
     kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);
     platforms = PlatformController(&logText);
     enemies = EnemyController(&crocText);
+    friends = EnemyController(&fishText);
     tent.reset();
     temperature.reset();
     score.reset();

@@ -43,10 +43,10 @@ void Score::draw(sf::RenderWindow& window)
     window.draw(label);
 }
 
-void Score::update(Jack& player, sf::Texture* deathTexture, float deltaTime)
+void Score::update()
 {
-    //++point;
-    point = 1;
+    ++point;
+    //point = 1;
     points.setString(std::to_string(point));
 }
 

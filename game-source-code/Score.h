@@ -8,7 +8,7 @@ class Score
     public:
         Score(const float gameWidth, const float gameHeight);
         void draw(sf::RenderWindow& window);
-        void update(Jack& player, sf::Texture* deathTexture, float deltaTime);
+        void update();
         void reset();
 
     private:
