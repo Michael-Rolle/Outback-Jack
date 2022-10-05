@@ -6,7 +6,8 @@ GameManager::GameManager():
     splashRenderer{gameWidth, gameHeight},
     playingRenderer{gameWidth, gameHeight},
     victoryRenderer{gameWidth, gameHeight},
-    temperature{gameWidth, gameHeight}
+    temperature{gameWidth, gameHeight},
+    score{gameWidth, gameHeight}
 {
     //Window
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
@@ -125,6 +126,7 @@ void GameManager::update()
             platforms.update(deltaTime);
             enemies.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
+            score.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
             gameSounds.play(players.at(0));
@@ -151,6 +153,7 @@ void GameManager::render()
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
+        score.draw(window);
     }
     else if(gameOver)
     {
@@ -162,6 +165,7 @@ void GameManager::render()
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
+        score.draw(window);
     }
     else if(victory)
     {
@@ -189,6 +193,7 @@ void GameManager::resetGame()
     enemies = EnemyController(&crocText);
     tent.reset();
     temperature.reset();
+    score.reset();
 
     isPlaying = true;
     gameOver = false;

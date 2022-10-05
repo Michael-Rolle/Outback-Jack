@@ -15,6 +15,7 @@
 #include "EnemyCollisions.h"
 #include "EnemyController.h"
 #include "Temperature.h"
+#include "Score.h"
 #include "Tent.h"
 #include "GameSounds.h"
 #include <cstdlib>
@@ -54,6 +55,7 @@ class GameManager
         EnemyController enemies;
         EnemyCollisions enemyCollisionDetector;
         Temperature temperature;
+        Score score;
         sf::Texture tentSpritesheetText;
         Tent tent;
         sf::Clock clock;
