@@ -11,7 +11,7 @@ Score::Score(const float gameWidth, const float gameHeight)
     points.setFont(font);
     points.setCharacterSize(50);
     points.setFillColor(sf::Color::Blue);
-    points.setString("");
+    points.setString("0");
     points.setLetterSpacing(3);
     points.setOutlineThickness(3);
     points.setOutlineColor(sf::Color::White);
@@ -19,7 +19,7 @@ Score::Score(const float gameWidth, const float gameHeight)
     sf::FloatRect pointsRect = points.getLocalBounds();
 
     points.setOrigin(pointsRect.left + pointsRect.width/2.0f, pointsRect.top + pointsRect.height/2.0f);
-    points.setPosition(gameWidth/5, gameHeight/2 - 8.65*points.getCharacterSize());
+    points.setPosition(gameWidth/4.75, gameHeight/2 - 8.15*points.getCharacterSize());
 
     label.setFont(font);
     label.setCharacterSize(50);
@@ -34,7 +34,7 @@ Score::Score(const float gameWidth, const float gameHeight)
     label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
     label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
 
-    point = 0;
+    score = 0;
 }
 
 void Score::draw(sf::RenderWindow& window)
@@ -45,12 +45,12 @@ void Score::draw(sf::RenderWindow& window)
 
 void Score::update()
 {
-    ++point;
-    //point = 1;
-    points.setString(std::to_string(point));
+    ++score;
+    points.setString(std::to_string(score));
 }
 
 void Score::reset()
 {
-    point = 0;
+    score = 0;
+    points.setString(std::to_string(score));
 }

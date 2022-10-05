@@ -19,6 +19,7 @@ void PointCollisions::update(Jack& player, Score& score, EnemyController& friend
         {
             if(!player.jumping() && (abs(player.getPositionX()-xPos) <= enemyWidth/2.0f))
             {
+                //enemies.erase(0);
                 score.update();
             }
         }

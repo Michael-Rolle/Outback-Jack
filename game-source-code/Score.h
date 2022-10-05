@@ -15,7 +15,7 @@ class Score
         sf::Font font;
         sf::Text points;
         sf::Text label;
-        int point;
+        int score;
 };
 
 #endif
