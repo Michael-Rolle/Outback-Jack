@@ -10,7 +10,8 @@ class PointCollisions
     public:
         PointCollisions(float enemyWidth, float enemySpeed);
         PointCollisions(){};
-        void update(Jack& player, Score& score, EnemyController& friends);
+        //void update(Jack& player, Score& score, EnemyController& friends);
+        void update(Jack& player, Score& score, FishController& fishRow);
 
     private:
         float enemyWidth;

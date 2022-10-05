@@ -15,7 +15,7 @@ PlatformRow::PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, 
     {
         auto platform = Platform{texture, 150.0f, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
-            platform.setPositionX(1920 - ((numPlatforms-1-i)*(spacing+platform.width())+platform.width()/2.0f));
+            platform.setPositionX(1920.0f - ((numPlatforms-1-i)*(spacing+platform.width())+platform.width()/2.0f));
         else
             platform.setPositionX(platform.width()/2.0f + i*(spacing+platform.width()));
         platforms.push_back(platform);

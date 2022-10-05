@@ -15,6 +15,7 @@
 #include "EnemyCollisions.h"
 #include "PointCollisions.h"
 #include "EnemyController.h"
+#include "FishController.h"
 #include "Temperature.h"
 #include "Score.h"
 #include "Tent.h"
@@ -56,7 +57,8 @@ class GameManager
         EnemyController enemies;
         EnemyCollisions enemyCollisionDetector;
         sf::Texture fishText;
-        EnemyController friends;
+        //EnemyController friends;
+        FishController fishRow;
         PointCollisions pointCollisionDetector;
         Temperature temperature;
         Score score;

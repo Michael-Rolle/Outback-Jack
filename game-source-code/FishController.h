@@ -10,14 +10,16 @@ class FishController
 {
     public:
         FishController(sf::Texture* fishTexture, const unsigned int numFish, const float spacing);
+        FishController(){}
         vector<float> fishPositions();
-        void update();
+        void removeFish(unsigned int fishNum);
+        void update(float deltaTime);
         void draw(sf::RenderWindow& window);
     private:
         void newFishRow();
 
     private:
-        vector<Enemy> fishRow;
+        vector<Enemy*> fishRow;
         unsigned int gameRow;
         unsigned int numFish;
         float spacing;

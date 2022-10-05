@@ -47,7 +47,8 @@ GameManager::GameManager():
     {
        throw "cannot load texture";
     }
-    friends = EnemyController(&fishText, 960);
+    //friends = EnemyController(&fishText, 960);
+    fishRow = FishController(&fishText, 3, 100.0f);
 
     //Kangaroo
     if(!kangarooSpritesheetText.loadFromFile("resources/kangaroo.png"))
@@ -133,7 +134,8 @@ void GameManager::update()
             players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
             enemies.update(deltaTime);
-            friends.update(deltaTime);
+            //friends.update(deltaTime);
+            fishRow.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
@@ -159,7 +161,8 @@ void GameManager::render()
         tent.draw(window);
         platforms.draw(window);
         enemies.draw(window);
-        friends.draw(window);
+        //friends.draw(window);
+        fishRow.draw(window);
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
