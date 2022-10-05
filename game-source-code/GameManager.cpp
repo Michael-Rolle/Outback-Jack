@@ -135,7 +135,7 @@ void GameManager::update()
             enemies.update(deltaTime);
             fishRow.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
-            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
+            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent, score);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
             pointCollisionDetector.update(players.at(0), score, fishRow);
             gameSounds.play(players.at(0));
@@ -158,8 +158,8 @@ void GameManager::render()
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
         platforms.draw(window);
-        enemies.draw(window);
         fishRow.draw(window);
+        enemies.draw(window);
         kangaroo.draw(window);
         players.at(0).draw(window);
         temperature.draw(window);
@@ -171,6 +171,7 @@ void GameManager::render()
         playingRenderer.renderPlayingField(window);
         tent.draw(window);
         platforms.draw(window);
+        fishRow.draw(window);
         enemies.draw(window);
         kangaroo.draw(window);
         players.at(0).draw(window);

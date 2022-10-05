@@ -8,7 +8,7 @@ Collisions::Collisions(float platformWidth, float platformSpeed)
     this->platformSpeed = platformSpeed;
 }
 
-void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent)
+void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent, Score& score)
 {
     if(tent.built)
     {
@@ -39,6 +39,7 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
                 {
                     platforms.changePlatformRowColour(row-1, newColour, false);
                     player.playLandingSound = true;
+                    score.update(player);
                     tent.nextFrame();
                     if(platforms.allPlatformsNewColour())
                         platforms.getPlatformRow(row-1)->canChangeColour = false;

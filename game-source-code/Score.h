@@ -8,7 +8,7 @@ class Score
     public:
         Score(const float gameWidth, const float gameHeight);
         void draw(sf::RenderWindow& window);
-        void update();
+        void update(Jack& player);
         void reset();
 
     private:

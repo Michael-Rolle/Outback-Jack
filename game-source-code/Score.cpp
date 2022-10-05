@@ -43,9 +43,10 @@ void Score::draw(sf::RenderWindow& window)
     window.draw(label);
 }
 
-void Score::update()
+void Score::update(Jack& player)
 {
-    score += 10;
+    player.score += 10;
+    score = player.score;
     points.setString(std::to_string(score));
 }
 

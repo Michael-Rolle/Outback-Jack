@@ -20,6 +20,7 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     velocity.x = 0;
     velocity.y = 0;
     height = 100.0f;
+    score = 0.0f;
 
     jack.setTexture(*texture);
     jack.scale(height*frameCount.y/jack.getLocalBounds().width, height*frameCount.y/jack.getLocalBounds().height);

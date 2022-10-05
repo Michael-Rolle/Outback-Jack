@@ -21,7 +21,7 @@ void PointCollisions::update(Jack& player, Score& score, FishController& fishRow
             i++;
             if(!player.jumping() && (abs(player.getPositionX()-xPos) <= fishWidth/2.0f))
             {
-                score.update();
+                score.update(player);
                 fishRow.removeFish(i);
             }
         }
