@@ -15,7 +15,7 @@ class Score
         sf::Font font;
         sf::Text points;
         sf::Text label;
-        float totalTime;
+        int point;
 };
 
 #endif

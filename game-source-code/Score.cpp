@@ -33,6 +33,8 @@ Score::Score(const float gameWidth, const float gameHeight)
 
     label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
     label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+
+    point = 0;
 }
 
 void Score::draw(sf::RenderWindow& window)
@@ -43,11 +45,12 @@ void Score::draw(sf::RenderWindow& window)
 
 void Score::update(Jack& player, sf::Texture* deathTexture, float deltaTime)
 {
-    int point = 0;
+    //++point;
+    point = 1;
     points.setString(std::to_string(point));
 }
 
 void Score::reset()
 {
-    totalTime = 0.0f;
+    point = 0;
 }

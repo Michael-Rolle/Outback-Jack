@@ -126,7 +126,7 @@ void GameManager::update()
             platforms.update(deltaTime);
             enemies.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
-            score.update(players.at(0), &burntJackText, deltaTime);
+            //score.update(players.at(0), &burntJackText, deltaTime);
             collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
             gameSounds.play(players.at(0));
