@@ -2,6 +2,7 @@
 #define SCORE_H
 #include <SFML/Graphics.hpp>
 #include "Jack.h"
+#include "Temperature.h"
 
 class Score
 {
@@ -9,6 +10,7 @@ class Score
         Score(const float gameWidth, const float gameHeight);
         void draw(sf::RenderWindow& window);
         void update(Jack& player);
+        void updateFromTemp(Jack& player, Temperature& temperature);
         void reset();
 
     private:

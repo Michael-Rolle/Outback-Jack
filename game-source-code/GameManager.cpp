@@ -149,6 +149,10 @@ void GameManager::update()
             gameSounds.playGameOverSound();
         }
     }
+    else if(victory)
+    {
+        score.updateFromTemp(players.at(0), temperature);
+    }
 }
 
 void GameManager::render()

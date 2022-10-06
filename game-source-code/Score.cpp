@@ -55,3 +55,13 @@ void Score::reset()
     score = 0;
     points.setString(std::to_string(score));
 }
+
+void Score::updateFromTemp(Jack& player, Temperature& temperature)
+{
+    if(temperature.temp >= 50.0f)
+        return;
+    temperature.temp++;
+    player.score += 2.0f;
+    score = player.score;
+    points.setString(std::to_string(score));
+}

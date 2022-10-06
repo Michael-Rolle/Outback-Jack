@@ -11,11 +11,12 @@ class Temperature
         void update(Jack& player, sf::Texture* deathTexture, float deltaTime);
         void reset();
 
+    public:
+        float temp;
     private:
         sf::Font font;
         sf::Text temperature;
         sf::Text degrees;
-        float totalTime;
 };
 
 #endif
