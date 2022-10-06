@@ -57,7 +57,6 @@ class GameManager
         EnemyController enemies;
         EnemyCollisions enemyCollisionDetector;
         sf::Texture fishText;
-        //EnemyController friends;
         FishController fishRow;
         PointCollisions pointCollisionDetector;
         Temperature temperature;
