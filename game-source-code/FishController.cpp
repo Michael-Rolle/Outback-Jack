@@ -43,7 +43,7 @@ vector<float> FishController::fishPositions()
     for(auto& fish : fishRow)
     {
         if(fish == nullptr)
-            positions.push_back(-1);
+            positions.push_back(-500);
         else
             positions.push_back(fish->getPositionX());
     }

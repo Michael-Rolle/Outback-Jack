@@ -183,6 +183,7 @@ void GameManager::render()
         playingMusic.stop();
         tent.draw(window);
         players.at(0).draw(window);
+        score.draw(window);
         victoryRenderer.draw(window);
     }
     else
