@@ -66,6 +66,14 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_2_Image.setOrigin(arrowsRect.left + arrowsRect.width/2.0f, arrowsRect.top + arrowsRect.height/2.0f);
     controls_2_Image.setPosition(gameWidth/1.13f, gameHeight/1.25f);
 
+    if(!controls_2_Shift.loadFromFile("resources/Shift.png"))
+        throw "cannot load player ones shift controls image";
+    controls_2_Shift_Image.setTexture(controls_2_Shift);
+    controls_2_Shift_Image.setScale(gameWidth/(14.0f*controls_2_Shift_Image.getLocalBounds().width), gameHeight/(10.0f*controls_2_Shift_Image.getLocalBounds().height));
+    sf::FloatRect shift_2_Rect = controls_2_Shift_Image.getLocalBounds();
+    controls_2_Shift_Image.setOrigin(shift_2_Rect.left + shift_2_Rect.width/2.0f, shift_2_Rect.top + shift_2_Rect.height/2.0f);
+    controls_2_Shift_Image.setPosition(gameWidth/1.04f, gameHeight/1.05f);
+
     //Controls text
     player_1.setFont(font);
     player_1.setCharacterSize(20);
@@ -100,7 +108,16 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_1_text.setOrigin(controls_1_text_Rect.left + controls_1_text_Rect.width/2.0f, controls_1_text_Rect.top + controls_1_text_Rect.height/2.0f);
     controls_1_text.setPosition(gameWidth/9, gameHeight/1.25);
 
-
+    controls_1_shift.setFont(font);
+    controls_1_shift.setCharacterSize(15);
+    controls_1_shift.setFillColor(sf::Color::Black);
+    controls_1_shift.setString("TO  CHANGE  PLATFORM  DIRECTION");
+    controls_1_shift.setLetterSpacing(3);
+    controls_1_shift.setOutlineThickness(3);
+    controls_1_shift.setOutlineColor(sf::Color::White);
+    sf::FloatRect controls_1_shift_Rect = controls_1_shift.getLocalBounds();
+    controls_1_shift.setOrigin(controls_1_shift_Rect.left + controls_1_shift_Rect.width/2.0f, controls_1_shift_Rect.top + controls_1_shift_Rect.height/2.0f);
+    controls_1_shift.setPosition(gameWidth/5.5f, gameHeight/1.025);
 
     controls_2_text.setFont(font);
     controls_2_text.setCharacterSize(15);
@@ -112,6 +129,17 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     sf::FloatRect controls_2_text_Rect = controls_2_text.getLocalBounds();
     controls_2_text.setOrigin(controls_2_text_Rect.left + controls_2_text_Rect.width/2.0f, controls_2_text_Rect.top + controls_2_text_Rect.height/2.0f);
     controls_2_text.setPosition(gameWidth/1.13f, gameHeight/1.25);
+
+    controls_2_shift.setFont(font);
+    controls_2_shift.setCharacterSize(15);
+    controls_2_shift.setFillColor(sf::Color::Black);
+    controls_2_shift.setString("TO  CHANGE  PLATFORM  DIRECTION");
+    controls_2_shift.setLetterSpacing(3);
+    controls_2_shift.setOutlineThickness(3);
+    controls_2_shift.setOutlineColor(sf::Color::White);
+    sf::FloatRect controls_2_shift_Rect = controls_2_shift.getLocalBounds();
+    controls_2_shift.setOrigin(controls_2_shift_Rect.left + controls_2_shift_Rect.width/2.0f, controls_2_shift_Rect.top + controls_2_shift_Rect.height/2.0f);
+    controls_2_shift.setPosition(gameWidth/1.225f, gameHeight/1.025);
 }
 
 void SplashScreenRenderer::draw(sf::RenderWindow& window)
@@ -120,10 +148,13 @@ void SplashScreenRenderer::draw(sf::RenderWindow& window)
     window.draw(title);
     window.draw(startMessage);
     window.draw(controls_1_text);
+    window.draw(controls_1_shift);
     window.draw(controls_2_text);
+    window.draw(controls_2_shift);
     window.draw(player_1);
     window.draw(player_2);
     window.draw(controls_1_Image);
     window.draw(controls_1_Shift_Image);
     window.draw(controls_2_Image);
+    window.draw(controls_2_Shift_Image);
 }
