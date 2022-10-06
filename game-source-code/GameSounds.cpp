@@ -7,6 +7,10 @@ GameSounds::GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSo
     victorySound.setBuffer(victorySoundBuf);
     gameOverSound.setBuffer(gameOverSoundBuf);
     fishSound.setBuffer(fishSoundBuf);
+    jumpSound.setVolume(30);
+    landingSound.setVolume(30);
+    victorySound.setVolume(30);
+    fishSound.setVolume(10);
 }
 
 void GameSounds::play(Jack& player)
