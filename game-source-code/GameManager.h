@@ -47,7 +47,7 @@ class GameManager
         DefeatScreenRenderer defeatRenderer;
         sf::Music splashMusic;
         sf::Music playingMusic;
-        sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf;
+        sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf, tempScoreSoundBuf;
         GameSounds gameSounds;
         sf::Texture jackSpritesheetText, deadJackText, burntJackText, logText, whiteLogText;
         vector<Jack> players;

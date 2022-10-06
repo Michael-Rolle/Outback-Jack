@@ -26,9 +26,9 @@ GameManager::GameManager():
     playingMusic.setVolume(10);
 
     //Game Sounds
-    if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav") || !fishSoundBuf.loadFromFile("resources/bonus.wav"))
+    if(!jumpSoundBuf.loadFromFile("resources/quick-jump.wav") || !landSoundBuf.loadFromFile("resources/landing.wav") || !victorySoundBuf.loadFromFile("resources/completion-of-a-level.wav") || !gameOverSoundBuf.loadFromFile("resources/ominous-drums.wav") || !fishSoundBuf.loadFromFile("resources/bonus.wav") || !tempScoreSoundBuf.loadFromFile("resources/score-increasing.wav"))
         throw "cannot load sound";
-    gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf};
+    gameSounds = GameSounds{jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf, tempScoreSoundBuf};
 
     //Player
     if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
@@ -114,7 +114,10 @@ void GameManager::pollEvent()
             gameSounds.play(players.at(0));
             victory = players.at(0).wonGame(event, tent);
             if(victory)
-                gameSounds.playVictorySound();
+            {
+               //gameSounds.playVictorySound();
+               gameSounds.playTempScoreIncreaseing();
+            }
         }
 
         if((gameOver || victory) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))

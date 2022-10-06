@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Jack.h"
 #include "Temperature.h"
+#include "GameSounds.h"
 
 class Score
 {

@@ -8,12 +8,13 @@
 class GameSounds
 {
     public:
-        GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSoundBuf, sf::SoundBuffer& victorySoundBuf, sf::SoundBuffer& gameOverSoundBuf, sf::SoundBuffer& fishSoundBuf);
+        GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSoundBuf, sf::SoundBuffer& victorySoundBuf, sf::SoundBuffer& gameOverSoundBuf, sf::SoundBuffer& fishSoundBuf, sf::SoundBuffer& tempScoreSoundBuf);
         GameSounds(){};
         void play(Jack& player);
         void playVictorySound() { victorySound.play(); }
         void playGameOverSound() { gameOverSound.play(); }
         void playFishCollection() { fishSound.play(); }
+        void playTempScoreIncreaseing() { tempScoreSound.play(); }
 
     private:
         sf::Sound jumpSound;
@@ -21,6 +22,7 @@ class GameSounds
         sf::Sound victorySound;
         sf::Sound gameOverSound;
         sf::Sound fishSound;
+        sf::Sound tempScoreSound;
 };
 
 #endif // GAMESOUNDS_H
