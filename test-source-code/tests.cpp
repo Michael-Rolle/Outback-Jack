@@ -337,3 +337,31 @@ TEST_CASE("Enemies can kill Jack")
     }
     CHECK(player.isAlive == false);
 }
+
+TEST_CASE("The Kangaroo can kill Jack")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    auto enemies = EnemyController(&enemyText, 1920);
+    auto enemyCollisionDetector = EnemyCollisions(enemies.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
+    sf::Texture jack_spritesheet;
+    sf::Texture deadJackText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    deadJackText.loadFromFile("resources/dead_jack.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 90.0f);
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        player.update(deltaTime);
+        enemies.update(deltaTime);
+        enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+    }
+    CHECK(player.isAlive == false);
+}
