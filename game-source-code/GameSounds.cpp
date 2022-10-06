@@ -11,6 +11,7 @@ GameSounds::GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSo
     jumpSound.setVolume(30);
     landingSound.setVolume(30);
     victorySound.setVolume(30);
+    gameOverSound.setVolume(30);
     fishSound.setVolume(10);
     tempScoreSound.setVolume(10);
 }
