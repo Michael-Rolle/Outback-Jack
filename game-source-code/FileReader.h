@@ -5,7 +5,8 @@
 #include <iostream>
 
 using std::string;
-using std::fstream;
+using std::ifstream;
+using std::ofstream;
 using std::ios;
 
 class FileReader

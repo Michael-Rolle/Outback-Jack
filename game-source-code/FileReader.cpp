@@ -10,19 +10,26 @@ FileReader::FileReader(const string& filePath)
 
 string FileReader::read()
 {
-    char c;
+    auto file = ifstream{filePath};
+    if(!file.is_open())
+        throw "file cannot open";
+    //char c;
     string content = "";
-    while(!file.eof())
-    {
-        file.get(c);
-        content += c;
-    }
-    //file >> content;
+    //while(!file.eof())
+    //{
+    //    file.get(c);
+    //    content += c;
+    //}
+    file >> content;
+    file.close();
     return content;
 }
 
 void FileReader::write(const string& input)
 {
-    file.clear();
+    auto file = ofstream{filePath};
+    if(!file.is_open())
+        throw "file cannot open";
     file << input;
+    file.close();
 }

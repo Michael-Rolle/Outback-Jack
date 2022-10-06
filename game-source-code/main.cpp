@@ -12,7 +12,9 @@ int main()
     return EXIT_SUCCESS;*/
     auto fileReader = FileReader{"resources/highscore.txt"};
     //fileReader.write(to_string(1000));
-    fileReader.write("500");
+    cout << fileReader.read();
+    fileReader.write("12");
+    cout << fileReader.read();
     //cout << stoi(fileReader.read());
     //cout << stoi(fileReader.read());
     return 0;
