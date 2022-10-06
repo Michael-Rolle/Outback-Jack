@@ -355,7 +355,7 @@ TEST_CASE("Kangaroo can move right and left")
     float deltaTime;
 
     kangaroo.movingRight = true;
-    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
     {
         deltaTime = clock2.restart().asSeconds();
         kangaroo.update(player, deltaTime);
@@ -363,12 +363,45 @@ TEST_CASE("Kangaroo can move right and left")
     CHECK(kangaroo.joey.getPosition().x  > startPos);
 
     kangaroo.movingRight = false;
-    while(clock1.getElapsedTime().asSeconds() <= 5.0f)
+    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
     {
         deltaTime = clock2.restart().asSeconds();
         kangaroo.update(player, deltaTime);
     }
     CHECK(kangaroo.joey.getPosition().x < startPos);
+}
+
+TEST_CASE("Kangaroo can't move out of bounds")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    player.gameRow = 3u;
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    kangaroo.movingRight = true;
+    kangaroo.joey.setPosition(1910, 270);
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x  <= gameWidth);
+
+    kangaroo.joey.setPosition(10, 270);
+    kangaroo.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x >= 0.0f);
 }
 
 TEST_CASE("The Kangaroo can kill Jack")
