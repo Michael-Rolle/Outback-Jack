@@ -17,7 +17,6 @@ class FileReader
         void write(const string& input);
 
     private:
-        //fstream file;
         string filePath;
 };
 
