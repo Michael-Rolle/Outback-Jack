@@ -118,7 +118,7 @@ void GameManager::pollEvent()
                gameSounds.playTempScoreIncreaseing();
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && players.at(0).row() > 1)
             {
                 platforms.getPlatformRow(players.at(0).row()-1)->changeDirection();
                 tent.removeFrame();

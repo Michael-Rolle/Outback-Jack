@@ -3,7 +3,8 @@
 #include <string>
 #include <cmath>
 
-Score::Score(const float gameWidth, const float gameHeight)
+Score::Score(const float gameWidth, const float gameHeight):
+    highScoreFileReader{"resources/highscore.txt"}
 {
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         throw "cannot load font file";
@@ -26,13 +27,25 @@ Score::Score(const float gameWidth, const float gameHeight)
     label.setFillColor(sf::Color::Blue);
     label.setString("Score - ");
     label.setLetterSpacing(3);
-    label.setOutlineThickness(3);
+    label.setOutlineThickness(2);
     label.setOutlineColor(sf::Color::White);
 
     sf::FloatRect labelRect = label.getLocalBounds();
 
     label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
     label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+
+    highScore = stoi(highScoreFileReader.read());
+    highScoreText.setFont(font);
+    highScoreText.setCharacterSize(50);
+    highScoreText.setFillColor(sf::Color::White);
+    highScoreText.setString("Highscore - " + highScoreFileReader.read());
+    highScoreText.setLetterSpacing(3);
+    highScoreText.setOutlineThickness(2);
+    highScoreText.setOutlineColor(sf::Color::Yellow);
+    sf::FloatRect highScoreRect = highScoreText.getLocalBounds();
+    highScoreText.setOrigin(highScoreRect.left + highScoreRect.width/2.0f, highScoreRect.top + highScoreRect.height/2.0f);
+    highScoreText.setPosition(gameWidth/2.0f, gameHeight/2.0f - 10*highScoreText.getCharacterSize());
 
     score = 0;
 }
@@ -41,6 +54,7 @@ void Score::draw(sf::RenderWindow& window)
 {
     window.draw(points);
     window.draw(label);
+    window.draw(highScoreText);
 }
 
 void Score::update(Jack& player)
@@ -54,6 +68,8 @@ void Score::reset()
 {
     score = 0;
     points.setString(std::to_string(score));
+    highScore = stoi(highScoreFileReader.read());
+    highScoreText.setString("Highscore - " + highScoreFileReader.read());
 }
 
 void Score::updateFromTemp(Jack& player, Temperature& temperature)
@@ -65,4 +81,9 @@ void Score::updateFromTemp(Jack& player, Temperature& temperature)
     player.score += 2.0f;
     score = player.score;
     points.setString(std::to_string(score));
+
+    if(score > highScore)
+    {
+        highScoreFileReader.write(to_string(score));
+    }
 }
