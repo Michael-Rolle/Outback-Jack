@@ -4,6 +4,7 @@
 #include "Jack.h"
 #include "Temperature.h"
 #include "GameSounds.h"
+#include "FileReader.h"
 
 class Score
 {
@@ -18,7 +19,10 @@ class Score
         sf::Font font;
         sf::Text points;
         sf::Text label;
+        sf::Text highScoreText;
+        FileReader highScoreFileReader;
         int score;
+        int highScore;
 };
 
 #endif

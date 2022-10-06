@@ -3,7 +3,8 @@
 #include <string>
 #include <cmath>
 
-Score::Score(const float gameWidth, const float gameHeight)
+Score::Score(const float gameWidth, const float gameHeight):
+    highScoreFileReader{"resources/highscore.txt"}
 {
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         throw "cannot load font file";
@@ -33,6 +34,8 @@ Score::Score(const float gameWidth, const float gameHeight)
 
     label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
     label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+
+    highScore = stoi(highScoreFileReader.read());
 
     score = 0;
 }
