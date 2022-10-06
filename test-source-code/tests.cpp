@@ -35,8 +35,8 @@ TEST_CASE("All assests load correctly")
     CHECK(texture.loadFromFile("resources/jack_frames.png"));
     CHECK(texture.loadFromFile("resources/playingField.png"));
     CHECK(texture.loadFromFile("resources/start_background.jpg"));
-    CHECK(texture.loadFromFile("resources/log.png"));
-    CHECK(texture.loadFromFile("resources/white_log.png"));
+    CHECK(texture.loadFromFile("resources/wide_log.png"));
+    CHECK(texture.loadFromFile("resources/wide_log_white.png"));
     CHECK(texture.loadFromFile("resources/croc.png"));
     CHECK(texture.loadFromFile("resources/Fish.png"));
     CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
@@ -233,7 +233,7 @@ TEST_CASE("Player can't move left out of bounds")
 TEST_CASE("Platforms move in alternate directions")
 {
     sf::Texture log;
-    log.loadFromFile("resources/log.png");
+    log.loadFromFile("resources/wide_log.png");
     auto platformController = PlatformController(&log);
     auto rowOneDir = platformController.getPlatformRow(1)->movingRight;
     auto rowTwoDir = platformController.getPlatformRow(2)->movingRight;
@@ -247,9 +247,9 @@ TEST_CASE("Platforms move in alternate directions")
 TEST_CASE("Platforms can succesfully change colour")
 {
     sf::Texture log;
-    log.loadFromFile("resources/log.png");
+    log.loadFromFile("resources/wide_log.png");
     sf::Texture white_log;
-    white_log.loadFromFile("resources/white_log.png");
+    white_log.loadFromFile("resources/wide_log_white.png");
     auto platformController = PlatformController(&log);
     platformController.changePlatformRowColour(1, &white_log, false);
     CHECK_FALSE(platformController.getPlatformRow(1)->isOriginalColour);
@@ -261,7 +261,7 @@ TEST_CASE("Player moves along with platform when on top of one")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
-    log.loadFromFile("resources/log.png");
+    log.loadFromFile("resources/wide_log.png");
     auto tent = Tent(&log, 4, 4, 200.0f);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
@@ -439,7 +439,7 @@ TEST_CASE("Platform direction can be switched by Jack")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
-    log.loadFromFile("resources/log.png");
+    log.loadFromFile("resources/wide_log.png");
     auto tent = Tent(&log, 4, 4, 200.0f);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
