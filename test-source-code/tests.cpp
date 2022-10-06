@@ -7,6 +7,7 @@
 #include "../game-source-code/PlatformController.h"
 #include "../game-source-code/Collisions.h"
 #include "../game-source-code/Tent.h"
+#include "../game-source-code/Enemy.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -276,4 +277,33 @@ TEST_CASE("Player moves along with platform when on top of one")
         collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score);
     }
     CHECK(player.getPositionX() != previousPos);
+}
+
+TEST_CASE("Enemy can move right and left")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    auto speed = 200.0f;
+    auto movingRight = true;
+    auto gameRow = 2u;
+    auto enemy = Enemy(&enemyText, speed, movingRight, gameRow);
+    auto startPos = enemy.getPositionX();
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemy.update(deltaTime);
+    }
+    CHECK(enemy.getPositionX() > startPos);
+
+    enemy.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 0.2f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemy.update(deltaTime);
+    }
+    CHECK(enemy.getPositionX() < startPos);
 }
