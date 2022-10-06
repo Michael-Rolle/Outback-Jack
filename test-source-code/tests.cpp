@@ -7,6 +7,10 @@
 #include "../game-source-code/PlatformController.h"
 #include "../game-source-code/Collisions.h"
 #include "../game-source-code/Tent.h"
+#include "../game-source-code/Enemy.h"
+#include "../game-source-code/EnemyController.h"
+#include "../game-source-code/EnemyCollisions.h"
+#include "../game-source-code/Kangaroo.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -257,7 +261,7 @@ TEST_CASE("Player moves along with platform when on top of one")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Texture log;
     log.loadFromFile("resources/log.png");
-    auto tent = Tent(&log, 4, 3);
+    auto tent = Tent(&log, 4, 4, 200.0f);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
@@ -267,12 +271,163 @@ TEST_CASE("Player moves along with platform when on top of one")
     sf::Clock clock1;
     sf::Clock clock2;
     float deltaTime;
+    auto score = Score{1920, 1080};
     while(clock1.getElapsedTime().asSeconds() <= 0.5f)
     {
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score);
     }
     CHECK(player.getPositionX() != previousPos);
+}
+
+TEST_CASE("Enemy can move right and left")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    auto speed = 200.0f;
+    auto movingRight = true;
+    auto gameRow = 2u;
+    auto enemy = Enemy(&enemyText, speed, movingRight, gameRow);
+    auto startPos = enemy.getPositionX();
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemy.update(deltaTime);
+    }
+    CHECK(enemy.getPositionX() > startPos);
+
+    enemy.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemy.update(deltaTime);
+    }
+    CHECK(enemy.getPositionX() < startPos);
+}
+
+TEST_CASE("Enemies can kill Jack")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    auto enemies = EnemyController(&enemyText, 1920);
+    auto enemyCollisionDetector = EnemyCollisions(enemies.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
+    sf::Texture jack_spritesheet;
+    sf::Texture deadJackText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    deadJackText.loadFromFile("resources/dead_jack.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        player.update(deltaTime);
+        enemies.update(deltaTime);
+        enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+    }
+    CHECK(player.isAlive == false);
+}
+
+TEST_CASE("Kangaroo can move right and left")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    player.gameRow = 3u;
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    auto startPos = kangaroo.joey.getPosition().x;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    kangaroo.movingRight = true;
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x  > startPos);
+
+    kangaroo.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x < startPos);
+}
+
+TEST_CASE("Kangaroo can't move out of bounds")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    player.gameRow = 3u;
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    kangaroo.movingRight = true;
+    kangaroo.joey.setPosition(1910, 270);
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x  <= gameWidth);
+
+    kangaroo.joey.setPosition(10, 270);
+    kangaroo.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x >= 0.0f);
+}
+
+TEST_CASE("The Kangaroo can kill Jack")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    auto enemies = EnemyController(&enemyText, 1920);
+    auto enemyCollisionDetector = EnemyCollisions(enemies.getEnemyRow(1)->getEnemy(1).width(), 150.0f);
+    sf::Texture jack_spritesheet;
+    sf::Texture deadJackText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    deadJackText.loadFromFile("resources/dead_jack.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 90.0f);
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        player.update(deltaTime);
+        enemies.update(deltaTime);
+        enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+    }
+    CHECK(player.isAlive == false);
 }
