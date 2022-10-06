@@ -31,14 +31,18 @@ TEST_CASE("All assests load correctly")
 
     CHECK(texture.loadFromFile("resources/arrows.png"));
     CHECK(texture.loadFromFile("resources/wasd.png"));
-    CHECK(texture.loadFromFile("resources/basic_platform.png"));
+    CHECK(texture.loadFromFile("resources/Shift.png"));
     CHECK(texture.loadFromFile("resources/jack_frames.png"));
+    CHECK(texture.loadFromFile("resources/burnt_jack.png"));
+    CHECK(texture.loadFromFile("resources/dead_jack.png"));
     CHECK(texture.loadFromFile("resources/playingField.png"));
     CHECK(texture.loadFromFile("resources/start_background.jpg"));
     CHECK(texture.loadFromFile("resources/wide_log.png"));
     CHECK(texture.loadFromFile("resources/wide_log_white.png"));
     CHECK(texture.loadFromFile("resources/croc.png"));
     CHECK(texture.loadFromFile("resources/Fish.png"));
+    CHECK(texture.loadFromFile("resources/kangaroo.png"));
+    CHECK(texture.loadFromFile("resources/tent.png"));
     CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
 }
 
