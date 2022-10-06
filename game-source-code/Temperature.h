@@ -13,9 +13,9 @@ class Temperature
 
     public:
         float temp;
+        sf::Text temperature;
     private:
         sf::Font font;
-        sf::Text temperature;
         sf::Text degrees;
 };
 
