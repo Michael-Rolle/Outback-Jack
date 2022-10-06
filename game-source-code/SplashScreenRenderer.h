@@ -19,12 +19,18 @@ class SplashScreenRenderer
         sf::Text player_1;
         sf::Text player_2;
         sf::Text controls_1_text;
+        sf::Text controls_1_shift;
         sf::Text controls_2_text;
+        sf::Text controls_2_shift;
 
         sf::Texture controls_1;
         sf::Sprite controls_1_Image;
+        sf::Texture controls_1_Shift;
+        sf::Sprite controls_1_Shift_Image;
         sf::Texture controls_2;
         sf::Sprite controls_2_Image;
+        sf::Texture controls_2_Shift;
+        sf::Sprite controls_2_Shift_Image;
 };
 
 #endif

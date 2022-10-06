@@ -50,6 +50,14 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_1_Image.setOrigin(wasdRect.left + wasdRect.width/2.0f, wasdRect.top + wasdRect.height/2.0f);
     controls_1_Image.setPosition(gameWidth/9.0f, gameHeight/1.25f);
 
+    if(!controls_1_Shift.loadFromFile("resources/Shift.png"))
+        throw "cannot load player ones shift controls image";
+    controls_1_Shift_Image.setTexture(controls_1_Shift);
+    controls_1_Shift_Image.setScale(gameWidth/(14.0f*controls_1_Shift_Image.getLocalBounds().width), gameHeight/(10.0f*controls_1_Shift_Image.getLocalBounds().height));
+    sf::FloatRect shift_1_Rect = controls_1_Shift_Image.getLocalBounds();
+    controls_1_Shift_Image.setOrigin(shift_1_Rect.left + shift_1_Rect.width/2.0f, shift_1_Rect.top + shift_1_Rect.height/2.0f);
+    controls_1_Shift_Image.setPosition(gameWidth/27.0f, gameHeight/1.05f);
+
     if(!controls_2.loadFromFile("resources/arrows.png"))
         throw "cannot load player two controls image";
     controls_2_Image.setTexture(controls_2);
@@ -92,6 +100,8 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_1_text.setOrigin(controls_1_text_Rect.left + controls_1_text_Rect.width/2.0f, controls_1_text_Rect.top + controls_1_text_Rect.height/2.0f);
     controls_1_text.setPosition(gameWidth/9, gameHeight/1.25);
 
+
+
     controls_2_text.setFont(font);
     controls_2_text.setCharacterSize(15);
     controls_2_text.setFillColor(sf::Color::Black);
@@ -114,5 +124,6 @@ void SplashScreenRenderer::draw(sf::RenderWindow& window)
     window.draw(player_1);
     window.draw(player_2);
     window.draw(controls_1_Image);
+    window.draw(controls_1_Shift_Image);
     window.draw(controls_2_Image);
 }
