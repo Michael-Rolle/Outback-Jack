@@ -38,6 +38,7 @@ TEST_CASE("All assests load correctly")
     CHECK(texture.loadFromFile("resources/log.png"));
     CHECK(texture.loadFromFile("resources/white_log.png"));
     CHECK(texture.loadFromFile("resources/croc.png"));
+    CHECK(texture.loadFromFile("resources/Fish.png"));
     CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
 }
 
@@ -430,4 +431,36 @@ TEST_CASE("The Kangaroo can kill Jack")
         enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
     }
     CHECK(player.isAlive == false);
+}
+
+TEST_CASE("Platform direction can be switched by Jack")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    sf::Texture log;
+    log.loadFromFile("resources/log.png");
+    auto tent = Tent(&log, 4, 4, 200.0f);
+    auto platformController = PlatformController(&log);
+    auto platformPositions = platformController.getPlatformPositions(1);
+    auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
+    player.gameRow = 2;
+    auto prevDir = platformController.getPlatformRow(1)->getPlatform(1).movingRight;
+    sf::Event event = simulateKeypress(sf::Keyboard::LShift);
+    player.setMovement(event);
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    bool newDir = false;
+    auto score = Score{1920, 1080};
+    while(clock1.getElapsedTime().asSeconds() <= 0.00001f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        player.update(deltaTime);
+        platformController.update(deltaTime);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score);
+        newDir = platformController.getPlatformRow(1)->getPlatform(1).movingRight;
+    }
+    CHECK(newDir != prevDir);
 }
