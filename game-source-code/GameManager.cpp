@@ -6,6 +6,7 @@ GameManager::GameManager():
     splashRenderer{gameWidth, gameHeight},
     playingRenderer{gameWidth, gameHeight},
     victoryRenderer{gameWidth, gameHeight},
+    defeatRenderer{gameWidth, gameHeight},
     temperature{gameWidth, gameHeight},
     score{gameWidth, gameHeight}
 {
@@ -177,6 +178,7 @@ void GameManager::render()
         players.at(0).draw(window);
         temperature.draw(window);
         score.draw(window);
+        defeatRenderer.draw(window);
     }
     else if(victory)
     {

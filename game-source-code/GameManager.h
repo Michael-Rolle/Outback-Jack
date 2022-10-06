@@ -7,6 +7,7 @@
 #include "SplashScreenRenderer.h"
 #include "PlayingFieldRenderer.h"
 #include "VictoryScreenRenderer.h"
+#include "DefeatScreenRenderer.h"
 #include "Jack.h"
 #include "Kangaroo.h"
 #include "PlatformController.h"
@@ -43,6 +44,7 @@ class GameManager
         SplashScreenRenderer splashRenderer;
         PlayingFieldRenderer playingRenderer;
         VictoryScreenRenderer victoryRenderer;
+        DefeatScreenRenderer defeatRenderer;
         sf::Music splashMusic;
         sf::Music playingMusic;
         sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf;
