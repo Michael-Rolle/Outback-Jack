@@ -10,6 +10,7 @@
 #include "../game-source-code/Enemy.h"
 #include "../game-source-code/EnemyController.h"
 #include "../game-source-code/EnemyCollisions.h"
+#include "../game-source-code/Kangaroo.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -336,6 +337,38 @@ TEST_CASE("Enemies can kill Jack")
         enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
     }
     CHECK(player.isAlive == false);
+}
+
+TEST_CASE("Kangaroo can move right and left")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    player.gameRow = 3u;
+    sf::Texture kangarooSpritesheetText;
+    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+    auto startPos = kangaroo.joey.getPosition().x;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+
+    kangaroo.movingRight = true;
+    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x  > startPos);
+
+    kangaroo.movingRight = false;
+    while(clock1.getElapsedTime().asSeconds() <= 5.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        kangaroo.update(player, deltaTime);
+    }
+    CHECK(kangaroo.joey.getPosition().x < startPos);
 }
 
 TEST_CASE("The Kangaroo can kill Jack")
