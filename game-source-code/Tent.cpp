@@ -40,6 +40,40 @@ void Tent::nextFrame()
     tent.setOrigin(textRect.width/2.0f, textRect.height);
 }
 
+void Tent::removeFrame()
+{
+    if(currentFrame.x == 0)
+        return;
+
+    if(currentFrame.x == 1 && currentFrame.y == 1)
+    {
+        currentFrame.x = 0;
+        textRect.left = tent.getLocalBounds().width;
+        textRect.top = tent.getLocalBounds().height;
+        tent.setTextureRect(textRect);
+    }
+    else if(currentFrame.x == 1 && currentFrame.y != 1)
+    {
+        currentFrame.x = numFrames.x;
+        currentFrame.y -= 1;
+    }
+    else if(currentFrame.x == numFrames.x && currentFrame.y == numFrames.y)
+    {
+        currentFrame.x -= 1;
+        built = false;
+    }
+    else
+    {
+        currentFrame.x -= 1;
+    }
+
+    textRect.left = (currentFrame.x-1)*textRect.width;
+    textRect.top = (currentFrame.y-1)*textRect.height;
+
+    tent.setTextureRect(textRect);
+    tent.setOrigin(textRect.width/2.0f, textRect.height);
+}
+
 float Tent::getPositionX()
 {
     return tent.getPosition().x;

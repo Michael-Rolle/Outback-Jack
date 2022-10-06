@@ -8,6 +8,7 @@ class Tent
         Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float height);
         Tent(){};
         void nextFrame();
+        void removeFrame();
         float getPositionX();
         float width();
         void draw(sf::RenderWindow& window);

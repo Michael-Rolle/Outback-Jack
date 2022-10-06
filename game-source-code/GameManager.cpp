@@ -115,8 +115,13 @@ void GameManager::pollEvent()
             victory = players.at(0).wonGame(event, tent);
             if(victory)
             {
-               //gameSounds.playVictorySound();
                gameSounds.playTempScoreIncreaseing();
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            {
+                platforms.getPlatformRow(players.at(0).row()-1)->changeDirection();
+                tent.removeFrame();
             }
         }
 
