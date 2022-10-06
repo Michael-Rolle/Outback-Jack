@@ -7,7 +7,7 @@ class SplashScreenRenderer
 {
     public:
         SplashScreenRenderer(const float gameWidth, const float gameHeight);
-        void renderSplashScreen(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window);
 
     private:
         sf::Font font;

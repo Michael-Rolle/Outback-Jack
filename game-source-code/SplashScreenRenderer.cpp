@@ -104,7 +104,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_2_text.setPosition(gameWidth/1.13f, gameHeight/1.25);
 }
 
-void SplashScreenRenderer::renderSplashScreen(sf::RenderWindow& window)
+void SplashScreenRenderer::draw(sf::RenderWindow& window)
 {
     window.draw(backgroundImage);
     window.draw(title);

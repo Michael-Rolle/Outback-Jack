@@ -154,9 +154,9 @@ void GameManager::update()
 void GameManager::render()
 {
     window.clear();
-    if(isPlaying && !gameOver && !victory)
+    if(isPlaying || gameOver || victory)
     {
-        playingRenderer.renderPlayingField(window);
+        playingRenderer.draw(window);
         tent.draw(window);
         platforms.draw(window);
         fishRow.draw(window);
@@ -165,33 +165,15 @@ void GameManager::render()
         players.at(0).draw(window);
         temperature.draw(window);
         score.draw(window);
-    }
-    else if(gameOver)
-    {
-        playingMusic.stop();
-        playingRenderer.renderPlayingField(window);
-        tent.draw(window);
-        platforms.draw(window);
-        fishRow.draw(window);
-        enemies.draw(window);
-        kangaroo.draw(window);
-        players.at(0).draw(window);
-        temperature.draw(window);
-        score.draw(window);
-        defeatRenderer.draw(window);
-    }
-    else if(victory)
-    {
-        playingMusic.stop();
-        tent.draw(window);
-        players.at(0).draw(window);
-        score.draw(window);
-        victoryRenderer.draw(window);
+        if(gameOver)
+            defeatRenderer.draw(window);
+        else if(victory)
+            victoryRenderer.draw(window);
     }
     else
     {
         //draw the splash screen
-        splashRenderer.renderSplashScreen(window);
+        splashRenderer.draw(window);
     }
     window.display();
 }

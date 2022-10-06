@@ -7,7 +7,7 @@ class PlayingFieldRenderer
 {
     public:
         PlayingFieldRenderer(const float gameWidth, const float gameHeight);
-        void renderPlayingField(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window);
 
     private:
         sf::Texture playingField;

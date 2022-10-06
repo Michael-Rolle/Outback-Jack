@@ -13,7 +13,7 @@ PlayingFieldRenderer::PlayingFieldRenderer(const float gameWidth, const float ga
     playingFieldImage.setPosition(gameWidth/2.0f, gameHeight/2.0f);
 }
 
-void PlayingFieldRenderer::renderPlayingField(sf::RenderWindow& window)
+void PlayingFieldRenderer::draw(sf::RenderWindow& window)
 {
     window.draw(playingFieldImage);
 }
