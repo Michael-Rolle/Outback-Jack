@@ -166,9 +166,15 @@ void GameManager::render()
         temperature.draw(window);
         score.draw(window);
         if(gameOver)
+        {
+            playingMusic.stop();
             defeatRenderer.draw(window);
+        }
         else if(victory)
+        {
+            playingMusic.stop();
             victoryRenderer.draw(window);
+        }
     }
     else
     {
