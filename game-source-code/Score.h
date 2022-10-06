@@ -5,6 +5,9 @@
 #include "Temperature.h"
 #include "GameSounds.h"
 #include "FileReader.h"
+#include <string>
+
+using namespace std;
 
 class Score
 {

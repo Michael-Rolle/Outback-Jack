@@ -36,6 +36,16 @@ Score::Score(const float gameWidth, const float gameHeight):
     label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
 
     highScore = stoi(highScoreFileReader.read());
+    highScoreText.setFont(font);
+    highScoreText.setCharacterSize(50);
+    highScoreText.setFillColor(sf::Color::White);
+    highScoreText.setString("Highscore: " + highScoreFileReader.read());
+    highScoreText.setLetterSpacing(3);
+    highScoreText.setOutlineThickness(3);
+    highScoreText.setOutlineColor(sf::Color::Yellow);
+    sf::FloatRect highScoreRect = highScoreText.getLocalBounds();
+    highScoreText.setOrigin(highScoreRect.left + highScoreRect.width/2.0f, highScoreRect.top + highScoreRect.height/2.0f);
+    highScoreText.setPosition(gameWidth/2.0f, gameHeight/2.0f - 10*highScoreText.getCharacterSize());
 
     score = 0;
 }
@@ -44,6 +54,7 @@ void Score::draw(sf::RenderWindow& window)
 {
     window.draw(points);
     window.draw(label);
+    window.draw(highScoreText);
 }
 
 void Score::update(Jack& player)
@@ -68,4 +79,9 @@ void Score::updateFromTemp(Jack& player, Temperature& temperature)
     player.score += 2.0f;
     score = player.score;
     points.setString(std::to_string(score));
+
+    if(score > highScore)
+    {
+        highScoreFileReader.write(to_string(score));
+    }
 }
