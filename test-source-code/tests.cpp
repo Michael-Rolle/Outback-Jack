@@ -422,48 +422,29 @@ TEST_CASE("Fish can move") // fish direction is random, therefore testing if the
     CHECK(tempCurr != tempPrev);
 }
 
-TEST_CASE("Fish loop around right edge of the screen")
+TEST_CASE("Fish can loop around the edge of the screen")
 {
     sf::Texture fishText;
     fishText.loadFromFile("resources/Fish.png");
-    auto fishRow = FishController(&fishText, 1, 50.0f);
-    auto prevPos = fishRow.fishPositions();
-    auto tempPrev = prevPos[0];
-    vector<float> currPos;
-    auto tempCurr = 0.0f;
+    auto numFish = 1;
+    auto fishRow = FishController(&fishText, numFish, 50.0f);
+    if(fishRow.movingRight)
+        fishRow.fishRow.at(0)->setPositionX(gameWidth);
+    else
+        fishRow.fishRow.at(0)->setPositionX(0);
+    auto prevPos = fishRow.fishPositions().front();
     sf::Clock clock1;
     sf::Clock clock2;
     float deltaTime;
-    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
+    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
     {
         deltaTime = clock2.restart().asSeconds();
         fishRow.update(deltaTime);
-        currPos = fishRow.fishPositions();
     }
-    tempCurr = currPos[0];
-    CHECK(tempCurr < tempPrev);
-}
-
-TEST_CASE("Fish loop around left edge of the screen")
-{
-    sf::Texture fishText;
-    fishText.loadFromFile("resources/Fish.png");
-    auto fishRow = FishController(&fishText, 1, 50.0f);
-    auto prevPos = fishRow.fishPositions();
-    auto tempPrev = prevPos[0];
-    vector<float> currPos;
-    auto tempCurr = 0.0f;
-    sf::Clock clock1;
-    sf::Clock clock2;
-    float deltaTime;
-    while(clock1.getElapsedTime().asSeconds() <= 5.0f)
-    {
-        deltaTime = clock2.restart().asSeconds();
-        fishRow.update(deltaTime);
-        currPos = fishRow.fishPositions();
-    }
-    tempCurr = currPos[0];
-    CHECK(tempCurr > tempPrev);
+    if(fishRow.movingRight)
+        CHECK(fishRow.fishPositions().front() < prevPos);
+    else
+        CHECK(fishRow.fishPositions().front() > prevPos);
 }
 
 TEST_CASE("Kangaroo can move right and left")
