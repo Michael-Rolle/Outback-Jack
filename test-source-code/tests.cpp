@@ -341,6 +341,33 @@ TEST_CASE("Enemy loops around right edge of the screen")
     CHECK(tempCurr < tempPrev);
 }
 
+TEST_CASE("Enemy loops around left edge of the screen")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    const unsigned int numEnemies = 1;
+    const float spacing = 10.0;
+    const unsigned int gameRow = 2u;
+    const bool movingRight = false;
+    float pos = 10.0;
+    auto enemyRow = EnemyRow(&enemyText, numEnemies, spacing, gameRow, movingRight, pos);
+    auto prevPos = enemyRow.enemyPositions();
+    auto tempPrev = prevPos[0];
+    vector<float> currPos;
+    auto tempCurr = 0.0f;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemyRow.update(deltaTime);
+        currPos = enemyRow.enemyPositions();
+    }
+    tempCurr = currPos[0];
+    CHECK(tempCurr > tempPrev);
+}
+
 TEST_CASE("Enemies can kill Jack")
 {
     sf::Texture enemyText;
