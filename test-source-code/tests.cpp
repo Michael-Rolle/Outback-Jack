@@ -314,7 +314,7 @@ TEST_CASE("Enemy can move right and left")
     CHECK(enemy.getPositionX() < startPos);
 }
 
-TEST_CASE("Enemy loops around edge of the screen")
+TEST_CASE("Enemy loops around right edge of the screen")
 {
     sf::Texture enemyText;
     enemyText.loadFromFile("resources/croc.png");
@@ -389,6 +389,50 @@ TEST_CASE("Fish can move") // fish direction is random, therefore testing if the
     }
     tempCurr = currPos[0];
     CHECK(tempCurr != tempPrev);
+}
+
+TEST_CASE("Fish loop around right edge of the screen")
+{
+    sf::Texture fishText;
+    fishText.loadFromFile("resources/Fish.png");
+    auto fishRow = FishController(&fishText, 1, 50.0f);
+    auto prevPos = fishRow.fishPositions();
+    auto tempPrev = prevPos[0];
+    vector<float> currPos;
+    auto tempCurr = 0.0f;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        fishRow.update(deltaTime);
+        currPos = fishRow.fishPositions();
+    }
+    tempCurr = currPos[0];
+    CHECK(tempCurr < tempPrev);
+}
+
+TEST_CASE("Fish loop around left edge of the screen")
+{
+    sf::Texture fishText;
+    fishText.loadFromFile("resources/Fish.png");
+    auto fishRow = FishController(&fishText, 1, 50.0f);
+    auto prevPos = fishRow.fishPositions();
+    auto tempPrev = prevPos[0];
+    vector<float> currPos;
+    auto tempCurr = 0.0f;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 5.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        fishRow.update(deltaTime);
+        currPos = fishRow.fishPositions();
+    }
+    tempCurr = currPos[0];
+    CHECK(tempCurr > tempPrev);
 }
 
 TEST_CASE("Kangaroo can move right and left")
