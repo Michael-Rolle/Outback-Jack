@@ -12,6 +12,7 @@
 #include "../game-source-code/EnemyController.h"
 #include "../game-source-code/EnemyCollisions.h"
 #include "../game-source-code/Kangaroo.h"
+#include "../game-source-code/FishController.h"
 
 //Global Constants
 const float gameWidth = 1920;
@@ -366,6 +367,28 @@ TEST_CASE("Enemies can kill Jack")
         enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
     }
     CHECK(player.isAlive == false);
+}
+
+TEST_CASE("Fish can move") // fish direction is random, therefore testing if they are capable of movement
+{
+    sf::Texture fishText;
+    fishText.loadFromFile("resources/Fish.png");
+    auto fishRow = FishController(&fishText, 1, 50.0f);
+    auto prevPos = fishRow.fishPositions();
+    auto tempPrev = prevPos[0];
+    vector<float> currPos = {};
+    auto tempCurr = 0.0f;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        fishRow.update(deltaTime);
+        currPos = fishRow.fishPositions();
+    }
+    tempCurr = currPos[0];
+    CHECK(tempCurr != tempPrev);
 }
 
 TEST_CASE("Kangaroo can move right and left")
