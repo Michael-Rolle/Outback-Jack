@@ -326,7 +326,7 @@ TEST_CASE("Enemy loops around edge of the screen")
     auto enemyRow = EnemyRow(&enemyText, numEnemies, spacing, gameRow, movingRight, pos);
     auto prevPos = enemyRow.enemyPositions();
     auto tempPrev = prevPos[0];
-    vector<float> currPos = {};
+    vector<float> currPos;
     auto tempCurr = 0.0f;
     sf::Clock clock1;
     sf::Clock clock2;
@@ -376,7 +376,7 @@ TEST_CASE("Fish can move") // fish direction is random, therefore testing if the
     auto fishRow = FishController(&fishText, 1, 50.0f);
     auto prevPos = fishRow.fishPositions();
     auto tempPrev = prevPos[0];
-    vector<float> currPos = {};
+    vector<float> currPos;
     auto tempCurr = 0.0f;
     sf::Clock clock1;
     sf::Clock clock2;
