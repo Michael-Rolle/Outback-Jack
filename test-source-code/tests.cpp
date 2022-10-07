@@ -8,6 +8,7 @@
 #include "../game-source-code/Collisions.h"
 #include "../game-source-code/Tent.h"
 #include "../game-source-code/Enemy.h"
+#include "../game-source-code/EnemyRow.h"
 #include "../game-source-code/EnemyController.h"
 #include "../game-source-code/EnemyCollisions.h"
 #include "../game-source-code/Kangaroo.h"
@@ -310,6 +311,33 @@ TEST_CASE("Enemy can move right and left")
         enemy.update(deltaTime);
     }
     CHECK(enemy.getPositionX() < startPos);
+}
+
+TEST_CASE("Enemy loops around edge of the screen")
+{
+    sf::Texture enemyText;
+    enemyText.loadFromFile("resources/croc.png");
+    const unsigned int numEnemies = 1;
+    const float spacing = 10.0;
+    const unsigned int gameRow = 2u;
+    const bool movingRight = true;
+    float pos = 1910.0;
+    auto enemyRow = EnemyRow(&enemyText, numEnemies, spacing, gameRow, movingRight, pos);
+    auto prevPos = enemyRow.enemyPositions();
+    auto tempPrev = prevPos[0];
+    vector<float> currPos = {};
+    auto tempCurr = 0.0f;
+    sf::Clock clock1;
+    sf::Clock clock2;
+    float deltaTime;
+    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
+    {
+        deltaTime = clock2.restart().asSeconds();
+        enemyRow.update(deltaTime);
+        currPos = enemyRow.enemyPositions();
+    }
+    tempCurr = currPos[0];
+    CHECK(tempCurr < tempPrev);
 }
 
 TEST_CASE("Enemies can kill Jack")
