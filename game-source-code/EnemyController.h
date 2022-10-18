@@ -4,7 +4,7 @@
 #include <vector>
 
 /*!
-Class capable of updating and reading each enemy row (and hence each enemy as well) that exists.
+Class capable of creating, updating and reading each enemy row (and hence each enemy as well) that exists.
 */
 
 using namespace std;
