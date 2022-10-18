@@ -18,7 +18,7 @@ class Jack
                                                          the float and in the direction specified by the bool.*/
         void update(float deltaTime); /*!< Updates the position and animation frame of the player respective to the float. */
         void draw(sf::RenderWindow& window); /*!< Draws the player with reference to a RenderWindow. */
-        void die(sf::Texture* texture); /*!< Change the players texture to the paramter Texture if they die. */
+        void die(sf::Texture* texture); /*!< Change the players texture to the parameter Texture if they die. */
         bool jumping(){ return isJumping; } /*!< Check if the player is currently jumping. */
         float getPositionX() { return jack.getPosition().x; } /*!< Returns the x coordinates of the player as a float. */
         float width() { return jack.getGlobalBounds().width; } /*!< Returns the global width of the players' sprite as a float. */
