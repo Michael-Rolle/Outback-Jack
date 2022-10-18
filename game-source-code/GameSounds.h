@@ -2,15 +2,12 @@
 #define GAMESOUNDS_H
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "Jack.h"
-
 
 class GameSounds
 {
     public:
         GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSoundBuf, sf::SoundBuffer& victorySoundBuf, sf::SoundBuffer& gameOverSoundBuf, sf::SoundBuffer& fishSoundBuf, sf::SoundBuffer& tempScoreSoundBuf);
         GameSounds(){};
-        //void play(Jack& player);
         void playJumpSound() { jumpSound.play(); }
         void playLandingSound() { landingSound.play(); }
         void playVictorySound() { victorySound.play(); }

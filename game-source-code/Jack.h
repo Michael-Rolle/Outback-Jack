@@ -25,8 +25,6 @@ class Jack
 
     public:
         bool isAlive;
-        //bool playJumpSound;
-        //bool playLandingSound;
         float score;
     private:
         sf::Sprite jack;

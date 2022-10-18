@@ -15,11 +15,3 @@ GameSounds::GameSounds(sf::SoundBuffer& jumpSoundBuf, sf::SoundBuffer& landingSo
     fishSound.setVolume(10);
     tempScoreSound.setVolume(10);
 }
-
-/*void GameSounds::play(Jack& player)
-{
-    if(player.playJumpSound)
-        jumpSound.play();
-    if(player.playLandingSound)
-        landingSound.play();
-}*/
