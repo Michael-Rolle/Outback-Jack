@@ -25,11 +25,25 @@
 
 using std::vector;
 
+/*! \mainpage
+All public member functions specified as 'void' do not return a type as they are manipulative functions about their object.
+Data is then incapable of being read from these functions. If one of these function does not accept any parameter it is
+usually a 'Setter' or 'Getter' type function.
+
+All other functions return a type as these types and their respective data are required for other implementations.
+*/
+
+/*!
+Class responsible for the creation of the game window and the creation and visualisation of all game objects. It updates
+the state of the game while polling for events, until the game has ended. The game can then be reset.
+*/
+
 class GameManager
 {
     public:
         GameManager();
-        void run();
+        void run(); /*!< Takes in no parameters and doesn't return a type. Responsible for executing private member
+                    functions while the window is open. Hence updating the game as events take place. */
     private:
         void pollEvent();
         void update();

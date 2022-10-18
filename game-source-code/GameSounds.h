@@ -2,6 +2,12 @@
 #define GAMESOUNDS_H
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+//#include "Jack.h"
+
+/*!
+Responsible for playing all sounds within the game. All public member functions
+do not take any paramters as they are only called to play the specified sound.
+*/
 
 class GameSounds
 {
