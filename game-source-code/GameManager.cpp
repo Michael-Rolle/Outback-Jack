@@ -110,8 +110,8 @@ void GameManager::pollEvent()
 
         if(isPlaying && !victory)
         {
-            players.at(0).setMovement(event);
-            gameSounds.play(players.at(0));
+            players.at(0).setMovement(event, gameSounds);
+            //gameSounds.play(players.at(0));
             victory = players.at(0).wonGame(event, tent);
             if(victory)
             {
@@ -144,10 +144,10 @@ void GameManager::update()
             enemies.update(deltaTime);
             fishRow.update(deltaTime);
             temperature.update(players.at(0), &burntJackText, deltaTime);
-            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent, score);
+            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent, score, gameSounds);
             enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
             pointCollisionDetector.update(players.at(0), score, fishRow, gameSounds);
-            gameSounds.play(players.at(0));
+            //gameSounds.play(players.at(0));
             kangaroo.update(players.at(0), deltaTime);
         }
         else

@@ -2,6 +2,7 @@
 #define JACK_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "GameSounds.h"
 #include "Animation.h"
 #include "Tent.h"
 
@@ -9,7 +10,7 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
-        void setMovement(sf::Event event);
+        void setMovement(sf::Event event, GameSounds& gameSounds);
         void addVelocityX(float speed, bool right);
         void update(float deltaTime);
         void draw(sf::RenderWindow& window);
@@ -24,8 +25,8 @@ class Jack
 
     public:
         bool isAlive;
-        bool playJumpSound;
-        bool playLandingSound;
+        //bool playJumpSound;
+        //bool playLandingSound;
         float score;
     private:
         sf::Sprite jack;
