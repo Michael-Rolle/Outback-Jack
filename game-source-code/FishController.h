@@ -19,7 +19,7 @@ class FishController
         vector<float> fishPositions(); /*!< Returns a vector of type float containing the positions of all fish within the row. Only one
                                             row so no need for a parameter.*/
         unsigned int row(){ return gameRow; } /*!< Returns the integer value of the current row the fish exist in. */
-        Enemy getFish(unsigned int fishNum){ return *fishRow.at(fishNum-1); } /*!< Returns the fish (of type Enemy) specified by the paramter.
+        Enemy getFish(unsigned int fishNum){ return *fishRow.at(fishNum-1); } /*!< Returns the fish (of type Enemy) specified by the parameter.
                                                                                    The input integer must be less than or equal to the number
                                                                                    of created fish. */
         void removeFish(unsigned int fishNum); /*!< Removes the specified fish from the row of existing fish.
