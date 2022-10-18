@@ -3,7 +3,10 @@
 #include "Enemy.h"
 #include <vector>
 
-//using namespace std;
+/*!
+Creates a row of enemies capable of being moved as one unit.
+*/
+
 using std::vector;
 
 class EnemyRow

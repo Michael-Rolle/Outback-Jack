@@ -9,7 +9,8 @@
 /*! Responsible for checking the player lands on a platform and then updating the colour of the platform to reflect this.
     If the player is not on a platform the collisions class is responsible for killing the player. The player can earn
     points for landing on platforms and the platforms only change colour if the tent is not built. The player moves with
-    the platform if they stand still on it. A sound is played when the player lands on a platform. */
+    the platform if they stand still on it. A sound is played when the player lands on a platform. Also checks if the
+    player is within the safe zone. */
 
 class Collisions
 {
