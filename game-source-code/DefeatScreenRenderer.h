@@ -9,7 +9,7 @@ class DefeatScreenRenderer
     public:
         DefeatScreenRenderer(const float gameWidth, const float gameHeight);
         void draw(sf::RenderWindow& window); /*!< Takes in a reference to a RenderWindow to draw the respective text
-                                                  for if the player dies. Does not return a type. */
+                                                  for if the player dies. */
 
     private:
         sf::Font font;

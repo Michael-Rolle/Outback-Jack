@@ -17,10 +17,10 @@ class Collisions
         Collisions(float platformWidth, float platformSpeed);
         Collisions(){};
         void update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent, Score& score); /*!<
-        Checks for a collision occuring. Returns no type. Takes in the respective Player, a texture to update the player with
+        Checks for a collision occuring. Takes in the respective Player, a texture to update the player with
         if they die, a PlatformController to access the respective platforms, two textures to alternate between depending on if
         the platform has been landed on, a Tent object to track the construction of the tent and a Score object to update the
-        players' score. Paramters do not allow for the collision detection of multiple players and therefore the tracking of
+        players' score. Parameters do not allow for the collision detection of multiple players and therefore the tracking of
         each players score and tent. */
 
     private:
