@@ -3,6 +3,10 @@
 #include "Platform.h"
 #include <vector>
 
+/*!
+
+*/
+
 using namespace std;
 
 class PlatformRow
@@ -10,12 +14,12 @@ class PlatformRow
     public:
         PlatformRow(sf::Texture* texture, const unsigned int numPlatforms, const float spacing, const unsigned int gameRow, const bool movingRight);
         ~PlatformRow(){}
-        vector<float> platformPositions();
-        Platform getPlatform(const unsigned int platformNum){ return platforms.at(platformNum-1); } //enter a number from 1 to numPlatforms
-        void changeDirection();
-        void changeColour(sf::Texture* texture, bool original);
-        void update(float deltaTime);
-        void draw(sf::RenderWindow& window);
+        vector<float> platformPositions(); /*!<  */
+        Platform getPlatform(const unsigned int platformNum){ return platforms.at(platformNum-1); } /*!<  */
+        void changeDirection(); /*!<  */
+        void changeColour(sf::Texture* texture, bool original); /*!<  */
+        void update(float deltaTime); /*!<  */
+        void draw(sf::RenderWindow& window); /*!<  */
 
     public:
         bool canChangeColour;

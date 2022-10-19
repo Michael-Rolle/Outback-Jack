@@ -14,7 +14,8 @@ class Jack
 {
     public:
         Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
-        void setMovement(sf::Event event, GameSounds& gameSounds); /*!< Takes in an Event object to move the player respectively. */
+        void setMovement(sf::Event event, GameSounds& gameSounds); /*!< Takes in an Event object to move the player respectively, and a
+                                                                        GameSounds object to play a sound when the player jumps. */
         void addVelocityX(float speed, bool right); /*!< Adds horizontal velocity to the player by the value designated by
                                                          the float and in the direction specified by the bool.*/
         void update(float deltaTime); /*!< Updates the position and animation frame of the player respective to the float. */
