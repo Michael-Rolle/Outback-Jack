@@ -3,11 +3,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+/*!
+Draws the splash screen detailing the title of the game and the controls for the player.
+*/
+
 class SplashScreenRenderer
 {
     public:
         SplashScreenRenderer(const float gameWidth, const float gameHeight);
-        void draw(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window); /*!< Draws all text and images with reference to a RenderWindow. */
 
     private:
         sf::Font font;
