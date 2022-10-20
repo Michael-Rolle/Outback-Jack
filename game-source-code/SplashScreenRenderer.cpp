@@ -74,6 +74,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     controls_2_Shift_Image.setOrigin(shift_2_Rect.left + shift_2_Rect.width/2.0f, shift_2_Rect.top + shift_2_Rect.height/2.0f);
     controls_2_Shift_Image.setPosition(gameWidth/1.04f, gameHeight/1.05f);
 
+
     //Controls text
     player_1.setFont(font);
     player_1.setCharacterSize(20);

@@ -31,6 +31,7 @@ TEST_CASE("All assests load correctly")
 {
     sf::Texture texture;
     sf::Font font;
+    sf::SoundBuffer sound;
 
     CHECK(texture.loadFromFile("resources/arrows.png"));
     CHECK(texture.loadFromFile("resources/wasd.png"));
@@ -47,6 +48,14 @@ TEST_CASE("All assests load correctly")
     CHECK(texture.loadFromFile("resources/kangaroo.png"));
     CHECK(texture.loadFromFile("resources/tent.png"));
     CHECK(font.loadFromFile("resources/I-Have-Bad-News.ttf"));
+    CHECK(sound.loadFromFile("resources/05 Den of Thieves.wav"));
+    CHECK(sound.loadFromFile("resources/18 The Archives.wav"));
+    CHECK(sound.loadFromFile("resources/bonus.wav"));
+    CHECK(sound.loadFromFile("resources/completion-of-a-level.wav"));
+    CHECK(sound.loadFromFile("resources/landing.wav"));
+    CHECK(sound.loadFromFile("resources/ominous-drums.wav"));
+    CHECK(sound.loadFromFile("resources/quick-jump.wav"));
+    CHECK(sound.loadFromFile("resources/score-increasing.wav"));
 }
 
 
