@@ -162,7 +162,7 @@ bool Jack::wonGame(sf::Event event, Tent& tent)
         return false;
     if(event.type == sf::Event::KeyPressed)
     {
-        if((event.key.code == sf::Keyboard::W) && (jack.getPosition().x < tent.getPositionX()+tent.width()/2.0f) && (jack.getPosition().x > tent.getPositionX()-tent.width()/2) && (gameRow == 1))
+        if((event.key.code == sf::Keyboard::W) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f)
             return true;
     }
     return false;

@@ -607,3 +607,39 @@ TEST_CASE("When temperature gets to 50 degrees celsius, the player dies")
     temperature.update(player, &jack_spritesheet, deltaTime);
     CHECK_FALSE(player.isAlive);
 }
+
+TEST_CASE("Tent adds a block when player jumps on an untouched platform")
+{
+    sf::Texture jack_spritesheet, tentText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    tentText.loadFromFile("resources/tent.png");
+    auto tent = Tent(&tentText, 4, 4, 200.0f);
+    auto prevFrameX = tent.currentFrame.x;
+    sf::Texture log;
+    log.loadFromFile("resources/wide_log.png");
+    auto score = Score{1920, 1080};
+    auto platformController = PlatformController(&log);
+    auto platformPositions = platformController.getPlatformPositions(1);
+    auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    auto gameSounds = GameSounds();
+    player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
+    player.gameRow = 2;
+    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds);
+    CHECK(tent.currentFrame.x != prevFrameX);
+}
+
+TEST_CASE("Player can win the game when the tent is fully built")
+{
+    sf::Texture jack_spritesheet, tentText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    tentText.loadFromFile("resources/tent.png");
+    auto tent = Tent{&tentText, 4, 4, 200.0f};
+    tent.currentFrame = sf::Vector2u(3, 4);
+    tent.nextFrame();
+    player.jack.setPosition(tent.getPositionX(), 270);
+    player.gameRow = 1;
+    sf::Event event = simulateKeypress(sf::Keyboard::W);
+    CHECK(player.wonGame(event, tent));
+}
