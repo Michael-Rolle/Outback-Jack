@@ -81,7 +81,8 @@ TEST_CASE("Player can move right")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto prvsPos = player.jack.getPosition().x;
     sf::Event event = simulateKeypress(sf::Keyboard::D);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 0.1f)
@@ -98,7 +99,8 @@ TEST_CASE("Player can move left")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto prvsPos = player.jack.getPosition().x;
     sf::Event event = simulateKeypress(sf::Keyboard::A);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 0.1f)
@@ -115,7 +117,8 @@ TEST_CASE("Player can jump down")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 2)
@@ -134,7 +137,8 @@ TEST_CASE("Player can jump up")
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::W);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 2)
@@ -151,7 +155,8 @@ TEST_CASE("Player jumps down 180 pixels")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 2)
@@ -170,7 +175,8 @@ TEST_CASE("Player jumps up 180 pixels")
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::W);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 2)
@@ -186,7 +192,8 @@ TEST_CASE("Player can't jump up out of safe zone")
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     sf::Event event = simulateKeypress(sf::Keyboard::W);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     CHECK_FALSE(player.isJumping);
 }
 
@@ -198,7 +205,8 @@ TEST_CASE("Player can't jump down past bottom row")
     player.jack.setPosition(player.jack.getPosition().x, 990);
     player.gameRow = 5;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     CHECK_FALSE(player.isJumping);
 }
 
@@ -209,7 +217,8 @@ TEST_CASE("Player can't move right out of bounds")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     player.jack.setPosition(gameWidth-50, player.jack.getPosition().y);
     sf::Event event = simulateKeypress(sf::Keyboard::D);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 0.5f)
@@ -226,7 +235,8 @@ TEST_CASE("Player can't move left out of bounds")
     auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
     player.jack.setPosition(50, player.jack.getPosition().y);
     sf::Event event = simulateKeypress(sf::Keyboard::A);
-    player.setMovement(event);
+    auto gameSounds = GameSounds();
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     while(clock1.getElapsedTime().asSeconds() <= 0.5f)
@@ -272,6 +282,7 @@ TEST_CASE("Player moves along with platform when on top of one")
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    auto gameSounds = GameSounds();
     player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
     auto previousPos = player.getPositionX();
     player.gameRow = 2;
@@ -284,7 +295,7 @@ TEST_CASE("Player moves along with platform when on top of one")
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds);
     }
     CHECK(player.getPositionX() != previousPos);
 }
@@ -551,11 +562,12 @@ TEST_CASE("Platform direction can be switched by Jack")
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    auto gameSounds = GameSounds();
     player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
     player.gameRow = 2;
     auto prevDir = platformController.getPlatformRow(1)->getPlatform(1).movingRight;
     sf::Event event = simulateKeypress(sf::Keyboard::LShift);
-    player.setMovement(event);
+    player.setMovement(event, gameSounds);
     sf::Clock clock1;
     sf::Clock clock2;
     float deltaTime;
@@ -566,8 +578,32 @@ TEST_CASE("Platform direction can be switched by Jack")
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds);
         newDir = platformController.getPlatformRow(1)->getPlatform(1).movingRight;
     }
     CHECK(newDir != prevDir);
+}
+
+TEST_CASE("Temperature increases with time")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto temperature = Temperature{1920, 1080};
+    auto previousTemp = temperature.temp;
+    float deltaTime = 10;
+    temperature.update(player, &jack_spritesheet, deltaTime);
+    auto currentTemp = temperature.temp;
+    CHECK(currentTemp > previousTemp);
+}
+
+TEST_CASE("When temperature gets to 50 degrees celsius, the player dies")
+{
+    sf::Texture jack_spritesheet;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto temperature = Temperature{1920, 1080};
+    float deltaTime = 50;
+    temperature.update(player, &jack_spritesheet, deltaTime);
+    CHECK_FALSE(player.isAlive);
 }
