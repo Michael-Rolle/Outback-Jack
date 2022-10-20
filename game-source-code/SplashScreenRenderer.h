@@ -11,7 +11,8 @@ class SplashScreenRenderer
 {
     public:
         SplashScreenRenderer(const float gameWidth, const float gameHeight);
-        void draw(sf::RenderWindow& window); /*!< Draws all text and images with reference to a RenderWindow. */
+        void draw(sf::RenderWindow& window);
+        /*!< Draws all text and images with reference to a RenderWindow. */
 
     private:
         sf::Font font;

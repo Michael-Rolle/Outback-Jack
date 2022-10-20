@@ -10,7 +10,8 @@ class PlayingFieldRenderer
 {
     public:
         PlayingFieldRenderer(const float gameWidth, const float gameHeight);
-        void draw(sf::RenderWindow& window); /*!< Draws the playing field with reference to a RenderWindow. */
+        void draw(sf::RenderWindow& window);
+        /*!< Draws the playing field with reference to a RenderWindow. */
 
     private:
         sf::Texture playingField;
