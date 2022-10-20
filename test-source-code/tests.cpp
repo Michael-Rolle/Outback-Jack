@@ -6,6 +6,7 @@
 #include "../game-source-code/Jack.h"
 #include "../game-source-code/PlatformController.h"
 #include "../game-source-code/Collisions.h"
+#include "../game-source-code/PointCollisions.h"
 #include "../game-source-code/Tent.h"
 #include "../game-source-code/Enemy.h"
 #include "../game-source-code/EnemyRow.h"
@@ -642,4 +643,58 @@ TEST_CASE("Player can win the game when the tent is fully built")
     player.gameRow = 1;
     sf::Event event = simulateKeypress(sf::Keyboard::W);
     CHECK(player.wonGame(event, tent));
+}
+
+TEST_CASE("Score increases when player jumps onto an untouched platform")
+{
+    sf::Texture jack_spritesheet, tentText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    tentText.loadFromFile("resources/tent.png");
+    auto tent = Tent(&tentText, 4, 4, 200.0f);
+    auto prevScore = player.score;
+    sf::Texture log;
+    log.loadFromFile("resources/wide_log.png");
+    auto score = Score{1920, 1080};
+    auto platformController = PlatformController(&log);
+    auto platformPositions = platformController.getPlatformPositions(1);
+    auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
+    auto gameSounds = GameSounds();
+    player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
+    player.gameRow = 2;
+    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds);
+    CHECK(player.score > prevScore);
+}
+
+TEST_CASE("Score increases when player wins the game and the temperature is below 50 degrees celsius")
+{
+    sf::Texture jack_spritesheet, tentText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto temperature = Temperature{1920, 1080};
+    auto score = Score{1920, 1080};
+    float deltaTime = 10;
+    temperature.update(player, &jack_spritesheet, deltaTime);
+    auto prevScore = player.score;
+    score.updateFromTemp(player, temperature);
+    CHECK(player.score > prevScore);
+}
+
+TEST_CASE("Score increases when the player collides with a fish")
+{
+    sf::Texture jack_spritesheet, fishText;
+    jack_spritesheet.loadFromFile("resources/jack_frames.png");
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto prevScore = player.score;
+    fishText.loadFromFile("resources/Fish.png");
+    auto numFish = 1;
+    auto fishRow = FishController(&fishText, numFish, 50.0f);
+    auto score = Score{1920, 1080};
+    auto gameSounds = GameSounds{};
+    auto fishPos = fishRow.fishPositions().at(0);
+    player.jack.setPosition(fishPos, 180*fishRow.row()-90);
+    player.gameRow = fishRow.row();
+    auto pointCollisions = PointCollisions(fishRow.getFish(1).width());
+    pointCollisions.update(player, score, fishRow, gameSounds);
+    CHECK(player.score > prevScore);
 }
