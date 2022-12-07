@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include "Jack.h"
 #include "Animation.h"
+#include <vector>
+
+using namespace std;
 
 /*!
 Creates a Kangaroo enemy capable of killing the player. The Kangaroo can move left or right within the safe zone and tracks the player if they are in the safe zone.
@@ -17,7 +20,7 @@ class Kangaroo
         /*!< Returns the horizontal position of the Kangaroo as a float. */
         float width(){ return joey.getGlobalBounds().width; }
         /*!< Returns the width of the Kangaroo as a float. */
-        void update(Jack& player, float deltaTime);
+        void update(vector<Jack>& player, float deltaTime);
         /*!< Updates the Kangaroo object to wander if the player is outside the safe zone, or to track the player if they are within the safe zone. Tracks the player by taking a in reference to them
              to read their x position. Updates the Kangaroo objects postion by taking in a float. */
         void draw(sf::RenderWindow& window);

@@ -2,12 +2,13 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed, int playerNumber):
-    animation(texture, frameCount, switchTime),
-    playerNum{playerNumber}
+Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed, int playerNum):
+    animation(texture, frameCount, switchTime)
 {
     this->speed = speed; //pixels per second
+    this->playerNum = playerNum;
     frameRow = 0; //idle animation
+    victory = false;
     facingRight = true;
     isAlive = true;
     gameRow = 1; //safe zone
@@ -23,7 +24,10 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
 
     jack.setTexture(*texture);
     jack.scale(height*frameCount.y/jack.getLocalBounds().width, height*frameCount.y/jack.getLocalBounds().height);
-    jack.setPosition(960.0f, 180.0f + 90.0f);
+    if(playerNum == 1)
+        jack.setPosition(0.25*1920.0f, 180.0f + 90.0f);
+    else if(playerNum == 2)
+        jack.setPosition(0.75*1920.0f, 180.0f + 90.0f);
 }
 
 void Jack::update(float deltaTime)

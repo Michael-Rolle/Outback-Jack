@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <cmath>
+#include <vector>
 
 Score::Score(const float gameWidth, const float gameHeight):
     highScoreFileReader{"resources/highscore.txt"}
@@ -9,31 +10,57 @@ Score::Score(const float gameWidth, const float gameHeight):
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
         throw "cannot load font file";
 
-    points.setFont(font);
-    points.setCharacterSize(50);
-    points.setFillColor(sf::Color::Blue);
-    points.setString("0");
-    points.setLetterSpacing(3);
-    points.setOutlineThickness(3);
-    points.setOutlineColor(sf::Color::White);
+    points = vector<sf::Text>(2);
+    labels = vector<sf::Text>(2);
+    scores = vector<int>(2);
 
-    sf::FloatRect pointsRect = points.getLocalBounds();
+    auto count = 0;
+    for(auto& point: points)
+    {
+        point.setFont(font);
+        point.setCharacterSize(50);
+        if(count == 0)
+            point.setFillColor(sf::Color::Green);
+        else
+            point.setFillColor(sf::Color::Red);
+        point.setString("0");
+        point.setLetterSpacing(3);
+        point.setOutlineThickness(3);
+        point.setOutlineColor(sf::Color::White);
 
-    points.setOrigin(pointsRect.left + pointsRect.width/2.0f, pointsRect.top + pointsRect.height/2.0f);
-    points.setPosition(gameWidth/4.75, gameHeight/2 - 8.15*points.getCharacterSize());
+        sf::FloatRect pointsRect = point.getLocalBounds();
 
-    label.setFont(font);
-    label.setCharacterSize(50);
-    label.setFillColor(sf::Color::Blue);
-    label.setString("Score - ");
-    label.setLetterSpacing(3);
-    label.setOutlineThickness(2);
-    label.setOutlineColor(sf::Color::White);
+        point.setOrigin(pointsRect.left + pointsRect.width/2.0f, pointsRect.top + pointsRect.height/2.0f);
+        if(count == 0)
+            point.setPosition(gameWidth/4.75, gameHeight/2 - 8.15*point.getCharacterSize());
+        else
+            point.setPosition(1850, gameHeight/2 - 8.15*point.getCharacterSize());//1712.43
+        count += 1;
+    }
 
-    sf::FloatRect labelRect = label.getLocalBounds();
+    count = 0;
+    for(auto& label: labels)
+    {
+        label.setFont(font);
+        label.setCharacterSize(50);
+        if(count == 0)
+            label.setFillColor(sf::Color::Green);
+        else
+            label.setFillColor(sf::Color::Red);
+        label.setString("Score - ");
+        label.setLetterSpacing(3);
+        label.setOutlineThickness(2);
+        label.setOutlineColor(sf::Color::White);
 
-    label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
-    label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+        sf::FloatRect labelRect = label.getLocalBounds();
+
+        label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
+        if(count == 0)
+            label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+        else
+            label.setPosition(gameWidth/1.16, gameHeight/2 - 8*label.getCharacterSize());//1515.79
+        count += 1;
+    }
 
     highScore = stoi(highScoreFileReader.read());
     highScoreText.setFont(font);
@@ -47,27 +74,32 @@ Score::Score(const float gameWidth, const float gameHeight):
     highScoreText.setOrigin(highScoreRect.left + highScoreRect.width/2.0f, highScoreRect.top + highScoreRect.height/2.0f);
     highScoreText.setPosition(gameWidth/2.0f, gameHeight/2.0f - 10*highScoreText.getCharacterSize());
 
-    score = 0;
+    scores.at(0) = 0;
+    scores.at(1) = 0;
 }
 
 void Score::draw(sf::RenderWindow& window)
 {
-    window.draw(points);
-    window.draw(label);
+    for(auto& point: points)
+        window.draw(point);
+    for(auto& label: labels)
+        window.draw(label);
     window.draw(highScoreText);
 }
 
 void Score::update(Jack& player)
 {
     player.score += 10;
-    score = player.score;
-    points.setString(std::to_string(score));
+    scores.at(player.playerNum-1) = player.score;
+    points.at(player.playerNum-1).setString(std::to_string(scores.at(player.playerNum-1)));
 }
 
 void Score::reset()
 {
-    score = 0;
-    points.setString(std::to_string(score));
+    for(auto& score: scores)
+        score = 0;
+    for(auto& point: points)
+        point.setString("0");
     highScore = stoi(highScoreFileReader.read());
     highScoreText.setString("Highscore - " + highScoreFileReader.read());
 }
@@ -79,11 +111,11 @@ void Score::updateFromTemp(Jack& player, Temperature& temperature)
     temperature.temp++;
     temperature.temperature.setString(std::to_string((int)floor(temperature.temp)));
     player.score += 2.0f;
-    score = player.score;
-    points.setString(std::to_string(score));
+    scores.at(player.playerNum-1) = player.score;
+    points.at(player.playerNum-1).setString(std::to_string(scores.at(player.playerNum-1)));
 
-    if(score > highScore)
+    if(scores.at(player.playerNum-1) > highScore)
     {
-        highScoreFileReader.write(to_string(score));
+        highScoreFileReader.write(to_string(scores.at(player.playerNum-1)));
     }
 }

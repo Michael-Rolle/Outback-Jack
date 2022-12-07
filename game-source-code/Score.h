@@ -6,6 +6,7 @@
 #include "GameSounds.h"
 #include "FileReader.h"
 #include <string>
+#include <vector>
 
 /*!
 Displays and keeps track of a players' score. Also displays the highest score achieved between games.
@@ -28,11 +29,11 @@ class Score
 
     private:
         sf::Font font;
-        sf::Text points;
-        sf::Text label;
+        vector<sf::Text> points;
+        vector<sf::Text> labels;
         sf::Text highScoreText;
         FileReader highScoreFileReader;
-        int score;
+        vector<int> scores;
         int highScore;
 };
 

@@ -1,4 +1,7 @@
 #include "Kangaroo.h"
+#include <vector>
+
+using namespace std;
 
 Kangaroo::Kangaroo(sf::Texture* spritesheet, sf::Vector2u frameCount, float switchTime, float speed):
     animation{spritesheet, frameCount, switchTime}
@@ -7,7 +10,7 @@ Kangaroo::Kangaroo(sf::Texture* spritesheet, sf::Vector2u frameCount, float swit
     frameRow = 0;
     this->speed = speed;
     joey.setTexture(*spritesheet);
-    joey.setPosition(1800, 270); //assuming origin is the centre of the kangaroo
+    joey.setPosition(0.51*1920.0f, 270); //assuming origin is the centre of the kangaroo
     joey.scale(height*frameCount.x/joey.getGlobalBounds().width, height*frameCount.y/joey.getGlobalBounds().height);
     velocity.x = 0;
     velocity.y = 0;
@@ -18,19 +21,64 @@ Kangaroo::Kangaroo():
     animation{}
 {}
 
-void Kangaroo::update(Jack& player, float deltaTime)
+void Kangaroo::update(vector<Jack>& players, float deltaTime)
 {
-    if(player.row() == 1) //tracks player if in the safe zone with joey
+    if(players.at(0).row() == 1 || players.at(1).row() == 1) //tracks player if in the safe zone with joey
     {
-        if(player.getPositionX() <= joey.getPosition().x)
+        if(players.at(0).row() == 1 && players.at(1).row() == 1)
         {
-            velocity.x = -speed*deltaTime;
-            movingRight = false;
+            if(abs(players.at(0).getPositionX() - this->getPositionX()) <= abs(players.at(1).getPositionX() - this->getPositionX()))
+            {
+                if(players.at(0).getPositionX() - this->getPositionX() > 0)
+                {
+                    velocity.x = speed*deltaTime;
+                    movingRight = true;
+                }
+                else
+                {
+                    velocity.x = -speed*deltaTime;
+                    movingRight = false;
+                }
+            }
+            else
+            {
+                if(players.at(1).getPositionX() - this->getPositionX() > 0)
+                {
+                    velocity.x = speed*deltaTime;
+                    movingRight = true;
+                }
+                else
+                {
+                    velocity.x = -speed*deltaTime;
+                    movingRight = false;
+                }
+            }
         }
-        else if(player.getPositionX() >= joey.getPosition().x)
+        else if(players.at(0).row() != 1)
         {
-            velocity.x = speed*deltaTime;
-            movingRight = true;
+            if(players.at(1).getPositionX() - this->getPositionX() > 0)
+            {
+                velocity.x = speed*deltaTime;
+                movingRight = true;
+            }
+            else
+            {
+                velocity.x = -speed*deltaTime;
+                movingRight = false;
+            }
+        }
+        else
+        {
+            if(players.at(0).getPositionX() - this->getPositionX() > 0)
+            {
+                velocity.x = speed*deltaTime;
+                movingRight = true;
+            }
+            else
+            {
+                velocity.x = -speed*deltaTime;
+                movingRight = false;
+            }
         }
     }
     else //wanders from side to side

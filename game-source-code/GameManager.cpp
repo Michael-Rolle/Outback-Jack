@@ -10,8 +10,8 @@ GameManager::GameManager():
     playingRenderer{gameWidth, gameHeight},
     victoryRenderer{gameWidth, gameHeight},
     defeatRenderer{gameWidth, gameHeight},
-    temperature{gameWidth, gameHeight},
-    score{gameWidth, gameHeight}
+    score{gameWidth, gameHeight},
+    temperature{gameWidth, gameHeight}
 {
     //Window
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
@@ -36,8 +36,10 @@ GameManager::GameManager():
     //Player
     if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
         throw "cannot load textures";
+    if(!jackSpritesheetTextRed.loadFromFile("resources/jack_frames_red.png") || !deadJackTextRed.loadFromFile("resources/dead_jack_red.png") || !burntJackTextRed.loadFromFile("resources/burnt_jack_red.png"))
+        throw "cannot load textures";
     auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, 1);
-    auto player_2 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, 2);
+    auto player_2 = Jack(&jackSpritesheetTextRed, sf::Vector2u(3, 3), 0.2f, 600.0f, 2);
     players.push_back(player_1);
     players.push_back(player_2);
 
@@ -150,10 +152,10 @@ void GameManager::update()
         if(players.at(0).isAlive && players.at(1).isAlive)
         {
             deltaTime = clock.restart().asSeconds();
-            //players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
             enemies.update(deltaTime);
             fishRow.update(deltaTime);
+            kangaroo.update(players, deltaTime);
             int count = 0;
             for(auto& player: players)
             {
@@ -162,7 +164,7 @@ void GameManager::update()
                 collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(count), score, gameSounds);
                 enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
                 pointCollisionDetector.update(player, score, fishRow, gameSounds);
-                kangaroo.update(player, deltaTime);
+                count += 1;
             }
         }
         else

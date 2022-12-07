@@ -22,8 +22,10 @@
 #include "Tent.h"
 #include "GameSounds.h"
 #include <cstdlib>
+#include <vector>
+#include <string>
 
-using std::vector;
+using namespace std;
 
 /*! \mainpage
 All public member functions specified as 'void' do not return a type as they are manipulative functions about their object. Data is then incapable of being read from these functions. If one
