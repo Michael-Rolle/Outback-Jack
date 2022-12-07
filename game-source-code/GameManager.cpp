@@ -1,4 +1,7 @@
 #include "GameManager.h"
+#include <vector>
+
+using namespace std;
 
 //Constructor intializes all variables
 GameManager::GameManager():
@@ -33,8 +36,10 @@ GameManager::GameManager():
     //Player
     if(!jackSpritesheetText.loadFromFile("resources/jack_frames.png") || !deadJackText.loadFromFile("resources/dead_jack.png") || !burntJackText.loadFromFile("resources/burnt_jack.png"))
         throw "cannot load textures";
-    auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f);
+    auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, 1);
+    auto player_2 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, 2);
     players.push_back(player_1);
+    players.push_back(player_2);
 
     //Enemies
     if(!crocText.loadFromFile("resources/croc.png"))
@@ -63,7 +68,8 @@ GameManager::GameManager():
     //Tent
     if(!tentSpritesheetText.loadFromFile("resources/tent.png"))
         throw "cannot load texture";
-    tent = Tent{&tentSpritesheetText, 4, 4, 200.0f};
+    tents.push_back(Tent{&tentSpritesheetText, 4, 4, 200.0f, 0.25*1920.0f});
+    tents.push_back(Tent{&tentSpritesheetText, 4, 4, 200.0f, 0.75*1920.0f});
 
     //Collisions
     collisionDetector = Collisions(platforms.getPlatformRow(1)->getPlatform(1).width(), 150.0f);
@@ -110,8 +116,9 @@ void GameManager::pollEvent()
 
         if(isPlaying && !victory)
         {
-            players.at(0).setMovement(event, gameSounds);
-            victory = players.at(0).wonGame(event, tent);
+            for(auto& player: players)
+                player.setMovement(event, gameSounds);
+            victory = players.at(0).wonGame(event, tents.at(0)) || players.at(1).wonGame(event, tents.at(1));
             if(victory)
             {
                gameSounds.playTempScoreIncreaseing();
@@ -120,7 +127,12 @@ void GameManager::pollEvent()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && players.at(0).row() > 1)
             {
                 platforms.getPlatformRow(players.at(0).row()-1)->changeDirection();
-                tent.removeFrame();
+                tents.at(0).removeFrame();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && players.at(1).row() > 1)
+            {
+                platforms.getPlatformRow(players.at(1).row()-1)->changeDirection();
+                tents.at(1).removeFrame();
             }
         }
 
@@ -135,18 +147,23 @@ void GameManager::update()
 {
     if(isPlaying && !victory)
     {
-        if(players.at(0).isAlive)
+        if(players.at(0).isAlive && players.at(1).isAlive)
         {
             deltaTime = clock.restart().asSeconds();
-            players.at(0).update(deltaTime); //controls movement and animations
+            //players.at(0).update(deltaTime); //controls movement and animations
             platforms.update(deltaTime);
             enemies.update(deltaTime);
             fishRow.update(deltaTime);
-            temperature.update(players.at(0), &burntJackText, deltaTime);
-            collisionDetector.update(players.at(0), &deadJackText, platforms, &logText, &whiteLogText, tent, score, gameSounds);
-            enemyCollisionDetector.update(players.at(0), &deadJackText, enemies, kangaroo);
-            pointCollisionDetector.update(players.at(0), score, fishRow, gameSounds);
-            kangaroo.update(players.at(0), deltaTime);
+            int count = 0;
+            for(auto& player: players)
+            {
+                player.update(deltaTime);
+                temperature.update(player, &burntJackText, deltaTime);
+                collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(count), score, gameSounds);
+                enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+                pointCollisionDetector.update(player, score, fishRow, gameSounds);
+                kangaroo.update(player, deltaTime);
+            }
         }
         else
         {
@@ -157,7 +174,10 @@ void GameManager::update()
     }
     else if(victory)
     {
-        score.updateFromTemp(players.at(0), temperature);
+        if(players.at(0).victory)
+            score.updateFromTemp(players.at(0), temperature);
+        if(players.at(1).victory)
+            score.updateFromTemp(players.at(1), temperature);
     }
 }
 
@@ -167,12 +187,14 @@ void GameManager::render()
     if(isPlaying || gameOver || victory)
     {
         playingRenderer.draw(window);
-        tent.draw(window);
+        for(auto& tent: tents)
+            tent.draw(window);
         platforms.draw(window);
         fishRow.draw(window);
         enemies.draw(window);
         kangaroo.draw(window);
-        players.at(0).draw(window);
+        for(auto& player: players)
+            player.draw(window);
         temperature.draw(window);
         score.draw(window);
         if(gameOver)
@@ -196,15 +218,18 @@ void GameManager::render()
 
 void GameManager::resetGame()
 {
+    auto num = 1;
     for(auto& player : players)
     {
-        player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f};
+        player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, num};
+        num += 1;
     }
     kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);
     platforms = PlatformController(&logText);
     enemies = EnemyController(&crocText, 1920);
     fishRow = FishController(&fishText, 3, 50.0f);
-    tent.reset();
+    for(auto& tent: tents)
+        tent.reset();
     temperature.reset();
     score.reset();
 

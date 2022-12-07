@@ -13,7 +13,7 @@ Creates a player for the game. The player is capable of being moved around and j
 class Jack
 {
     public:
-        Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed);
+        Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed, int playerNum);
         void setMovement(sf::Event event, GameSounds& gameSounds);
         /*!< Takes in an Event object to move the player respectively, and a GameSounds object to play a sound when the player jumps. */
         void addVelocityX(float speed, bool right);
@@ -41,7 +41,9 @@ class Jack
 
     public:
         bool isAlive;
+        bool victory;
         float score;
+        int playerNum;
     private:
         sf::Sprite jack;
         Animation animation;

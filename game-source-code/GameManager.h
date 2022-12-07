@@ -77,7 +77,7 @@ class GameManager
         Temperature temperature;
         Score score;
         sf::Texture tentSpritesheetText;
-        Tent tent;
+        vector<Tent> tents;
         sf::Clock clock;
         float deltaTime;
         bool twoPlayer;

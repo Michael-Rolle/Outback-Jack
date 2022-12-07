@@ -10,7 +10,7 @@ fully built.
 class Tent
 {
     public:
-        Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float height);
+        Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float height, float horizontalPosition);
         Tent(){};
         void nextFrame();
         /*!< Adds the next frame to the tent if it is not fully built. Frames are added horizontally and then vertically. */

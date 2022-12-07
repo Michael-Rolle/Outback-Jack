@@ -2,8 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed):
-    animation(texture, frameCount, switchTime)
+Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed, int playerNumber):
+    animation(texture, frameCount, switchTime),
+    playerNum{playerNumber}
 {
     this->speed = speed; //pixels per second
     frameRow = 0; //idle animation
@@ -68,35 +69,74 @@ void Jack::setMovement(sf::Event event, GameSounds& gameSounds)
 {
     if(event.type == sf::Event::KeyPressed)
     {
-        if(event.key.code == sf::Keyboard::D)
-            movingRight = true;
-        if(event.key.code == sf::Keyboard::A)
-            movingLeft = true;
-        if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1 && canJump)
+        if(this->playerNum == 1)
         {
-            gameSounds.playJumpSound();
-            isJumping = true;
-            jumpingUp = true;
-            canJump = false;
-            return;
+            if(event.key.code == sf::Keyboard::D)
+                movingRight = true;
+            if(event.key.code == sf::Keyboard::A)
+                movingLeft = true;
+            if(event.key.code == sf::Keyboard::W && !isJumping && gameRow != 1 && canJump)
+            {
+                gameSounds.playJumpSound();
+                isJumping = true;
+                jumpingUp = true;
+                canJump = false;
+                return;
+            }
+            if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5 && canJump)
+            {
+                gameSounds.playJumpSound();
+                isJumping = true;
+                jumpingUp = false;
+                canJump = false;
+                return;
+            }
         }
-        if(event.key.code == sf::Keyboard::S && !isJumping && gameRow != 5 && canJump)
+        else if(this->playerNum == 2)
         {
-            gameSounds.playJumpSound();
-            isJumping = true;
-            jumpingUp = false;
-            canJump = false;
-            return;
+            if(event.key.code == sf::Keyboard::Right)
+                movingRight = true;
+            if(event.key.code == sf::Keyboard::Left)
+                movingLeft = true;
+            if(event.key.code == sf::Keyboard::Up && !isJumping && gameRow != 1 && canJump)
+            {
+                gameSounds.playJumpSound();
+                isJumping = true;
+                jumpingUp = true;
+                canJump = false;
+                return;
+            }
+            if(event.key.code == sf::Keyboard::Down && !isJumping && gameRow != 5 && canJump)
+            {
+                gameSounds.playJumpSound();
+                isJumping = true;
+                jumpingUp = false;
+                canJump = false;
+                return;
+            }
         }
     }
+
     else if(event.type == sf::Event::KeyReleased)
     {
-        if(event.key.code == sf::Keyboard::A)
-            movingLeft = false;
-        if(event.key.code == sf::Keyboard::D)
-            movingRight = false;
-        if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::S)
-            canJump = true;
+        if(this->playerNum == 1)
+        {
+            if(event.key.code == sf::Keyboard::A)
+                movingLeft = false;
+            if(event.key.code == sf::Keyboard::D)
+                movingRight = false;
+            if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::S)
+                canJump = true;
+        }
+        else if(this->playerNum == 2)
+        {
+            if(event.key.code == sf::Keyboard::Left)
+                movingLeft = false;
+            if(event.key.code == sf::Keyboard::Right)
+                movingRight = false;
+            if(event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Down)
+                canJump = true;
+        }
     }
 }
 
