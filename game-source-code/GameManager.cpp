@@ -10,8 +10,8 @@ GameManager::GameManager():
     playingRenderer{gameWidth, gameHeight},
     victoryRenderer{gameWidth, gameHeight},
     defeatRenderer{gameWidth, gameHeight},
-    score{gameWidth, gameHeight},
-    temperature{gameWidth, gameHeight}
+    temperature{gameWidth, gameHeight},
+    score{gameWidth, gameHeight}
 {
     //Window
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
@@ -160,9 +160,18 @@ void GameManager::update()
             for(auto& player: players)
             {
                 player.update(deltaTime);
-                temperature.update(player, &burntJackText, deltaTime);
-                collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(count), score, gameSounds);
-                enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+                if(player.playerNum == 1)
+                {
+                    temperature.update(player, &burntJackText, deltaTime);
+                    collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(count), score, gameSounds);
+                    enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+                }
+                else
+                {
+                    temperature.update(player, &burntJackTextRed, deltaTime);
+                    collisionDetector.update(player, &deadJackTextRed, platforms, &logText, &whiteLogText, tents.at(count), score, gameSounds);
+                    enemyCollisionDetector.update(player, &deadJackTextRed, enemies, kangaroo);
+                }
                 pointCollisionDetector.update(player, score, fishRow, gameSounds);
                 count += 1;
             }
@@ -223,7 +232,10 @@ void GameManager::resetGame()
     auto num = 1;
     for(auto& player : players)
     {
-        player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, num};
+        if(num == 1)
+            player = Jack{&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, num};
+        else
+            player = Jack{&jackSpritesheetTextRed, sf::Vector2u(3, 3), 0.2f, 600.0f, num};
         num += 1;
     }
     kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);

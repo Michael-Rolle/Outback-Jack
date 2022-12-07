@@ -65,6 +65,7 @@ class GameManager
         sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf, tempScoreSoundBuf;
         GameSounds gameSounds;
         sf::Texture jackSpritesheetText, deadJackText, burntJackText, logText, whiteLogText;
+        sf::Texture jackSpritesheetTextRed, deadJackTextRed, burntJackTextRed;
         vector<Jack> players;
         sf::Texture kangarooSpritesheetText;
         Kangaroo kangaroo;

@@ -9,7 +9,10 @@ Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, floa
     this->playerNum = playerNum;
     frameRow = 0; //idle animation
     victory = false;
-    facingRight = true;
+    if(playerNum == 1)
+        facingRight = true;
+    else
+        facingRight = false;
     isAlive = true;
     gameRow = 1; //safe zone
     isJumping = false;

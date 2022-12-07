@@ -34,7 +34,7 @@ Score::Score(const float gameWidth, const float gameHeight):
         if(count == 0)
             point.setPosition(gameWidth/4.75, gameHeight/2 - 8.15*point.getCharacterSize());
         else
-            point.setPosition(1850, gameHeight/2 - 8.15*point.getCharacterSize());//1712.43
+            point.setPosition(1800, gameHeight/2 - 8.15*point.getCharacterSize());//1712.43
         count += 1;
     }
 
@@ -58,7 +58,7 @@ Score::Score(const float gameWidth, const float gameHeight):
         if(count == 0)
             label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
         else
-            label.setPosition(gameWidth/1.16, gameHeight/2 - 8*label.getCharacterSize());//1515.79
+            label.setPosition(1605, gameHeight/2 - 8*label.getCharacterSize());//1515.79
         count += 1;
     }
 
