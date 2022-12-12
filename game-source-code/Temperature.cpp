@@ -45,7 +45,7 @@ void Temperature::draw(sf::RenderWindow& window)
 
 void Temperature::update(Jack& player, sf::Texture* deathTexture, float deltaTime)
 {
-    temp += deltaTime;
+    temp += 0.5*deltaTime;
     int time = round(temp);
     temperature.setString(std::to_string(time));
     if(time >= 50)

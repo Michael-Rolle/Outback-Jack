@@ -21,6 +21,8 @@
 #include "Score.h"
 #include "Tent.h"
 #include "GameSounds.h"
+#include "EndScreen.h"
+#include "PlayerNumber.h"
 #include <cstdlib>
 #include <vector>
 #include <string>
@@ -58,8 +60,9 @@ class GameManager
         const unsigned short frameRate = 60;
         SplashScreenRenderer splashRenderer;
         PlayingFieldRenderer playingRenderer;
-        VictoryScreenRenderer victoryRenderer;
-        DefeatScreenRenderer defeatRenderer;
+        //VictoryScreenRenderer victoryRenderer;
+        //DefeatScreenRenderer defeatRenderer;
+        EndScreen endScreenRenderer;
         sf::Music splashMusic;
         sf::Music playingMusic;
         sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf, tempScoreSoundBuf;

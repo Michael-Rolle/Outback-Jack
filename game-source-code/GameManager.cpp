@@ -8,8 +8,9 @@ GameManager::GameManager():
     window{sf::VideoMode(1280, 720), "Outback Jack"},
     splashRenderer{gameWidth, gameHeight},
     playingRenderer{gameWidth, gameHeight},
-    victoryRenderer{gameWidth, gameHeight},
-    defeatRenderer{gameWidth, gameHeight},
+    //victoryRenderer{gameWidth, gameHeight},
+    //defeatRenderer{gameWidth, gameHeight},
+    endScreenRenderer(gameWidth, gameHeight),
     temperature{gameWidth, gameHeight},
     score{gameWidth, gameHeight}
 {
@@ -120,7 +121,7 @@ void GameManager::pollEvent()
         {
             for(auto& player: players)
                 player.setMovement(event, gameSounds);
-            victory = players.at(0).wonGame(event, tents.at(0)) || players.at(1).wonGame(event, tents.at(1));
+            victory = (players.at(0).wonGame(event, tents.at(0)) || players.at(1).wonGame(event, tents.at(1)));
             if(victory)
             {
                gameSounds.playTempScoreIncreaseing();
@@ -186,9 +187,15 @@ void GameManager::update()
     else if(victory)
     {
         if(players.at(0).victory)
+        {
             score.updateFromTemp(players.at(0), temperature);
-        if(players.at(1).victory)
+            endScreenRenderer.displayWin(PlayerNumber::One);
+        }
+        else if(players.at(1).victory)
+        {
             score.updateFromTemp(players.at(1), temperature);
+            endScreenRenderer.displayWin(PlayerNumber::Two);
+        }
     }
 }
 
@@ -211,12 +218,14 @@ void GameManager::render()
         if(gameOver)
         {
             playingMusic.stop();
-            defeatRenderer.draw(window);
+            //defeatRenderer.draw(window);
+            endScreenRenderer.draw(window);
         }
         else if(victory)
         {
             playingMusic.stop();
-            victoryRenderer.draw(window);
+            //victoryRenderer.draw(window);
+            endScreenRenderer.draw(window);
         }
     }
     else
