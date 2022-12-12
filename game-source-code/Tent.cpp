@@ -20,6 +20,8 @@ Tent::Tent(sf::Texture* texture, unsigned int rows, unsigned int columns, float 
 
 void Tent::nextFrame()
 {
+    if(built)
+        return;
     if(currentFrame.x == numFrames.x && currentFrame.y != numFrames.y)
     {
         currentFrame.x = 1;

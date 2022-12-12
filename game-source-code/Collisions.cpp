@@ -10,7 +10,7 @@ Collisions::Collisions(float platformWidth, float platformSpeed)
 
 void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent, Score& score, GameSounds& gameSounds)
 {
-    if(tent.built)
+    /*if(tent.built)
     {
         for(int i = 0; i < 4; i++)
         {
@@ -18,7 +18,7 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
             platformRow->changeColour(newColour, false);
             platformRow->canChangeColour = false;
         }
-    }
+    }*/
     unsigned int row = player.row();
     if(row > 1)
     {
@@ -45,7 +45,7 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
                         platforms.getPlatformRow(row-1)->canChangeColour = false;
                 }
             }
-            else if(player.jumping() && platforms.allPlatformsNewColour() && !tent.built)
+            else if(player.jumping() && platforms.allPlatformsNewColour()) //&& !tent.built)
             {
                 for(int i = 0; i < 4; i++)
                 {
