@@ -1,6 +1,7 @@
 #include "Jack.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "PlayerNumber.h"
 
 Jack::Jack(sf::Texture* texture, sf::Vector2u frameCount, float switchTime, float speed, int playerNum):
     animation(texture, frameCount, switchTime)
@@ -203,13 +204,15 @@ void Jack::jump()
     }
 }
 
-bool Jack::wonGame(sf::Event event, Tent& tent)
+bool Jack::wonGame(sf::Event event, Tent& tent, PlayerNumber num)
 {
     if(!tent.built)
         return false;
     if(event.type == sf::Event::KeyPressed)
     {
-        if((event.key.code == sf::Keyboard::W) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
+        if(num == PlayerNumber::One && (event.key.code == sf::Keyboard::W) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
+            return true;
+        else if(num == PlayerNumber::Two && (event.key.code == sf::Keyboard::Up) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
             return true;
     }
     return false;
