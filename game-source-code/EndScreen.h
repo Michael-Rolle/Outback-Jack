@@ -13,6 +13,7 @@ class EndScreen
     private:
         sf::Font font;
         sf::Text text;
+        sf::Text replayText;
 };
 
 #endif // ENDSCREEN_H

@@ -182,6 +182,10 @@ void GameManager::update()
             isPlaying = false;
             gameOver = true;
             gameSounds.playGameOverSound();
+            if(players.at(0).isAlive)
+                endScreenRenderer.displayWin(PlayerNumber::One);
+            else if(players.at(1).isAlive)
+                endScreenRenderer.displayWin(PlayerNumber::Two);
         }
     }
     else if(victory)

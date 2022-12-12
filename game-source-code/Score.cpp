@@ -32,9 +32,9 @@ Score::Score(const float gameWidth, const float gameHeight):
 
         point.setOrigin(pointsRect.left + pointsRect.width/2.0f, pointsRect.top + pointsRect.height/2.0f);
         if(count == 0)
-            point.setPosition(gameWidth/4.75, gameHeight/2 - 8.15*point.getCharacterSize());
+            point.setPosition(gameWidth/4.75, gameHeight/2 - 10*point.getCharacterSize());
         else
-            point.setPosition(1800, gameHeight/2 - 8.15*point.getCharacterSize());//1712.43
+            point.setPosition(1775, gameHeight/2 - 10*point.getCharacterSize());//1712.43
         count += 1;
     }
 
@@ -56,9 +56,9 @@ Score::Score(const float gameWidth, const float gameHeight):
 
         label.setOrigin(labelRect.left + labelRect.width/2.0f, labelRect.top + labelRect.height/2.0f);
         if(count == 0)
-            label.setPosition(gameWidth/9.25 , gameHeight/2 - 8*label.getCharacterSize());
+            label.setPosition(gameWidth/9.25 , gameHeight/2 - 10*label.getCharacterSize());
         else
-            label.setPosition(1605, gameHeight/2 - 8*label.getCharacterSize());//1515.79
+            label.setPosition(1580, gameHeight/2 - 10*label.getCharacterSize());//1515.79
         count += 1;
     }
 

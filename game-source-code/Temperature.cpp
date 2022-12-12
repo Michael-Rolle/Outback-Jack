@@ -19,7 +19,7 @@ Temperature::Temperature(const float gameWidth, const float gameHeight)
     sf::FloatRect temperatureRect = temperature.getLocalBounds();
 
     temperature.setOrigin(temperatureRect.left + temperatureRect.width/2.0f, temperatureRect.top + temperatureRect.height/2.0f);
-    temperature.setPosition(gameWidth/50, gameHeight/2 - 10*temperature.getCharacterSize());
+    temperature.setPosition(gameWidth/50, gameHeight/2 - 8.5*temperature.getCharacterSize());
 
     degrees.setFont(font);
     degrees.setCharacterSize(10);
@@ -32,7 +32,7 @@ Temperature::Temperature(const float gameWidth, const float gameHeight)
     sf::FloatRect degreesRect = degrees.getLocalBounds();
 
     degrees.setOrigin(degreesRect.left + degreesRect.width/2.0f, degreesRect.top + degreesRect.height/2.0f);
-    degrees.setPosition(gameWidth/13, gameHeight/2 - 50*degrees.getCharacterSize());
+    degrees.setPosition(gameWidth/13, gameHeight/2 - 43*degrees.getCharacterSize());
 
     temp = 0.0f;
 }
