@@ -36,6 +36,11 @@ EndScreen::EndScreen(const float gameWidth, const float gameHeight)
         case PlayerNumber::Two:
             text.setString("PLAYER TWO WINS!");
             break;
+        case PlayerNumber::Neither:
+            text.setString("DEFEAT!");
+            text.setOrigin(text.getLocalBounds().width/2.0f, text.getLocalBounds().height/2.0f);
+            text.setPosition(1920.0f/2.0f, 0.3*1080.0f);
+            break;
         default:
             throw "invalid player number";
     }

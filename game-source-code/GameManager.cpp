@@ -186,6 +186,8 @@ void GameManager::update()
                 endScreenRenderer.displayWin(PlayerNumber::One);
             else if(players.at(1).isAlive)
                 endScreenRenderer.displayWin(PlayerNumber::Two);
+            else
+                endScreenRenderer.displayWin(PlayerNumber::Neither);
         }
     }
     else if(victory)
