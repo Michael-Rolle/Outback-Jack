@@ -43,9 +43,12 @@ void Temperature::draw(sf::RenderWindow& window)
     window.draw(degrees);
 }
 
-void Temperature::update(Jack& player, sf::Texture* deathTexture, float deltaTime)
+void Temperature::update(Jack& player, sf::Texture* deathTexture, float deltaTime, GameMode gameMode)
 {
-    temp += 0.5*deltaTime;
+    if(gameMode == GameMode::Twoplayer)
+        temp += 0.5*deltaTime;
+    else
+        temp += deltaTime;
     int time = round(temp);
     temperature.setString(std::to_string(time));
     if(time >= 50)
