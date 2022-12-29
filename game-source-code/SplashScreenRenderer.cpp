@@ -16,7 +16,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     title.setFillColor(sf::Color::White);
     startMessage.setFillColor(sf::Color::Red);
     title.setString("OUTBACK  JACK");
-    startMessage.setString("Press  Space  to  Play Singleplayer\n\n\n\n Press  Enter  to  play  Two-player");
+    startMessage.setString("Press  Space  to  Play Singleplayer\n\n\n Press  Enter  to  play  Two-player");
     title.setLetterSpacing(3);
     startMessage.setLetterSpacing(3);
     title.setOutlineThickness(3);
@@ -30,7 +30,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     title.setOrigin(titleRect.left + titleRect.width/2.0f, titleRect.top + titleRect.height/2.0f);
     title.setPosition(gameWidth/2, gameHeight/2 - 3.5*title.getCharacterSize());
     startMessage.setOrigin(startRect.left + startRect.width/2.0f, startRect.top + startRect.height/2.0f);
-    startMessage.setPosition(title.getPosition().x, title.getPosition().y + 2*title.getCharacterSize());
+    startMessage.setPosition(title.getPosition().x, title.getPosition().y + 3*title.getCharacterSize());
 
     //Background image
     if(!background.loadFromFile("resources/start_background.jpg"))
