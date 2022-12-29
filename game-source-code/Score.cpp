@@ -3,8 +3,9 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include "GameMode.h"
 
-Score::Score(const float gameWidth, const float gameHeight):
+Score::Score(const float gameWidth, const float gameHeight, GameMode gameMode):
     highScoreFileReader{"resources/highscore.txt"}
 {
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
@@ -13,6 +14,13 @@ Score::Score(const float gameWidth, const float gameHeight):
     points = vector<sf::Text>(2);
     labels = vector<sf::Text>(2);
     scores = vector<int>(2);
+
+    if(gameMode == GameMode::Singleplayer)
+    {
+        points.pop_back();
+        labels.pop_back();
+        scores.pop_back();
+    }
 
     auto count = 0;
     for(auto& point: points)
@@ -74,8 +82,10 @@ Score::Score(const float gameWidth, const float gameHeight):
     highScoreText.setOrigin(highScoreRect.left + highScoreRect.width/2.0f, highScoreRect.top + highScoreRect.height/2.0f);
     highScoreText.setPosition(gameWidth/2.0f, gameHeight/2.0f - 10*highScoreText.getCharacterSize());
 
-    scores.at(0) = 0;
-    scores.at(1) = 0;
+    for(auto& score: scores)
+    {
+        score = 0;
+    }
 }
 
 void Score::draw(sf::RenderWindow& window)

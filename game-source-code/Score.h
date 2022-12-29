@@ -7,6 +7,7 @@
 #include "FileReader.h"
 #include <string>
 #include <vector>
+#include "GameMode.h"
 
 /*!
 Displays and keeps track of a players' score. Also displays the highest score achieved between games.
@@ -17,7 +18,7 @@ using namespace std;
 class Score
 {
     public:
-        Score(const float gameWidth, const float gameHeight);
+        Score(const float gameWidth, const float gameHeight, GameMode gameMode);
         void draw(sf::RenderWindow& window);
         /*!< Draws the current score of the player and the high score with reference to a RenderWindow. */
         void update(Jack& player);

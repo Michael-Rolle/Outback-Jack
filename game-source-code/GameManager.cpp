@@ -13,7 +13,7 @@ GameManager::GameManager():
     endScreenRenderer(gameWidth, gameHeight),
     gameMode{GameMode::Singleplayer},
     temperature{gameWidth, gameHeight},
-    score{gameWidth, gameHeight}
+    score{gameWidth, gameHeight, GameMode::Singleplayer}
 {
     //Window
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
@@ -113,7 +113,10 @@ void GameManager::pollEvent()
         if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && !isPlaying)
         {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+            {
                 gameMode = GameMode::Twoplayer;
+                score = Score{gameWidth, gameHeight, GameMode::Twoplayer};
+            }
             else
             {
                 players.pop_back();
