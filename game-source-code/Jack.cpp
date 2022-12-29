@@ -204,19 +204,19 @@ void Jack::jump()
     }
 }
 
-bool Jack::wonGame(sf::Event event, Tent& tent, PlayerNumber num)
+bool Jack::wonGame(sf::Event event, Tent& tent)
 {
     if(!tent.built)
         return false;
     if(event.type == sf::Event::KeyPressed)
     {
-        if(num == PlayerNumber::One && (event.key.code == sf::Keyboard::W) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
+        if(playerNum == 1 && (event.key.code == sf::Keyboard::W) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
         {
             victory = true;
             return true;
         }
 
-        else if(num == PlayerNumber::Two && (event.key.code == sf::Keyboard::Up) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
+        else if(playerNum == 2 && (event.key.code == sf::Keyboard::Up) && abs(jack.getPosition().x - tent.getPositionX()) <= tent.width()/2.0f && gameRow == 1)
         {
             victory = true;
             return true;

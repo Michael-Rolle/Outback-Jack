@@ -23,6 +23,7 @@
 #include "GameSounds.h"
 #include "EndScreen.h"
 #include "PlayerNumber.h"
+#include "GameMode.h"
 #include <cstdlib>
 #include <vector>
 #include <string>
@@ -63,6 +64,7 @@ class GameManager
         //VictoryScreenRenderer victoryRenderer;
         //DefeatScreenRenderer defeatRenderer;
         EndScreen endScreenRenderer;
+        GameMode gameMode;
         sf::Music splashMusic;
         sf::Music playingMusic;
         sf::SoundBuffer jumpSoundBuf, landSoundBuf, victorySoundBuf, gameOverSoundBuf, fishSoundBuf, tempScoreSoundBuf;

@@ -33,7 +33,7 @@ class Jack
         /*!< Returns the global width of the players' sprite as a float. */
         unsigned int row() { return gameRow; }
         /*!< Returns the game row the player currently exists in. There are only six rows. */
-        bool wonGame(sf::Event event, Tent& tent, PlayerNumber num);
+        bool wonGame(sf::Event event, Tent& tent);
         /*!< Checks if the player has won the game. Takes in an Event object to check the player has jumped to the safe zone and a reference to a Tent object to check the player has moved to the
              Tent door. */
 

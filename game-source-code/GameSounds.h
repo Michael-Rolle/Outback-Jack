@@ -18,7 +18,7 @@ class GameSounds
         void playVictorySound() { victorySound.play(); }
         void playGameOverSound() { gameOverSound.play(); }
         void playFishCollection() { fishSound.play(); }
-        void playTempScoreIncreaseing() { tempScoreSound.play(); }
+        void playTempScoreIncreasing() { tempScoreSound.play(); }
 
     private:
         sf::Sound jumpSound;

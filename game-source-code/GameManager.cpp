@@ -11,6 +11,7 @@ GameManager::GameManager():
     //victoryRenderer{gameWidth, gameHeight},
     //defeatRenderer{gameWidth, gameHeight},
     endScreenRenderer(gameWidth, gameHeight),
+    gameMode{GameMode::Singleplayer},
     temperature{gameWidth, gameHeight},
     score{gameWidth, gameHeight}
 {
@@ -89,7 +90,7 @@ GameManager::GameManager():
 //Main game loop
 void GameManager::run()
 {
-    while(window.isOpen())
+     while(window.isOpen())
     {
         pollEvent();
         update();
@@ -108,9 +109,16 @@ void GameManager::pollEvent()
             break;
         }
 
-        // Space pressed, start game
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isPlaying)
+        // Space or Enter pressed, start game
+        if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && !isPlaying)
         {
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+                gameMode = GameMode::Twoplayer;
+            else
+            {
+                players.pop_back();
+                tents.pop_back();
+            }
             isPlaying = true;
             splashMusic.stop();
             playingMusic.play();
@@ -121,10 +129,17 @@ void GameManager::pollEvent()
         {
             for(auto& player: players)
                 player.setMovement(event, gameSounds);
-            victory = (players.at(0).wonGame(event, tents.at(0), PlayerNumber::One) || players.at(1).wonGame(event, tents.at(1), PlayerNumber::Two));
+            //victory = (players.at(0).wonGame(event, tents.at(0), PlayerNumber::One) || (gameMode == GameMode::Twoplayer && players.at(1).wonGame(event, tents.at(1), PlayerNumber::Two)));
+            auto count = 0;
+            for(auto& player: players)
+            {
+                if(player.wonGame(event, tents.at(count++)))
+                    victory = true;
+            }
+
             if(victory)
             {
-               gameSounds.playTempScoreIncreaseing();
+               gameSounds.playTempScoreIncreasing();
             }
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && players.at(0).row() > 1)
@@ -132,10 +147,13 @@ void GameManager::pollEvent()
                 platforms.getPlatformRow(players.at(0).row()-1)->changeDirection();
                 tents.at(0).removeFrame();
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && players.at(1).row() > 1)
+            if(gameMode == GameMode::Twoplayer)
             {
-                platforms.getPlatformRow(players.at(1).row()-1)->changeDirection();
-                tents.at(1).removeFrame();
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) && players.at(1).row() > 1)
+                {
+                    platforms.getPlatformRow(players.at(1).row()-1)->changeDirection();
+                    tents.at(1).removeFrame();
+                }
             }
         }
 
@@ -150,13 +168,19 @@ void GameManager::update()
 {
     if(isPlaying && !victory)
     {
-        if(players.at(0).isAlive && players.at(1).isAlive)
+        bool allAlive = true;
+        for(auto& player: players)
+        {
+            if(!player.isAlive)
+                allAlive = false;
+        }
+        if(allAlive)
         {
             deltaTime = clock.restart().asSeconds();
             platforms.update(deltaTime);
             enemies.update(deltaTime);
             fishRow.update(deltaTime);
-            kangaroo.update(players, deltaTime);
+            kangaroo.update(players, deltaTime, gameMode);
             int count = 0;
             for(auto& player: players)
             {
@@ -182,12 +206,20 @@ void GameManager::update()
             isPlaying = false;
             gameOver = true;
             gameSounds.playGameOverSound();
-            if(players.at(0).isAlive)
-                endScreenRenderer.displayWin(PlayerNumber::One);
-            else if(players.at(1).isAlive)
-                endScreenRenderer.displayWin(PlayerNumber::Two);
+            if(gameMode == GameMode::Twoplayer)
+            {
+                if(players.at(0).isAlive)
+                    endScreenRenderer.displayWin(PlayerNumber::One);
+                else if(players.at(1).isAlive)
+                    endScreenRenderer.displayWin(PlayerNumber::Two);
+                else
+                    endScreenRenderer.displayWin(PlayerNumber::Neither);
+            }
             else
-                endScreenRenderer.displayWin(PlayerNumber::Neither);
+            {
+                if(players.at(0).isAlive)
+                    endScreenRenderer.displayWin(PlayerNumber::One);
+            }
         }
     }
     else if(victory)
@@ -197,10 +229,13 @@ void GameManager::update()
             score.updateFromTemp(players.at(0), temperature);
             endScreenRenderer.displayWin(PlayerNumber::One);
         }
-        else if(players.at(1).victory)
+        if(gameMode == GameMode::Twoplayer)
         {
-            score.updateFromTemp(players.at(1), temperature);
-            endScreenRenderer.displayWin(PlayerNumber::Two);
+            if(players.at(1).victory)
+            {
+                score.updateFromTemp(players.at(1), temperature);
+                endScreenRenderer.displayWin(PlayerNumber::Two);
+            }
         }
     }
 }

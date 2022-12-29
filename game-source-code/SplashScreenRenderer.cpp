@@ -16,7 +16,7 @@ SplashScreenRenderer::SplashScreenRenderer(const float gameWidth, const float ga
     title.setFillColor(sf::Color::White);
     startMessage.setFillColor(sf::Color::Red);
     title.setString("OUTBACK  JACK");
-    startMessage.setString("Press  Space  to  Play");
+    startMessage.setString("Press  Space  to  Play Singleplayer\n\n\n\n Press  Enter  to  play  Two-player");
     title.setLetterSpacing(3);
     startMessage.setLetterSpacing(3);
     title.setOutlineThickness(3);

@@ -4,6 +4,7 @@
 #include "Jack.h"
 #include "Animation.h"
 #include <vector>
+#include "GameMode.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Kangaroo
         /*!< Returns the horizontal position of the Kangaroo as a float. */
         float width(){ return joey.getGlobalBounds().width; }
         /*!< Returns the width of the Kangaroo as a float. */
-        void update(vector<Jack>& player, float deltaTime);
+        void update(vector<Jack>& player, float deltaTime, GameMode gameMode);
         /*!< Updates the Kangaroo object to wander if the player is outside the safe zone, or to track the player if they are within the safe zone. Tracks the player by taking a in reference to them
              to read their x position. Updates the Kangaroo objects postion by taking in a float. */
         void draw(sf::RenderWindow& window);

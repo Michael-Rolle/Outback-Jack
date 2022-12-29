@@ -1,5 +1,6 @@
 #include "Kangaroo.h"
 #include <vector>
+#include "GameMode.h"
 
 using namespace std;
 
@@ -21,26 +22,42 @@ Kangaroo::Kangaroo():
     animation{}
 {}
 
-void Kangaroo::update(vector<Jack>& players, float deltaTime)
+void Kangaroo::update(vector<Jack>& players, float deltaTime, GameMode gameMode)
 {
-    if(players.at(0).row() == 1 || players.at(1).row() == 1) //tracks player if in the safe zone with joey
+    if(gameMode == GameMode::Twoplayer)
     {
-        if(players.at(0).row() == 1 && players.at(1).row() == 1)
+        if(players.at(0).row() == 1 || players.at(1).row() == 1) //tracks player if in the safe zone with joey
         {
-            if(abs(players.at(0).getPositionX() - this->getPositionX()) <= abs(players.at(1).getPositionX() - this->getPositionX()))
+            if(players.at(0).row() == 1 && players.at(1).row() == 1)
             {
-                if(players.at(0).getPositionX() - this->getPositionX() > 0)
+                if(abs(players.at(0).getPositionX() - this->getPositionX()) <= abs(players.at(1).getPositionX() - this->getPositionX()))
                 {
-                    velocity.x = speed*deltaTime;
-                    movingRight = true;
+                    if(players.at(0).getPositionX() - this->getPositionX() > 0)
+                    {
+                        velocity.x = speed*deltaTime;
+                        movingRight = true;
+                    }
+                    else
+                    {
+                        velocity.x = -speed*deltaTime;
+                        movingRight = false;
+                    }
                 }
                 else
                 {
-                    velocity.x = -speed*deltaTime;
-                    movingRight = false;
+                    if(players.at(1).getPositionX() - this->getPositionX() > 0)
+                    {
+                        velocity.x = speed*deltaTime;
+                        movingRight = true;
+                    }
+                    else
+                    {
+                        velocity.x = -speed*deltaTime;
+                        movingRight = false;
+                    }
                 }
             }
-            else
+            else if(players.at(0).row() != 1)
             {
                 if(players.at(1).getPositionX() - this->getPositionX() > 0)
                 {
@@ -53,21 +70,34 @@ void Kangaroo::update(vector<Jack>& players, float deltaTime)
                     movingRight = false;
                 }
             }
-        }
-        else if(players.at(0).row() != 1)
-        {
-            if(players.at(1).getPositionX() - this->getPositionX() > 0)
-            {
-                velocity.x = speed*deltaTime;
-                movingRight = true;
-            }
             else
             {
-                velocity.x = -speed*deltaTime;
-                movingRight = false;
+                if(players.at(0).getPositionX() - this->getPositionX() > 0)
+                {
+                    velocity.x = speed*deltaTime;
+                    movingRight = true;
+                }
+                else
+                {
+                    velocity.x = -speed*deltaTime;
+                    movingRight = false;
+                }
             }
         }
-        else
+        else //wanders from side to side
+        {
+            if(joey.getPosition().x <= 0.0f || joey.getPosition().x >= 1920.0f)
+                movingRight = !movingRight;
+
+            if(movingRight)
+                velocity.x = speed*deltaTime;
+            else
+                velocity.x = -speed*deltaTime;
+        }
+    }
+    else //Code for singleplayer
+    {
+        if(players.at(0).row() == 1)
         {
             if(players.at(0).getPositionX() - this->getPositionX() > 0)
             {
@@ -80,16 +110,16 @@ void Kangaroo::update(vector<Jack>& players, float deltaTime)
                 movingRight = false;
             }
         }
-    }
-    else //wanders from side to side
-    {
-        if(joey.getPosition().x <= 0.0f || joey.getPosition().x >= 1920.0f)
-            movingRight = !movingRight;
-
-        if(movingRight)
-            velocity.x = speed*deltaTime;
         else
-            velocity.x = -speed*deltaTime;
+        {
+            if(joey.getPosition().x <= 0.0f || joey.getPosition().x >= 1920.0f)
+                movingRight = !movingRight;
+
+            if(movingRight)
+                velocity.x = speed*deltaTime;
+            else
+                velocity.x = -speed*deltaTime;
+        }
     }
 
     animation.update(frameRow, deltaTime, movingRight);
