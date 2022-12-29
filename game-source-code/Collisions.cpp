@@ -1,4 +1,5 @@
 #include "Collisions.h"
+#include "GameMode.h"
 
 using namespace std;
 
@@ -8,17 +9,20 @@ Collisions::Collisions(float platformWidth, float platformSpeed)
     this->platformSpeed = platformSpeed;
 }
 
-void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent, Score& score, GameSounds& gameSounds)
+void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformController& platforms, sf::Texture* originalColour, sf::Texture* newColour, Tent& tent, Score& score, GameSounds& gameSounds, GameMode gameMode)
 {
-    /*if(tent.built)
+    if(gameMode == GameMode::Singleplayer)
     {
-        for(int i = 0; i < 4; i++)
+        if(tent.built)
         {
-            auto platformRow = platforms.getPlatformRow(i+1);
-            platformRow->changeColour(newColour, false);
-            platformRow->canChangeColour = false;
+            for(int i = 0; i < 4; i++)
+            {
+                auto platformRow = platforms.getPlatformRow(i+1);
+                platformRow->changeColour(newColour, false);
+                platformRow->canChangeColour = false;
+            }
         }
-    }*/
+    }
     unsigned int row = player.row();
     if(row > 1)
     {
@@ -47,6 +51,8 @@ void Collisions::update(Jack& player, sf::Texture* deathTexture, PlatformControl
             }
             else if(player.jumping() && platforms.allPlatformsNewColour()) //&& !tent.built)
             {
+                if(gameMode == GameMode::Singleplayer && tent.built)
+                    return;
                 for(int i = 0; i < 4; i++)
                 {
                     platforms.changePlatformRowColour(i+1, originalColour, true);

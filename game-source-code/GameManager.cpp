@@ -188,13 +188,13 @@ void GameManager::update()
                 if(player.playerNum == 1)
                 {
                     temperature.update(player, &burntJackText, deltaTime);
-                    collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(0), score, gameSounds);
+                    collisionDetector.update(player, &deadJackText, platforms, &logText, &whiteLogText, tents.at(0), score, gameSounds, gameMode);
                     enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
                 }
                 else
                 {
                     temperature.update(player, &burntJackTextRed, deltaTime);
-                    collisionDetector.update(player, &deadJackTextRed, platforms, &logText, &whiteLogText, tents.at(1), score, gameSounds);
+                    collisionDetector.update(player, &deadJackTextRed, platforms, &logText, &whiteLogText, tents.at(1), score, gameSounds, gameMode);
                     enemyCollisionDetector.update(player, &deadJackTextRed, enemies, kangaroo);
                 }
                 pointCollisionDetector.update(player, score, fishRow, gameSounds);
