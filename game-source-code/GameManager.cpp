@@ -222,6 +222,8 @@ void GameManager::update()
             {
                 if(players.at(0).isAlive)
                     endScreenRenderer.displayWin(PlayerNumber::One);
+                else
+                    endScreenRenderer.displayWin(PlayerNumber::Neither);
             }
         }
     }
