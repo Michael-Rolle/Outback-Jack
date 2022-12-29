@@ -5,7 +5,7 @@
 #include <vector>
 #include "GameMode.h"
 
-Score::Score(const float gameWidth, const float gameHeight, GameMode gameMode):
+Score::Score(const float gameWidth, const float gameHeight):
     highScoreFileReader{"resources/highscore.txt"}
 {
     if(!font.loadFromFile("resources/I-Have-Bad-News.ttf"))
@@ -14,13 +14,6 @@ Score::Score(const float gameWidth, const float gameHeight, GameMode gameMode):
     points = vector<sf::Text>(2);
     labels = vector<sf::Text>(2);
     scores = vector<int>(2);
-
-    if(gameMode == GameMode::Singleplayer)
-    {
-        points.pop_back();
-        labels.pop_back();
-        scores.pop_back();
-    }
 
     auto count = 0;
     for(auto& point: points)
@@ -88,12 +81,24 @@ Score::Score(const float gameWidth, const float gameHeight, GameMode gameMode):
     }
 }
 
-void Score::draw(sf::RenderWindow& window)
+void Score::draw(sf::RenderWindow& window, GameMode gameMode)
 {
+    auto count = 0;
     for(auto& point: points)
+    {
+        if(gameMode == GameMode::Singleplayer && count != 0)
+            break;
         window.draw(point);
+        count++;
+    }
+    count = 0;
     for(auto& label: labels)
+    {
+        if(gameMode == GameMode::Singleplayer && count != 0)
+            break;
         window.draw(label);
+        count++;
+    }
     window.draw(highScoreText);
 }
 
@@ -110,6 +115,7 @@ void Score::reset()
         score = 0;
     for(auto& point: points)
         point.setString("0");
+
     highScore = stoi(highScoreFileReader.read());
     highScoreText.setString("Highscore - " + highScoreFileReader.read());
 }

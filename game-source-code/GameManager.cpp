@@ -13,7 +13,7 @@ GameManager::GameManager():
     endScreenRenderer(gameWidth, gameHeight),
     gameMode{GameMode::Singleplayer},
     temperature{gameWidth, gameHeight},
-    score{gameWidth, gameHeight, GameMode::Singleplayer}
+    score{gameWidth, gameHeight}
 {
     //Window
     window.setView(sf::View(sf::FloatRect(0.0f, 0.0f, gameWidth, gameHeight)));
@@ -84,6 +84,7 @@ GameManager::GameManager():
     isPlaying = false;
     gameOver = false;
     victory = false;
+    inEndScreen = false;
     deltaTime= 0.0f;
 }
 
@@ -110,15 +111,15 @@ void GameManager::pollEvent()
         }
 
         // Space or Enter pressed, start game
-        if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && !isPlaying)
+        if((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (!isPlaying && !inEndScreen))
         {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             {
                 gameMode = GameMode::Twoplayer;
-                score = Score{gameWidth, gameHeight, GameMode::Twoplayer};
             }
             else
             {
+                gameMode = GameMode::Singleplayer;
                 players.pop_back();
                 tents.pop_back();
             }
@@ -160,7 +161,7 @@ void GameManager::pollEvent()
             }
         }
 
-        if((gameOver || victory) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if((gameOver || victory) && sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
         {
             resetGame();
         }
@@ -208,6 +209,7 @@ void GameManager::update()
         {
             isPlaying = false;
             gameOver = true;
+            inEndScreen = true;
             gameSounds.playGameOverSound();
             if(gameMode == GameMode::Twoplayer)
             {
@@ -229,6 +231,7 @@ void GameManager::update()
     }
     else if(victory)
     {
+        inEndScreen = true;
         if(players.at(0).victory)
         {
             score.updateFromTemp(players.at(0), temperature);
@@ -260,7 +263,7 @@ void GameManager::render()
         for(auto& player: players)
             player.draw(window);
         temperature.draw(window);
-        score.draw(window);
+        score.draw(window, gameMode);
         if(gameOver)
         {
             playingMusic.stop();
@@ -282,9 +285,9 @@ void GameManager::render()
     window.display();
 }
 
-void GameManager::resetGame()
+void GameManager::resetGame() //Return to splash screen
 {
-    auto num = 1;
+    /*auto num = 1;
     for(auto& player : players)
     {
         if(num == 1)
@@ -292,7 +295,16 @@ void GameManager::resetGame()
         else
             player = Jack{&jackSpritesheetTextRed, sf::Vector2u(3, 3), 0.2f, 600.0f, num};
         num += 1;
-    }
+    }*/
+    players.clear();
+    auto player_1 = Jack(&jackSpritesheetText, sf::Vector2u(3, 3), 0.2f, 600.0f, 1);
+    auto player_2 = Jack(&jackSpritesheetTextRed, sf::Vector2u(3, 3), 0.2f, 600.0f, 2);
+    players.push_back(player_1);
+    players.push_back(player_2);
+    tents.clear();
+    tents.push_back(Tent{&tentSpritesheetText, 4, 4, 200.0f, 0.25*1920.0f});
+    tents.push_back(Tent{&tentSpritesheetText, 4, 4, 200.0f, 0.75*1920.0f});
+
     kangaroo = Kangaroo(&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f);
     platforms = PlatformController(&logText);
     enemies = EnemyController(&crocText, 1920);
@@ -302,10 +314,12 @@ void GameManager::resetGame()
     temperature.reset();
     score.reset();
 
-    isPlaying = true;
+    isPlaying = false;
     gameOver = false;
     victory = false;
+    inEndScreen = false;
     deltaTime= 0.0f;
     clock.restart().asSeconds();
-    playingMusic.play();
+    //playingMusic.play();
+    splashMusic.play();
 }

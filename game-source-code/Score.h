@@ -18,8 +18,8 @@ using namespace std;
 class Score
 {
     public:
-        Score(const float gameWidth, const float gameHeight, GameMode gameMode);
-        void draw(sf::RenderWindow& window);
+        Score(const float gameWidth, const float gameHeight);
+        void draw(sf::RenderWindow& window, GameMode gameMode);
         /*!< Draws the current score of the player and the high score with reference to a RenderWindow. */
         void update(Jack& player);
         /*!< Updates the respective players' score in increments of 10. */
@@ -27,6 +27,7 @@ class Score
         /*!< Updates the respective players' score from the Temperature object and if its a new high score, it is written to the text file. */
         void reset();
         /*!< Resets the score for the player but maintains the value of the high score. */
+        //void removePlayerTwo() { points.pop_back(); labels.pop_back(); scores.pop_back(); }
 
     private:
         sf::Font font;

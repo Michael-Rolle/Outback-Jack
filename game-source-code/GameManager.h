@@ -92,6 +92,7 @@ class GameManager
         bool isPlaying;
         bool gameOver;
         bool victory;
+        bool inEndScreen;
 };
 
 #endif // GAMEMANAGER_H

@@ -8,8 +8,8 @@ EndScreen::EndScreen(const float gameWidth, const float gameHeight)
         throw "cannot load font";
     text.setFont(font);
     replayText.setFont(font);
-    text.setString("PLAYER ONE WINS!");
-    replayText.setString("PRESS SPACE TO REPLAY");
+    text.setString("PLAYER  ONE  WINS!");
+    replayText.setString("PRESS  BACKSPACE  TO  REPLAY");
     text.setCharacterSize(100);
     replayText.setCharacterSize(50);
     text.setLetterSpacing(3);
@@ -31,10 +31,14 @@ EndScreen::EndScreen(const float gameWidth, const float gameHeight)
     switch(num)
     {
         case PlayerNumber::One:
-            text.setString("PLAYER ONE WINS!");
+            text.setString("PLAYER  ONE  WINS!");
+            text.setOrigin(text.getLocalBounds().width/2.0f, text.getLocalBounds().height/2.0f);
+            text.setPosition(1920.0f/2.0f, 0.3*1080.0f);
             break;
         case PlayerNumber::Two:
-            text.setString("PLAYER TWO WINS!");
+            text.setString("PLAYER  TWO  WINS!");
+            text.setOrigin(text.getLocalBounds().width/2.0f, text.getLocalBounds().height/2.0f);
+            text.setPosition(1920.0f/2.0f, 0.3*1080.0f);
             break;
         case PlayerNumber::Neither:
             text.setString("DEFEAT!");
