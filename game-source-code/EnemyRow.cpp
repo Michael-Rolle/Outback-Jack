@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Enemy.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ EnemyRow::EnemyRow(sf::Texture* texture, const unsigned int numEnemies, const fl
     this->movingRight = movingRight;
     for(int i = 0; i < (int)numEnemies; i++)
     {
-        auto enemy = Enemy{texture, 200.0f, movingRight, gameRow};
+        auto speed = 200 + rand()%200;
+        auto enemy = Enemy{texture, speed, movingRight, gameRow};
         if(movingRight) //ensure the first element in the vector is the left most element
             enemy.setPositionX(pos - ((numEnemies-1-i)*(spacing+enemy.width())+enemy.width()/2.0f));
         else
