@@ -10,7 +10,7 @@ Platform::Platform(sf::Texture* texture, float speed, bool movingRight, unsigned
     this->gameRow = gameRow;
     velocity.y = 0.0f;
     platform.setTexture(*texture);
-    platform.scale(height/platform.getLocalBounds().width, height/platform.getLocalBounds().height);
+    platform.scale(1.5*height/platform.getLocalBounds().width, height/platform.getLocalBounds().height);
     platform.setOrigin(platform.getLocalBounds().width/2.0f, platform.getLocalBounds().top); //So the platform will spawn at the bottom of the game row.
     if(movingRight)
         platform.setPosition(0.0f+platform.getGlobalBounds().width/2.0f, (gameRow*180.0f)+90.0f);
