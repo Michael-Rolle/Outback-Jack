@@ -63,7 +63,7 @@ TEST_CASE("Player spawns in the safe zone")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     CHECK(player.jack.getPosition().y > (gameHeight/6.0f)*1);
     CHECK(player.jack.getPosition().y < (gameHeight/6.0f)*2);
 }
@@ -72,7 +72,7 @@ TEST_CASE("Players height is 100 pixels")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     CHECK(player.jack.getGlobalBounds().height/3.0f == 100.0f);
 }
 
@@ -80,7 +80,7 @@ TEST_CASE("Players width is 100 pixels")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     CHECK(player.jack.getGlobalBounds().width/3.0f == 100.0f);
 }
 
@@ -88,7 +88,7 @@ TEST_CASE("Player can move right")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto prvsPos = player.jack.getPosition().x;
     sf::Event event = simulateKeypress(sf::Keyboard::D);
     auto gameSounds = GameSounds();
@@ -106,7 +106,7 @@ TEST_CASE("Player can move left")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto prvsPos = player.jack.getPosition().x;
     sf::Event event = simulateKeypress(sf::Keyboard::A);
     auto gameSounds = GameSounds();
@@ -124,7 +124,7 @@ TEST_CASE("Player can jump down")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
     auto gameSounds = GameSounds();
@@ -142,7 +142,7 @@ TEST_CASE("Player can jump up")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     player.jack.setPosition(player.jack.getPosition().x, 450);
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
@@ -162,7 +162,7 @@ TEST_CASE("Player jumps down 180 pixels")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto previousPos = player.jack.getPosition().y;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
     auto gameSounds = GameSounds();
@@ -180,7 +180,7 @@ TEST_CASE("Player jumps up 180 pixels")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     player.jack.setPosition(player.jack.getPosition().x, 450);
     player.gameRow = 2;
     auto previousPos = player.jack.getPosition().y;
@@ -200,7 +200,7 @@ TEST_CASE("Player can't jump up out of safe zone")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     sf::Event event = simulateKeypress(sf::Keyboard::W);
     auto gameSounds = GameSounds();
     player.setMovement(event, gameSounds);
@@ -211,7 +211,7 @@ TEST_CASE("Player can't jump down past bottom row")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     player.jack.setPosition(player.jack.getPosition().x, 990);
     player.gameRow = 5;
     sf::Event event = simulateKeypress(sf::Keyboard::S);
@@ -224,7 +224,7 @@ TEST_CASE("Player can't move right out of bounds")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     player.jack.setPosition(gameWidth-50, player.jack.getPosition().y);
     sf::Event event = simulateKeypress(sf::Keyboard::D);
     auto gameSounds = GameSounds();
@@ -242,7 +242,7 @@ TEST_CASE("Player can't move left out of bounds")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     player.jack.setPosition(50, player.jack.getPosition().y);
     sf::Event event = simulateKeypress(sf::Keyboard::A);
     auto gameSounds = GameSounds();
@@ -285,10 +285,10 @@ TEST_CASE("Player moves along with platform when on top of one")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     sf::Texture log;
     log.loadFromFile("resources/wide_log.png");
-    auto tent = Tent(&log, 4, 4, 200.0f);
+    auto tent = Tent(&log, 4, 4, 200.0f, gameWidth/2.0f);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
@@ -305,7 +305,7 @@ TEST_CASE("Player moves along with platform when on top of one")
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds, GameMode::Singleplayer);
     }
     CHECK(player.getPositionX() != previousPos);
 }
@@ -403,15 +403,16 @@ TEST_CASE("Enemies can kill Jack")
     sf::Texture deadJackText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     deadJackText.loadFromFile("resources/dead_jack.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
+    player.jack.setPosition(100.0f, 180.0f + 180.0f);
+    player.gameRow = 2;
     sf::Texture kangarooSpritesheetText;
     kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
     auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
     sf::Clock clock1;
     sf::Clock clock2;
     float deltaTime;
-    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    while(clock1.getElapsedTime().asSeconds() <= 1.0f)
     {
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
@@ -472,65 +473,71 @@ TEST_CASE("Kangaroo can move right and left")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
-    player.gameRow = 3u;
-    sf::Texture kangarooSpritesheetText;
-    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
-    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
-    auto startPos = kangaroo.joey.getPosition().x;
-    sf::Clock clock1;
-    sf::Clock clock2;
-    float deltaTime;
-
-    kangaroo.movingRight = true;
-    while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+    auto players = vector<Jack>{Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1)};
+    for(auto& player : players)
     {
-        deltaTime = clock2.restart().asSeconds();
-        kangaroo.update(player, deltaTime);
-    }
-    CHECK(kangaroo.joey.getPosition().x  > startPos);
+        player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+        player.gameRow = 3u;
+        sf::Texture kangarooSpritesheetText;
+        kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+        auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+        auto startPos = kangaroo.joey.getPosition().x;
+        sf::Clock clock1;
+        sf::Clock clock2;
+        float deltaTime;
 
-    kangaroo.movingRight = false;
-    while(clock1.getElapsedTime().asSeconds() <= 0.3f)
-    {
-        deltaTime = clock2.restart().asSeconds();
-        kangaroo.update(player, deltaTime);
+        kangaroo.movingRight = true;
+        while(clock1.getElapsedTime().asSeconds() <= 0.1f)
+        {
+            deltaTime = clock2.restart().asSeconds();
+            kangaroo.update(players, deltaTime, GameMode::Singleplayer);
+        }
+        CHECK(kangaroo.joey.getPosition().x  > startPos);
+
+        kangaroo.movingRight = false;
+        while(clock1.getElapsedTime().asSeconds() <= 0.3f)
+        {
+            deltaTime = clock2.restart().asSeconds();
+            kangaroo.update(players, deltaTime, GameMode::Singleplayer);
+        }
+        CHECK(kangaroo.joey.getPosition().x < startPos);
     }
-    CHECK(kangaroo.joey.getPosition().x < startPos);
 }
 
 TEST_CASE("Kangaroo can't move out of bounds")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    player.jack.setPosition(1900.0f, 180.0f + 180.0f);
-    player.gameRow = 3u;
-    sf::Texture kangarooSpritesheetText;
-    kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
-    auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
-    sf::Clock clock1;
-    sf::Clock clock2;
-    float deltaTime;
-
-    kangaroo.movingRight = true;
-    kangaroo.joey.setPosition(1910, 270);
-    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+    auto players = vector<Jack>{Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1)};
+    for(auto& player: players)
     {
-        deltaTime = clock2.restart().asSeconds();
-        kangaroo.update(player, deltaTime);
-    }
-    CHECK(kangaroo.joey.getPosition().x  <= gameWidth);
+        player.jack.setPosition(1900.0f, 180.0f + 180.0f);
+        player.gameRow = 3u;
+        sf::Texture kangarooSpritesheetText;
+        kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
+        auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
+        sf::Clock clock1;
+        sf::Clock clock2;
+        float deltaTime;
 
-    kangaroo.joey.setPosition(10, 270);
-    kangaroo.movingRight = false;
-    while(clock1.getElapsedTime().asSeconds() <= 0.5f)
-    {
-        deltaTime = clock2.restart().asSeconds();
-        kangaroo.update(player, deltaTime);
+        kangaroo.movingRight = true;
+        kangaroo.joey.setPosition(1910, 270);
+        while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+        {
+            deltaTime = clock2.restart().asSeconds();
+            kangaroo.update(players, deltaTime, GameMode::Singleplayer);
+        }
+        CHECK(kangaroo.joey.getPosition().x  <= gameWidth);
+
+        kangaroo.joey.setPosition(10, 270);
+        kangaroo.movingRight = false;
+        while(clock1.getElapsedTime().asSeconds() <= 0.5f)
+        {
+            deltaTime = clock2.restart().asSeconds();
+            kangaroo.update(players, deltaTime, GameMode::Singleplayer);
+        }
+        CHECK(kangaroo.joey.getPosition().x >= 0.0f);
     }
-    CHECK(kangaroo.joey.getPosition().x >= 0.0f);
 }
 
 TEST_CASE("The Kangaroo can kill Jack")
@@ -543,8 +550,8 @@ TEST_CASE("The Kangaroo can kill Jack")
     sf::Texture deadJackText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
     deadJackText.loadFromFile("resources/dead_jack.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
-    player.jack.setPosition(1900.0f, 180.0f + 90.0f);
+    auto players = vector<Jack>{Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1)};
+    players[0].jack.setPosition(gameWidth/2.0f, 180.0f + 90.0f);
     sf::Texture kangarooSpritesheetText;
     kangarooSpritesheetText.loadFromFile("resources/kangaroo.png");
     auto kangaroo = Kangaroo{&kangarooSpritesheetText, sf::Vector2u{3,1}, 0.3f, 200.0f};
@@ -554,21 +561,21 @@ TEST_CASE("The Kangaroo can kill Jack")
     while(clock1.getElapsedTime().asSeconds() <= 0.1f)
     {
         deltaTime = clock2.restart().asSeconds();
-        player.update(deltaTime);
-        enemies.update(deltaTime);
-        enemyCollisionDetector.update(player, &deadJackText, enemies, kangaroo);
+        players[0].update(deltaTime);
+        kangaroo.update(players, deltaTime, GameMode::Singleplayer);
+        enemyCollisionDetector.update(players[0], &deadJackText, enemies, kangaroo);
     }
-    CHECK(player.isAlive == false);
+    CHECK(players[0].isAlive == false);
 }
 
 TEST_CASE("Platform direction can be switched by Jack")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     sf::Texture log;
     log.loadFromFile("resources/wide_log.png");
-    auto tent = Tent(&log, 4, 4, 200.0f);
+    auto tent = Tent(&log, 4, 4, 200.0f, gameWidth/2.0f);
     auto platformController = PlatformController(&log);
     auto platformPositions = platformController.getPlatformPositions(1);
     auto collisionDetector = Collisions(platformController.getPlatformRow(1)->getPlatform(1).width(), 100.0f);
@@ -588,7 +595,7 @@ TEST_CASE("Platform direction can be switched by Jack")
         deltaTime = clock2.restart().asSeconds();
         player.update(deltaTime);
         platformController.update(deltaTime);
-        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds);
+        collisionDetector.update(player, &jack_spritesheet, platformController, &log, &log, tent, score, gameSounds, GameMode::Singleplayer);
         newDir = platformController.getPlatformRow(1)->getPlatform(1).movingRight;
     }
     CHECK(newDir != prevDir);
@@ -598,11 +605,11 @@ TEST_CASE("Temperature increases with time")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto temperature = Temperature{1920, 1080};
     auto previousTemp = temperature.temp;
     float deltaTime = 10;
-    temperature.update(player, &jack_spritesheet, deltaTime);
+    temperature.update(player, &jack_spritesheet, deltaTime, GameMode::Singleplayer);
     auto currentTemp = temperature.temp;
     CHECK(currentTemp > previousTemp);
 }
@@ -611,10 +618,10 @@ TEST_CASE("When temperature gets to 50 degrees celsius, the player dies")
 {
     sf::Texture jack_spritesheet;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto temperature = Temperature{1920, 1080};
     float deltaTime = 50;
-    temperature.update(player, &jack_spritesheet, deltaTime);
+    temperature.update(player, &jack_spritesheet, deltaTime, GameMode::Singleplayer);
     CHECK_FALSE(player.isAlive);
 }
 
@@ -622,9 +629,9 @@ TEST_CASE("Tent adds a block when player jumps on an untouched platform")
 {
     sf::Texture jack_spritesheet, tentText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     tentText.loadFromFile("resources/tent.png");
-    auto tent = Tent(&tentText, 4, 4, 200.0f);
+    auto tent = Tent(&tentText, 4, 4, 200.0f, gameWidth/2.0f);
     auto prevFrameX = tent.currentFrame.x;
     sf::Texture log;
     log.loadFromFile("resources/wide_log.png");
@@ -635,7 +642,7 @@ TEST_CASE("Tent adds a block when player jumps on an untouched platform")
     auto gameSounds = GameSounds();
     player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
     player.gameRow = 2;
-    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds);
+    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds, GameMode::Singleplayer);
     CHECK(tent.currentFrame.x != prevFrameX);
 }
 
@@ -643,9 +650,9 @@ TEST_CASE("Player can win the game when the tent is fully built")
 {
     sf::Texture jack_spritesheet, tentText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     tentText.loadFromFile("resources/tent.png");
-    auto tent = Tent{&tentText, 4, 4, 200.0f};
+    auto tent = Tent{&tentText, 4, 4, 200.0f, gameWidth/2.0f};
     tent.currentFrame = sf::Vector2u(3, 4);
     tent.nextFrame();
     player.jack.setPosition(tent.getPositionX(), 270);
@@ -658,9 +665,9 @@ TEST_CASE("Score increases when player jumps onto an untouched platform")
 {
     sf::Texture jack_spritesheet, tentText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     tentText.loadFromFile("resources/tent.png");
-    auto tent = Tent(&tentText, 4, 4, 200.0f);
+    auto tent = Tent(&tentText, 4, 4, 200.0f, gameWidth/2.0f);
     auto prevScore = player.score;
     sf::Texture log;
     log.loadFromFile("resources/wide_log.png");
@@ -671,7 +678,7 @@ TEST_CASE("Score increases when player jumps onto an untouched platform")
     auto gameSounds = GameSounds();
     player.jack.setPosition(platformPositions.back(), 450); //set Jack on top of a platform
     player.gameRow = 2;
-    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds);
+    collisionDetector.update(player, &jack_spritesheet, platformController, &tentText, &tentText, tent, score, gameSounds, GameMode::Singleplayer);
     CHECK(player.score > prevScore);
 }
 
@@ -679,11 +686,11 @@ TEST_CASE("Score increases when player wins the game and the temperature is belo
 {
     sf::Texture jack_spritesheet, tentText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto temperature = Temperature{1920, 1080};
     auto score = Score{1920, 1080};
     float deltaTime = 10;
-    temperature.update(player, &jack_spritesheet, deltaTime);
+    temperature.update(player, &jack_spritesheet, deltaTime, GameMode::Singleplayer);
     auto prevScore = player.score;
     score.updateFromTemp(player, temperature);
     CHECK(player.score > prevScore);
@@ -693,7 +700,7 @@ TEST_CASE("Score increases when the player collides with a fish")
 {
     sf::Texture jack_spritesheet, fishText;
     jack_spritesheet.loadFromFile("resources/jack_frames.png");
-    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f);
+    auto player = Jack(&jack_spritesheet, sf::Vector2u(3, 3), 0.2f, 500.0f, 1);
     auto prevScore = player.score;
     fishText.loadFromFile("resources/Fish.png");
     auto numFish = 1;
